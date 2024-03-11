@@ -5,15 +5,15 @@
 #include "Item.h"
 using namespace std;
 
-class Consumeable : public Item
+class Consumable : public Item
 {
 
 protected:
     double potency;
 
 public:
-    Consumeable(string name, double price, bool vIP, double potency);
-    virtual ~Consumeable();
+    Consumable(string name, double price, bool vIP, double potency);
+    virtual ~Consumable();
     double getPotency();
     void setPotency(double newPotency);
 };

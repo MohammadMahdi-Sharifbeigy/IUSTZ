@@ -2,19 +2,19 @@
 
 using namespace std;
 
-Consumeable::Consumeable(string name, double price, bool vIP, double potency) : Item(name, price, vIP)
+Consumable::Consumable(string name, double price, bool vIP, double potency) : Item(name, price, vIP)
 {
     this->potency = potency;
 }
 
-Consumeable::~Consumeable(){};
+Consumable::~Consumable(){};
 
-double Consumeable::getPotency()
+double Consumable::getPotency()
 {
     return potency;
 }
 
-void Consumeable::setPotency(double newPotency)
+void Consumable::setPotency(double newPotency)
 {
     potency = newPotency;
 }
