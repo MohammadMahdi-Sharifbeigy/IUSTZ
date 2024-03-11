@@ -15,7 +15,7 @@ public:
     Throwable(string name, double price, bool vIP, int number, double synergydamage);
     virtual ~Throwable();
     double getSynengyDmg();
-    double getNumber();
+    int getNumber();
 };
 
 #endif
