@@ -1,12 +1,12 @@
-#include "HealingPotion.h"
+#include "DefensePotion.h"
 #include <iostream>
 
 using namespace std;
 
-void HealingPotion::increaseHP(chara& target) {
-  cout << "HP Increased!";
+void DefensePotion::increaseDefense(chara& target) {
+  cout << "Defense Increased!";
 }
-HealingPotion::HealingPotion(string name,
+DefensePotion::DefensePotion(string name,
                              double price,
                              bool vIP,
                              double potency)

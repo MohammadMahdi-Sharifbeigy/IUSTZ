@@ -7,11 +7,10 @@ using namespace std;
 
 class chara;
 
-class HealingPotion : public Consumable
-{
-public:
-    void increaseHP(chara &target);
-    HealingPotion(string name, double price, bool vIP, double potency);
+class HealingPotion : public Consumable {
+ public:
+  HealingPotion(string name, double price, bool vIP, double potency);
+  void increaseHP(chara& target);
 };
 
 #endif
