@@ -1,4 +1,4 @@
-#include "Flipflops.h"
+#include "Flip_flops.h"
 #include <iostream>
 using namespace std;
 
