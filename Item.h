@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-class Character;  // Forward declaration
+class Character;
 
 class Item {
  protected:
@@ -18,14 +18,9 @@ class Item {
 
   virtual void use(Character& target) = 0;
 
-  // Getters and setters
   string getName() const;
   double getPrice() const;
   bool isVIP() const;
-
-  void setName(const string& newName);
-  void setPrice(double newPrice);
-  void setVIP(bool newVIP);
 };
 
 #endif  // ITEM_H

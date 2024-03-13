@@ -16,14 +16,3 @@ double Item::getPrice() const {
 bool Item::isVIP() const {
   return VIP;
 }
-
-void Item::setName(const string& newName) {
-  name = newName;
-}
-void Item::setPrice(double newPrice) {
-  price = newPrice;
-}
-
-void Item::setVIP(bool newVIP) {
-  VIP = newVIP;
-}
