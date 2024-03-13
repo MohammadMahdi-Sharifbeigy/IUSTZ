@@ -5,19 +5,24 @@
 #include "Item.h"
 using namespace std;
 
-class Passive : public Item
-{
-protected:
-    string Perk;
-    double SynergyDamage;
-    string Type;
+class Passive : public Item {
+ protected:
+  string Perk;
+  double SynergyDamage;
+  string Type;
 
-public:
-    Passive(string name, double price, bool vIP, string perk, string type, double synergyDamage);
-    virtual ~Passive();
-    double getSynergyDamage();
-    string getPerk();
-    string getType();
+ public:
+  Passive(string name,
+          double price,
+          bool vIP,
+          string perk,
+          string type,
+          double synergyDamage);
+  virtual ~Passive();
+  double getSynergyDamage();
+  string getPerk();
+  string getType();
+  void use(Character& target) override;
 };
 
 #endif

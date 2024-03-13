@@ -1,22 +1,34 @@
 #include "Passive.h"
+#include <iostream>
 
 using namespace std;
 
-Passive::Passive(string name, double price, bool vIP, string perk, string type, double synergyDamage) : Item(name, price, vIP)
-{
-    Perk = perk;
-    SynergyDamage = synergyDamage;
-    Type = type;
+class Character;
+
+Passive::Passive(string name,
+                 double price,
+                 bool vIP,
+                 string perk,
+                 string type,
+                 double synergyDamage)
+    : Item(name, price, vIP) {
+  Perk = perk;
+  SynergyDamage = synergyDamage;
+  Type = type;
 };
-double Passive::getSynergyDamage()
-{
-    return SynergyDamage;
+double Passive::getSynergyDamage() {
+  return SynergyDamage;
 };
 
-string Passive::getPerk()
-{
-    return Perk;
+string Passive::getPerk() {
+  return Perk;
 }
-string Passive::getType(){
-    return Type;
+string Passive::getType() {
+  return Type;
+}
+void Passive::use(Character& target) {
+  cout << "Permanent item " << getName() << " used, granting " << getPerk()
+       << " to "
+       << "<Target name here>"
+       << "." << endl;
 }
