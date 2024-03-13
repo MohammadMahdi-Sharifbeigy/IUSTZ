@@ -1,8 +1,8 @@
-#include "Grenade.h"
+#include "Flipflops.h"
 #include <iostream>
 using namespace std;
 
-Grenade::Grenade(string name,
+Flipflops::Flipflops(string name,
            double price,
            bool vIP,
            int number,
