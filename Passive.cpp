@@ -26,9 +26,3 @@ string Passive::getPerk() {
 string Passive::getType() {
   return Type;
 }
-void Passive::use(Character& target) {
-  cout << "Permanent item " << getName() << " used, granting " << getPerk()
-       << " to "
-       << "<Target name here>"
-       << "." << endl;
-}

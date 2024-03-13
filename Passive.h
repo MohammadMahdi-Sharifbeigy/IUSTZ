@@ -22,7 +22,6 @@ class Passive : public Item {
   double getSynergyDamage();
   string getPerk();
   string getType();
-  void use(Character& target) override;
 };
 
 #endif
