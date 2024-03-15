@@ -1,82 +1,107 @@
-//
-//  Human.h
-//  bardia dar hezardastan
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef HUMAN_H
+#define HUMAN_H
 
-#ifndef Human_h
-#define Human_h
+#include "Character.h"
 
-
+using namespace std;
 
 class Human : public Character
 {
-protected :
+protected:
     int age;
     int maxXP;
     int currXP;
-    double stamin;
+    double stamina;
     double strenght;
     double endurance;
     double accuracy;
     double pace;
     double mind;
     int coin;
-    Item* chestArmor;
-    Item* weapon;
-    Item* leggings;
-    Item* helmet;
-    vector<Item*> consumables;
-    vector<Item*> equipment;
-    virtual int attack_func(Human* curenemy , Item* item);
-    virtual int attack_func(Character* curenemy , Item* item);
+    // vector<Items *> inventory;
     virtual void takeDamage(int damage);
-public :
+
+public:
     Human() = default;
-    
-    Human(string name,string role , int age);
-    virtual string NameMaker() override;
-    void firearm_ability();
-    void coldweapon_ability();
-    void addEquipments(Item* newEquipment);
-    void addConsumables(Item* newConsumable);
-    void showEquipments();
-    void showConsumables();
+    Human(const std::string &name, double hp, double attack, double defense, characterType role)
+    {
+        this->name = name;
+        this->maxHP = hp;
+        this->currHP = hp;
+        this->attack = attack;
+        this->defense = defense;
+        this->role = role;
+        this->level = 1;
+        this->currXP = 0;
+        this->maxXP = 100;
+    };
+    virtual void performAttack(Character &target) = 0;
+    virtual void performDefense() = 0;
+    virtual std::string NameMaker() override;
     virtual void levelUp();
     int getAge();
     void setName(int age);
-    int getCurrXP ();
-    void setCurrXP (int currXP);
-    int getMaxXP ();
-    void setMaxXP (int maxXP);
-    double getStamin();
-    void setStamin(double stamin);
-    double getStrenght ();
-    void setStrenght (double strenght);
-    double getEndurance ();
-    void setEndurance (double endurance);
+    int getCurrXP();
+    void setCurrXP(int currXP);
+    int getMaxXP();
+    void setMaxXP(int maxXP);
+    double getStamina();
+    void setStamina(double stamina);
+    double getStrength();
+    void setStrength(double strenght);
+    double getEndurance();
+    void setEndurance(double endurance);
     double getAccuracy();
     void setAccuracy(double accuracy);
-    double getPace ();
-    void setPace (double pace);
-    double getMind ();
-    void setMind (double mind);
+    double getPace();
+    void setPace(double pace);
+    double getMind();
+    void setMind(double mind);
     int getCoin();
     void setCoin(int coin);
-    Item* getChestArmor ();
-    void setChestArmor (Item* chestArmor);
-    Item* getWeapon ();
-    void setWeapon (Item* weapon);
-    Item* getLeggings ();
-    void setLeggings (Item* leggings);
-    Item* getHelmet ();
-    void setHelmet (Item* helmet);
+
+    // Items Functions
+
+    /*
+    void showEquipments();
+    void showConsumables();
+
+    void addInventory(Items *item)
+    {
+        inventory.push_back(item);
+    }
+
+    void removeInventory(int index)
+    {
+        if (index < this->inventorySize())
+        {
+            inventory.erase(inventory.begin() + index);
+        }
+    }
+
+    int inventorySize()
+    {
+        return inventory.size();
+    }
+
+    Items *itemssAt(int index)
+    {
+        if (this->inventorySize())
+        {
+            return inventory.at(index);
+        }
+        return nullptr;
+    }
+
+    Items *getArmor()
+    {
+        return Armor;
+    }
+    Items *getWeapon()
+    {
+        return weapon;
+    }
+    */
 };
-
-
-
-
-
 
 #endif /* Human_h */
