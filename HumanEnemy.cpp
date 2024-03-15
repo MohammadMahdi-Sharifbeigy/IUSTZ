@@ -1,85 +1,48 @@
-//
-//  HumanEnemy.cpp
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#include "HumanEnemy.h"
+#include "cmath"
 
-#include "HumanEnemy.hpp"
-#include <HumanEnemy.h>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <random>
+HumanEnemy::HumanEnemy(){}
 
+HumanEnemy::HumanEnemy(int level) : Enemy(level)
+{
+    std::srand(time(NULL));
+    hp = 2 * level + rand() % (5 * level / 4);
+    attack = 4 * level + rand() % (5 * level / 4);
+    defense = 2 * level + rand() % (5 * level / 4);
+    level = abs(level - 4 + rand() % 6) + 1;
+    giveExp = level * 10 * attack / defense;
+    role = getRandomRole(); // Set role randomly
+}
 
-using namespace std;
-using namespace HumanEnemy;
+HumanEnemy::HumanEnemy(int level, Human &human) : Enemy(level)
+{
+    std::srand(time(NULL));
+    hp = 2 * level + rand() % (5 * level / 4);
+    attack = 4 * level + rand() % (5 * level / 4);
+    defense = 2 * level + rand() % (5 * level / 4);
+    level = abs(level - 4 + rand() % 6) + 1;
+    giveExp = level * 10 * attack / defense;
+    setRoleBasedOnHuman(human); // Set role based on the Human it is fighting
+}
 
-
-HumanEnemy(Human* human){
-     chestArmor = nullptr;
-     leggings = nullptr;
-     weapon = nullptr;
-     helmet = nullptr;
-     this->name = "Human Enemy";
-     this->role = "Enemy";
-     this->age = human->getAge();
-     coin = 0;
-    srand(time(0));
-    if ( human->getLevel() > 2){
-        int n = (rand()%5) - 2;
-        level = human->getLevel() + n;
-        maxHP = human->getMaxHP() + (n*30);
-        currHP = maxHP;
-        maxXP = human-> getMaxXP() + (n*25);
-        currXP = maxXP;
-        attack = human->getAttack() + (10*n);
-        defense = human->getDefense() + (n*5);
-        stamin = human->getStamin() + (n*15);
-        strenght = human->getStamin() + (n*2);
-        endurance = human->getEndurance() + (2*n);
-        accuracy = human->getAccuracy() + (2*n);
-        pace = human->getPace() + (2*n);
-        mind = human->getMind() + (2*n);
-    }else if(human->getLevel() == 2){
-        int n = (rand()%3) - 1;
-        level = human->getLevel() + n;
-        maxHP = human->getMaxHP() + (n*30);
-        currHP = maxHP;
-        maxXP = human-> getMaxXP() + (n*25);
-        currXP = maxXP;
-        attack = human->getAttack() + (10*n);
-        defense = human->getDefense() + (n*5);
-        stamin = human->getStamin() + (n*15);
-        strenght = human->getStamin() + (n*2);
-        endurance = human->getEndurance() + (2*n);
-        accuracy = human->getAccuracy() + (2*n);
-        pace = human->getPace() + (2*n);
-        mind = human->getMind() + (2*n);
-    }else{
-        int n = (rand()%2) ;
-        level = human->getLevel() + n;
-        maxHP = human->getMaxHP() + (n*30);
-        currHP = maxHP;
-        maxXP = human-> getMaxXP() + (n*25);
-        currXP = maxXP;
-        attack = human->getAttack() + (10*n);
-        defense = human->getDefense() + (n*5);
-        stamin = human->getStamin() + (n*15);
-        strenght = human->getStamin() + (n*2);
-        endurance = human->getEndurance() + (2*n);
-        accuracy = human->getAccuracy() + (2*n);
-        pace = human->getPace() + (2*n);
-        mind = human->getMind() + (2*n);
+// Function to generate a random characterType
+characterType HumanEnemy::getRandomRole()
+{
+    int role = rand() % 8;
+    if (role == 7 || role == 6)
+    {
+        role = rand() % 8;
     }
+    return static_cast<characterType>(role);
 }
 
-
-virtual int attack_func (Character * currEnemy , Item* item) override {
-    return 0;
+// Function to set role based on the Human it is fighting
+void HumanEnemy::setRoleBasedOnHuman(Human &human)
+{
+    this->role = human.getRole();
 }
 
-virtual void takeDamage(int damage) override{
-    
+int HumanEnemy::attackChar(double charDefense)
+{
+    return abs((((((2 * level / 3) + 2) * (40 + (level * 9 / 10)) * attack) / charDefense) / 50) + 2);
 }

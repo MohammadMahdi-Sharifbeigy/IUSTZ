@@ -1,39 +1,19 @@
-//
-//  StrongZombie.cpp
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#include "StrongZombie.h"
+#include <cstdlib>
+#include <cmath>
 
-#include "StrongZombie.hpp"
-#include <StrongZombie.h>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <random>
+StrongZombie::StrongZombie(){}
 
-
-using namespace std;
-using namespace StrongZombie;
-
-
-
-StrongZombie(Human* human){
-    name = "Strong Zombie";
-    role = "Enemy";
-    srand(time(0));
-        int n = (rand()%3)+1;
-        level = (human->getLevel()) + n;
-        maxHP = human->getMaxHP() + (n*30);
-        currHP = maxHP;
-        attack = (human->getAttack()) + (n*10);
-        defense = (human->getDefense()) + (n*5);
+StrongZombie::StrongZombie(int level) : Enemy(level) {
+    role = STRONGZOMBIE;
+    std::srand(time(NULL));
+    hp = 2 * level + std::rand() % (5 * level / 4);
+    attack = 4 * level + std::rand() % (5 * level / 4);
+    defense = 2 * level + std::rand() % (5 * level / 4);
+    level = std::abs(level - 4 + std::rand() % 6) + 1;
+    giveExp = level * 10 * attack / defense;
 }
 
-virtual int attack_func(Human* curenemy){
-    return 0;
-}
-
-virtual void takeDamage(){
-    
+int StrongZombie::attackChar(double charDefense) {
+    return std::abs((((((2 * level / 5) + 2) * (35 + (level * 9 / 10)) * attack) / charDefense) / 50) + 2);
 }
