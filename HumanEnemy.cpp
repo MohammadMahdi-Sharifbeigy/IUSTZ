@@ -1,10 +1,9 @@
 #include "HumanEnemy.h"
 #include "cmath"
 
-HumanEnemy::HumanEnemy(){}
+HumanEnemy::HumanEnemy(Human &ref) : humanRef(ref) {}
 
-HumanEnemy::HumanEnemy(int level) : Enemy(level)
-{
+HumanEnemy::HumanEnemy(int level, Human &ref) : Enemy(level), humanRef(ref){
     std::srand(time(NULL));
     hp = 2 * level + rand() % (5 * level / 4);
     attack = 4 * level + rand() % (5 * level / 4);
@@ -14,8 +13,7 @@ HumanEnemy::HumanEnemy(int level) : Enemy(level)
     role = getRandomRole(); // Set role randomly
 }
 
-HumanEnemy::HumanEnemy(int level, Human &human) : Enemy(level)
-{
+HumanEnemy::HumanEnemy(int level, Human &ref, Human &human) : Enemy(level), humanRef(ref){
     std::srand(time(NULL));
     hp = 2 * level + rand() % (5 * level / 4);
     attack = 4 * level + rand() % (5 * level / 4);
