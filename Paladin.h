@@ -1,27 +1,23 @@
-//
-//  Paladin.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef PALADIN_H
+#define PALADIN_H
 
-#ifndef Paladin_h
-#define Paladin_h
-
+#include "PaladinAttack.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
 class Paladin : public Human
 {
-public :
-    Paladin(string name , int age);
+private:
+  AttackStrategy *attackStrategy;
 
-    virtual int attack_func (Human * currEnemy , Item* item) override ;
-    
-    virtual int attack_func (Character * currEnemy , Item* item) override ;
-    
-    virtual void takeDamage(int damage) override;
-    
-    virtual void levelUp() override ;
-    
+public:
+  Paladin(const std::string &name, double hp, double attack, double defense, characterType role);
+  ~Paladin();
+
+  void performAttack(Character &target) override;
+  void performDefense() override;
+  virtual void levelUp() override; 
 };
 
-#endif /* Paladin_h */
+#endif // PALADIN_H

@@ -1,27 +1,23 @@
-//
-//  Sniper.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef SNIPER_H
+#define SNIPER_H
 
-#ifndef Sniper_h
-#define Sniper_h
-
+#include "SniperAttack.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
 class Sniper : public Human
 {
-public :
-    Sniper(string name , int age) ;
+private:
+  AttackStrategy *attackStrategy;
 
-    virtual int attack_func (Human * currEnemy , Item* item) override;
-    
-    virtual int attack_func (Character * currEnemy , Item* item) override ;
-    
-    virtual void takeDamage(int damage) override;
-    
-    virtual void levelUp() override;
-    
+public:
+  Sniper(const std::string &name, double hp, double attack, double defense, characterType gold);
+  ~Sniper();
+
+  void performAttack(Character &target) override;
+  void performDefense() override;
+  virtual void levelUp() override; 
 };
 
-#endif /* Sniper_h */
+#endif // SNIPER_H

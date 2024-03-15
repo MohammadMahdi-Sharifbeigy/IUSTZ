@@ -1,28 +1,24 @@
-//
-//  Cyborg.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef CYBORG_H
+#define CYBORG_H
 
-#ifndef Cyborg_h
-#define Cyborg_h
-
+#include "CyborgAttack.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
 
 class Cyborg : public Human
 {
-public :
-    Cyborg(string name , int age) ;
+private:
+  AttackStrategy *attackStrategy;
 
-    virtual int attack_func (Human * currEnemy , Item* item) override ;
-    
-    virtual int attack_func (Character * currEnemy , Item* item) override ;
-    
-    virtual void takeDamage(int damage) override;
-    
-    virtual void levelUp() override;
-    
+public:
+  Cyborg(const std::string &name, double hp, double attack, double defense, characterType role);
+  ~Cyborg();
+
+  void performAttack(Character &target) override;
+  void performDefense() override;
+  virtual void levelUp() override; 
 };
 
-#endif /* Cyborg_h */
+#endif // CYBORG_H
