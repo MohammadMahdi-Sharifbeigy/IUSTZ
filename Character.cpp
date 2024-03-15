@@ -1,80 +1,103 @@
-//
-//  Character.cpp
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
-
-#include "Character.hpp"
-#include <Character.h>
+#include "Character.h"
+#include "CharacterType.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <random>
 
-
 using namespace std;
-using namespace Character;
 
 
-Character() = default;
-
-virtual string NameMaker(){
-    return" ";
+Character::Character(const string &name,
+                     double hp,
+                     int lvl,
+                     double attack,
+                     double defense,
+                     characterType role)
+    : name(name),
+      currHP(hp),
+      maxHP(hp),
+      level(lvl),
+      role(role),
+      attack(attack),
+      defense(defense)
+{
 }
 
-string getName(){
-    return name;
+Character::~Character() = default;
+
+string Character::getName() const
+{
+  return name;
 }
 
-void setName(string name){
-    this->name = name;
+double Character::getMaxHP() const
+{
+  return maxHP;
 }
 
-int getCurrHP (){
-    return currHP;
+double Character::getCurrentHP() const
+{
+  return currHP;
 }
 
-void setCurrHP (int currHp){
-    this->currHP = currHp;
+double Character::getAttack() const
+{
+  return attack;
 }
 
-int getMaxHP (){
-    return maxHP;
+double Character::getDefense() const
+{
+  return defense;
 }
 
-void setMaxHP (int maxHP){
-    this->maxHP = maxHP;
+int Character::getLevel() const
+{
+  return level;
 }
 
-int getLevel (){
-    return level;
+characterType Character::getRole() const
+{
+  return role;
 }
 
-void setLevel(int level){
-    this->level = level;
+void Character::setName(const string &newName)
+{
+  name = newName;
 }
 
-string getRole(){
-    return  role;
+void Character::setMaxHP(double newMaxHP)
+{
+  maxHP = newMaxHP;
 }
 
-void setRole(string role){
-    this->role = role;
+void Character::setAttack(double newAttack)
+{
+  attack = newAttack;
 }
 
-int getAttack (){
-    return attack;
+void Character::setDefense(double newDefense)
+{
+  defense = newDefense;
 }
 
-void setAttack (int attack){
-    this->attack = attack;
+void Character::setLevel(int newLevel)
+{
+  level = newLevel;
 }
 
-int getDefense (){
-    return defense;
+void Character::setRole(characterType newRole)
+{
+  role = newRole;
 }
 
-void setDefense (int defense){
-    this->defense = defense;
+bool Character::isAlive() const
+{
+  return currHP > 0;
+}
+void Character::takeDamage(double amount)
+{
+  currHP -= amount;
+  if (currHP < 0)
+    currHP = 0;
 }
