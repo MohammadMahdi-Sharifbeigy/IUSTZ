@@ -42,7 +42,20 @@ void Assassin::performAttack(Character &target)
   }
 }
 
-void Assassin::performDefense() {}
+void Assassin::performDefense(Enemy &attacker)
+{
+  if (attackStrategy)
+  {
+    if (Enemy *enemy = dynamic_cast<Enemy *>(&attacker))
+    {
+      attackStrategy->defenseEnemy(this, enemy);
+    }
+  }
+  else
+  {
+    std::cout << getName() << " defends against " << attacker.getcharType() << " with a basic defense." << std::endl;
+  }
+}
 
 void Assassin::levelUp()
 {

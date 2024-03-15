@@ -1,206 +1,93 @@
-//
-//  Human.cpp
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#include "Human.h"
 
-#include "Human.hpp"
-#include <Human.h>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <random>
+void Human::takeDamage(int damage) {}
 
+void Human::performAttack(Character &target) {}
 
-using namespace std;
-using namespace Human;
+void Human::performDefense(Enemy &attacker) {}
 
-
-
-
-virtual int attack_func(Human* curenemy , Item* item) = 0;
-virtual int attack_func(Character* curenemy , Item* item) = 0;
-virtual void takeDamage(int damage)=0;
-Human() = default;
-Human(string name,string role , int age) {
-   // attackMethod = new PaladinAttack();
-    chestArmor = nullptr;
-    leggings = nullptr;
-    weapon = nullptr;
-    helmet = nullptr;
-    this->name = name;
-    this->role = role;
-    this->age = age;
-    maxHP = 100;
-    currHP = 100;
-    attack = 5;
-    defense = 5;
-    level = 1;
-    currXP = 0;
-    maxXP = 100;
-    stamin = 100;
-    strenght = 1;
-    endurance = 1;
-    accuracy = 1;
-    pace = 1;
-    mind = 1;
-    coin = 50;
+std::string Human::NameMaker() {
+    return "";
 }
 
+void Human::levelUp() {}
 
-virtual string NameMaker() override{
-    return" ";
-}
-
-
-void firearm_ability(){
-    
-}
-
-void coldweapon_ability(){
-    
-}
-
-void addEquipments(Item* newEquipment){
-    equipment.push_back(newEquipment);
-}
-
-void addConsumables(Item* newConsumable){
-    consumables.push_back(newConsumable);
-}
-
-void showEquipments(){
-    if(equipment.size()> 0){
-        for(int i=0; i< equipment.size(); i++){
-            cout<<i+1<<". "<<equipment[i]<<endl;
-        }
-    }else{
-        cout<<"You have no equipments"<<endl;
-    }
-}
-
-void showConsumables(){
-    if(consumables.size()> 0){
-        for(int i=0; i< consumables.size(); i++){
-            cout<<i+1<<". "<<consumables[i]<<endl;
-        }
-    }else{
-        cout<<"You have no consumables"<<endl;
-    }
-}
-
-virtual void levelUp() = 0;
-
-int getAge(){
+int Human::getAge() {
     return age;
 }
 
-void setName(int age){
+void Human::setName(int age) {
     this->age = age;
 }
 
-int getCurrXP (){
+int Human::getCurrXP() {
     return currXP;
 }
 
-void setCurrXP (int currXP){
+void Human::setCurrXP(int currXP) {
     this->currXP = currXP;
 }
 
-int getMaxXP (){
+int Human::getMaxXP() {
     return maxXP;
 }
 
-void setMaxXP (int maxXP){
+void Human::setMaxXP(int maxXP) {
     this->maxXP = maxXP;
 }
 
-double getStamin(){
-    return  stamin;
+double Human::getStamina() {
+    return stamina;
 }
 
-void setStamin(double stamin){
-    this->stamin = stamin;
+void Human::setStamina(double stamina) {
+    this->stamina = stamina;
 }
 
-double getStrenght (){
-    return strenght;
+double Human::getStrength() {
+    return strength;
 }
 
-void setStrenght (double strenght){
-    this->strenght = strenght;
+void Human::setStrength(double strength) {
+    this->strength = strength;
 }
 
-double getEndurance (){
+double Human::getEndurance() {
     return endurance;
 }
 
-void setEndurance (double endurance){
+void Human::setEndurance(double endurance) {
     this->endurance = endurance;
 }
 
-
-double getAccuracy(){
-    return  accuracy;
+double Human::getAccuracy() {
+    return accuracy;
 }
 
-void setAccuracy(double accuracy){
+void Human::setAccuracy(double accuracy) {
     this->accuracy = accuracy;
 }
 
-double getPace (){
+double Human::getPace() {
     return pace;
 }
 
-void setPace (double pace){
+void Human::setPace(double pace) {
     this->pace = pace;
 }
 
-double getMind (){
+double Human::getMind() {
     return mind;
 }
 
-void setMind (double mind){
+void Human::setMind(double mind) {
     this->mind = mind;
 }
 
-int getCoin(){
+int Human::getCoin() {
     return coin;
 }
 
-void setCoin(int coin){
+void Human::setCoin(int coin) {
     this->coin = coin;
-}
-
-Item* getChestArmor (){
-    return chestArmor;
-}
-
-void setChestArmor (Item* chestArmor){
-    this->chestArmor = chestArmor;
-}
-
-Item* getWeapon (){
-    return weapon;
-}
-
-void setWeapon (Item* weapon){
-    this->weapon = weapon;
-}
-
-Item* getLeggings (){
-    return leggings;
-}
-
-void setLeggings (Item* leggings){
-    this->leggings = leggings;
-}
-
-Item* getHelmet (){
-    return helmet;
-}
-
-void setHelmet (Item* helmet){
-    this->helmet = helmet;
 }

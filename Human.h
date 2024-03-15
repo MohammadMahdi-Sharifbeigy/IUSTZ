@@ -12,7 +12,7 @@ protected:
     int maxXP;
     int currXP;
     double stamina;
-    double strenght;
+    double strength;
     double endurance;
     double accuracy;
     double pace;
@@ -36,7 +36,7 @@ public:
         this->maxXP = 100;
     };
     virtual void performAttack(Character &target) = 0;
-    virtual void performDefense() = 0;
+    virtual void performDefense(Enemy &attacker) = 0;
     virtual std::string NameMaker() override;
     virtual void levelUp();
     int getAge();
@@ -48,7 +48,7 @@ public:
     double getStamina();
     void setStamina(double stamina);
     double getStrength();
-    void setStrength(double strenght);
+    void setStrength(double strength);
     double getEndurance();
     void setEndurance(double endurance);
     double getAccuracy();

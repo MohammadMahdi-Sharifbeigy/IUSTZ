@@ -1,13 +1,13 @@
 #include "Asianmom.h"
 #include "Character.h"
 #include "AttackStrategy.h"
-#include "Human.h"  
+#include "Human.h"
 #include "CharacterType.h"
 #include "Enemy.h"
 #include <iostream>
 
-AsianMom::AsianMom(const std::string& name, double hp, double defense, double attack, characterType role)
-  : Human(name, hp, attack, defense, role) 
+AsianMom::AsianMom(const std::string &name, double hp, double defense, double attack, characterType role)
+    : Human(name, hp, attack, defense, role)
 {
   attackStrategy = new AsianmomAttack();
   age = 1;
@@ -22,27 +22,49 @@ AsianMom::AsianMom(const std::string& name, double hp, double defense, double at
   coin = 0;
 }
 
-
-AsianMom::~AsianMom() {
-  delete attackStrategy;  
+AsianMom::~AsianMom()
+{
+  delete attackStrategy;
 }
 
-void AsianMom::performAttack(Character& target) {
-  if (attackStrategy) {
-    Enemy* enemy = dynamic_cast<Enemy*>(&target);
-    if (enemy) {
+void AsianMom::performAttack(Character &target)
+{
+  if (attackStrategy)
+  {
+    Enemy *enemy = dynamic_cast<Enemy *>(&target);
+    if (enemy)
+    {
       attackStrategy->attackEnemy(this, enemy);
-    } else {
     }
-  } else {
+    else
+    {
+    }
+  }
+  else
+  {
     std::cout << getName() << " attacks " << target.getName() << " with a basic attack." << std::endl;
   }
 }
 
-void AsianMom::performDefense() {}
+void AsianMom::performDefense(Enemy &attacker)
+{
+  if (attackStrategy)
+  {
+    if (Enemy *enemy = dynamic_cast<Enemy *>(&attacker))
+    {
+      attackStrategy->defenseEnemy(this, enemy);
+    }
+  }
+  else
+  {
+    std::cout << getName() << " defends against " << attacker.getcharType() << " with a basic defense." << std::endl;
+  }
+}
 
-void AsianMom::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+void AsianMom::levelUp()
+{
+  while (getCurrentXP() >= getMaxXP())
+  {
     std::cout << "You have leveled up!" << std::endl;
     setMaxHP(getMaxHP() + 30);
     setAttack(getAttack() + 10);

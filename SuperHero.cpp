@@ -45,7 +45,20 @@ void SuperHero::performAttack(Character &target)
   }
 }
 
-void SuperHero::performDefense() {}
+void SuperHero::performDefense(Enemy &attacker)
+{
+  if (attackStrategy)
+  {
+    if (Enemy *enemy = dynamic_cast<Enemy *>(&attacker))
+    {
+      attackStrategy->defenseEnemy(this, enemy);
+    }
+  }
+  else
+  {
+    std::cout << getName() << " defends against " << attacker.getcharType() << " with a basic defense." << std::endl;
+  }
+}
 
 void SuperHero::levelUp()
 {

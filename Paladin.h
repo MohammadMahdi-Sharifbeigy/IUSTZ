@@ -16,7 +16,7 @@ public:
   ~Paladin();
 
   void performAttack(Character &target) override;
-  void performDefense() override;
+  void performDefense(Enemy &attacker) override;
   virtual void levelUp() override; 
 };
 
