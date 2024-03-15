@@ -1,24 +1,18 @@
-//
-//  WeakZombie.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef WEAKZOMBIE_H
+#define WEAKZOMBIE_H
 
-#ifndef WeakZombie_h
-#define WeakZombie_h
+#include "Enemy.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
-
-
-
-class WeakZombie : public Zombie
+class WeakZombie : public Enemy
 {
-public :
-    WeakZombie(Human* human):
-    
-    virtual int attack_func(Human* curenemy):
-    
-    virtual void takeDamage():
-};
+public:
+    WeakZombie();
 
-#endif /* WeakZombie_h */
+    WeakZombie(int level);
+ 
+    virtual int attackChar(double charDefense) override;
+};
+#endif /* WEAKZOMBIE_H */

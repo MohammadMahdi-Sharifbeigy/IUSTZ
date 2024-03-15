@@ -1,22 +1,26 @@
-//
-//  HumanEnemy.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef HUMANENEMY_H
+#define HUMANENEMY_H
 
-#ifndef HumanEnemy_h
-#define HumanEnemy_h
+#include "Enemy.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
-
-class HumanEnemy : public Human
+class HumanEnemy : public Enemy
 {
-public :
-    HumanEnemy(Human* human);
-    
-    virtual int attack_func (Character * currEnemy , Item* item);
-    
-    virtual void takeDamage(int damage) override;
+public:
+    HumanEnemy();
+
+    HumanEnemy(int level);
+
+    HumanEnemy(int level, Human &human);
+
+    virtual int attackChar(double charDefense) override;
+
+    characterType getRandomRole();
+
+    void setRoleBasedOnHuman(Human &human);
 };
 
-#endif /* HumanEnemy_h */
+#endif /* HUMANENEMY_H */
+

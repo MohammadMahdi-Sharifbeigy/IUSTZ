@@ -1,21 +1,19 @@
-//
-//  StrongZombie.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef STRONGZOMBIE_H
+#define STRONGZOMBIE_H
 
-#ifndef StrongZombie_h
-#define StrongZombie_h
+#include "Enemy.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
-
-class StrongZombie : public Zombie
+class StrongZombie : public Enemy
 {
-public :
-    StrongZombie(Human* human);
-    virtual int attack_func(Human* curenemy);
-    virtual void takeDamage();
-    
+public:
+    StrongZombie();
+
+    StrongZombie(int level);
+
+    virtual int attackChar(double charDefense) override;
 };
 
-#endif /* StrongZombie_h */
+#endif /* STRONGZOMBIE_H */
