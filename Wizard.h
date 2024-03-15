@@ -1,29 +1,23 @@
-//
-//  Wizard.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef WIZARD_H
+#define WIZARD_H
 
-#ifndef Wizard_h
-#define Wizard_h
-
+#include "WizardAttack.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
 class Wizard : public Human
 {
-public :
-    Wizard(string name , int age);
+private:
+  AttackStrategy *attackStrategy;
 
-    virtual int attack_func (Human * currEnemy , Item* item) override;
-    
-    virtual int attack_func (Character * currEnemy , Item* item) override;
-    
-    virtual void takeDamage(int damage) override;
-    
-    
-    virtual void levelUp() override ;
-    
+public:
+  Wizard(const std::string &name, double hp, double attack, double defense, characterType role);
+  ~Wizard();
+
+  void performAttack(Character &target) override;
+  void performDefense() override;
+  virtual void levelUp() override; 
 };
 
-
-#endif /* Wizard_h */
+#endif // WIZARD_H

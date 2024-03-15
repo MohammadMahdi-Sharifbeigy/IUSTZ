@@ -1,74 +1,70 @@
-//
-//  SuperHero.cpp
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
-
-#include "SuperHero.hpp"
-#include <SuperHero.h>
+#include "SuperHero.h"
+#include "Character.h"
+#include "AttackStrategy.h"
+#include "Human.h"
+#include "CharacterType.h"
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <random>
 
-
-using namespace std;
-using namespace SuperHero;
-
-
-SuperHero(string name , int age) {
-   // attackMethod = new PaladinAttack();
-    chestArmor = nullptr;
-    leggings = nullptr;
-    weapon = nullptr;
-    helmet = nullptr;
-    this->name = name;
-    this->role = "SuperHero";
-    this->age = age;
-    maxHP = 100;
-    currHP = 100;
-    attack = 10;
-    defense = 5;
-    level = 1;
-    currXP = 0;
-    maxXP = 100;
-    stamin = 100;
-    strenght = 3;
-    endurance = 1;
-    accuracy = 1;
-    pace = 1;
-    mind = 1;
-    coin = 50;
+SuperHero::SuperHero(const std::string &name, double hp, double defense, double attack, characterType role)
+    : Human(name, hp, attack, defense, role)
+{
+  attackStrategy = new SuperHeroAttack();
+  age = 1;
+  maxXP = 100;
+  currXP = 0;
+  stamina = 100.0;
+  strength = 10.0;
+  endurance = 10.0;
+  accuracy = 10.0;
+  pace = 10.0;
+  mind = 10.0;
+  coin = 0;
 }
 
-virtual int attack_func (Human * currEnemy , Item* item) override {
-    return 0;
+SuperHero::~SuperHero()
+{
+  delete attackStrategy;
 }
 
-virtual int attack_func (Character * currEnemy , Item* item) override {
-    return 0;
-}
-
-virtual void takeDamage(int damage) override{
-    
-}
-
-virtual void levelUp() override {
-    while (currXP >= maxXP) {
-        cout << "You have levled up!" << endl;
-        maxHP += 30;
-        attack += 10;
-        defense += 5;
-        level += 1;
-        stamin += 15;
-        strenght += 3;
-        endurance += 2;
-        accuracy += 2;
-        pace += 2;
-        mind += 2;
-        currXP = currXP - maxXP;
-    maxXP += 25;
-        cout<<"Your level is "<<level<<" now!"<<endl;
+void SuperHero::performAttack(Character &target)
+{
+  if (attackStrategy)
+  {
+    Enemy *enemy = dynamic_cast<Enemy *>(&target);
+    if (enemy)
+    {
+      attackStrategy->attackEnemy(this, enemy);
     }
+    else
+    {
+    }
+  }
+  else
+  {
+    std::cout << getName() << " attacks " << target.getName() << " with a basic attack." << std::endl;
+  }
+}
+
+void SuperHero::performDefense() {}
+
+void SuperHero::levelUp()
+{
+  while (getCurrentXP() >= getMaxXP())
+  {
+    std::cout << "You have leveled up!" << std::endl;
+    setMaxHP(getMaxHP() + 30);
+    setAttack(getAttack() + 10);
+    setDefense(getDefense() + 5);
+    setLevel(getLevel() + 1);
+    setStamina(getStamina() + 15);
+    setStrength(getStrength() + 2);
+    setEndurance(getEndurance() + 2);
+    setAccuracy(getAccuracy() + 2);
+    setPace(getPace() + 2);
+    setMind(getMind() + 2);
+    setCurrXP(getCurrXP() - getMaxXP());
+    setMaxXP(getMaxXP() + 25);
+
+    std::cout << "Your level is now " << getLevel() << "!" << std::endl;
+  }
 }

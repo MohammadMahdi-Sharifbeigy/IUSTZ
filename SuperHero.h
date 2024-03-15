@@ -1,28 +1,24 @@
-//
-//  SuperHero.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
+#ifndef SUPERHERO_H
+#define SUPERHERO_H
 
-#ifndef SuperHero_h
-#define SuperHero_h
-
+#include "SuperHeroAttack.h"
+#include "Character.h"
+#include "Human.h"
+#include "CharacterType.h"
 
 class SuperHero : public Human
 {
-public :
-    SupeHero(string name , int age);
+private:
+  AttackStrategy *attackStrategy;
 
-    virtual int attack_func (Human * currEnemy , Item* item) override ;
-    
-    virtual int attack_func (Character * currEnemy , Item* item) override ;
-    
-    virtual void takeDamage(int damage) override;
-    
-    virtual void levelUp() override ;
-    
+public:
+
+  SuperHero(const std::string &name, double hp, double attack, double defense, characterType role);
+  ~SuperHero();
+
+  void performAttack(Character &target) override;
+  void performDefense() override;
+  virtual void levelUp() override; 
 };
 
-
-#endif /* SuperHero_h */
+#endif // SUPERHERO_H

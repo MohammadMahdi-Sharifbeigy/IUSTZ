@@ -1,78 +1,70 @@
-//
-//  Wizard.cpp
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
-
-#include "Wizard.hpp"
-#include <Wizard.h>
+#include "Wizard.h"
+#include "Character.h"
+#include "AttackStrategy.h"
+#include "Human.h"
+#include "CharacterType.h"
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <random>
 
+Wizard::Wizard(const std::string &name, double hp, double defense, double attack, characterType role)
+    : Human(name, hp, attack, defense, role)
+{
+  attackStrategy = new WizardAttack();
+  age = 1;
+  maxXP = 100;
+  currXP = 0;
+  stamina = 100.0;
+  strength = 10.0;
+  endurance = 10.0;
+  accuracy = 10.0;
+  pace = 10.0;
+  mind = 10.0;
+  coin = 0;
+}
 
-using namespace std;
-using namespace Wizard;
+Wizard::~Wizard()
+{
+  delete attackStrategy;
+}
 
-
-
-
-    Wizard(string name , int age) {
-       // attackMethod = new PaladinAttack();
-        chestArmor = nullptr;
-        leggings = nullptr;
-        weapon = nullptr;
-        helmet = nullptr;
-        this->name = name;
-        this->role = "Wizard";
-        this->age = age;
-        maxHP = 100;
-        currHP = 100;
-        attack = 10;
-        defense = 5;
-        level = 1;
-        currXP = 0;
-        maxXP = 100;
-        stamin = 100;
-        strenght = 1;
-        endurance = 1;
-        accuracy = 1;
-        pace = 1;
-        mind = 3;
-        coin = 50;
+void Wizard::performAttack(Character &target)
+{
+  if (attackStrategy)
+  {
+    Enemy *enemy = dynamic_cast<Enemy *>(&target);
+    if (enemy)
+    {
+      attackStrategy->attackEnemy(this, enemy);
     }
+    else
+    {
+    }
+  }
+  else
+  {
+    std::cout << getName() << " attacks " << target.getName() << " with a basic attack." << std::endl;
+  }
+}
 
-    virtual int attack_func (Human * currEnemy , Item* item) override {
-        return 0;
-    }
-    
-    virtual int attack_func (Character * currEnemy , Item* item) override {
-        return 0;
-    }
-    
-    virtual void takeDamage(int damage) override{
-        
-    }
-    
-    virtual void levelUp() override {
-        while (currXP >= maxXP) {
-            cout << "You have levled up!" << endl;
-            maxHP += 30;
-            attack += 10;
-            defense += 5;
-            level += 1;
-            stamin += 15;
-            strenght += 2;
-            endurance += 2;
-            accuracy += 2;
-            pace += 2;
-            mind += 3;
-            currXP = currXP - maxXP;
-        maxXP += 25;
-            cout<<"Your level is "<<level<<" now!"<<endl;
-        }
-    }
-    
-};
+void Wizard::performDefense() {}
+
+void Wizard::levelUp()
+{
+  while (getCurrentXP() >= getMaxXP())
+  {
+    std::cout << "You have leveled up!" << std::endl;
+    setMaxHP(getMaxHP() + 30);
+    setAttack(getAttack() + 10);
+    setDefense(getDefense() + 5);
+    setLevel(getLevel() + 1);
+    setStamina(getStamina() + 15);
+    setStrength(getStrength() + 2);
+    setEndurance(getEndurance() + 2);
+    setAccuracy(getAccuracy() + 2);
+    setPace(getPace() + 2);
+    setMind(getMind() + 2);
+    setCurrXP(getCurrXP() - getMaxXP());
+    setMaxXP(getMaxXP() + 25);
+
+    std::cout << "Your level is now " << getLevel() << "!" << std::endl;
+  }
+}
