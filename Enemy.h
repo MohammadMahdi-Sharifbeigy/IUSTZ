@@ -20,7 +20,7 @@ int getRandomNumber(int a, int b)
     return distr(eng);
 }
 
-class Enemy
+class Enemy : public Character
 {
 public:
     Enemy(){}
@@ -43,6 +43,8 @@ protected:
 
 public:
     virtual int attackChar(double charDefense) = 0;
+    
+    virtual void takeDamage() override;
 
     int get_enemy_hp()
     {

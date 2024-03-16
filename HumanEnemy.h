@@ -30,14 +30,13 @@ public:
     }
 
     // Items Functions
-    // void showEquipments() { human.showEquipments(); }
-    // void showConsumables() { human.showConsumables(); }
-    // void addInventory(Items *item) { human.addInventory(item); }
-    // void removeInventory(int index) { human.removeInventory(index); }
-    // int inventorySize() { return human.inventorySize(); }
-    // Items *itemsAt(int index) { return human.itemsAt(index); }
-    // Items *getArmor() { return human.getArmor(); }
-    // Items *getWeapon() { return human.getWeapon(); }
+    void showInventory() { humanRef.showInventory(); }
+    void addInventory(Item *item) { humanRef.addInventory(item); }
+    void removeInventory(int index) { humanRef.removeInventory(index); }
+    int inventorySize() { return humanRef.inventorySize(); }
+    Item *itemsAt(int index) { return humanRef.itemsAt(index); }
+    Item *getArmor() { return humanRef.getArmor(); }
+    Item *getWeapon() { return humanRef.getWeapon(); }
 
 private:
     Human &humanRef;

@@ -26,10 +26,10 @@ HumanEnemy::HumanEnemy(int level, Human &ref, Human &human) : Enemy(level), huma
 // Function to generate a random characterType
 characterType HumanEnemy::getRandomRole()
 {
-    int role = rand() % 8;
-    if (role == 7 || role == 6)
+    int role = rand() % 9;
+    if (role == 7 || role == 8)
     {
-        role = rand() % 8;
+        role = rand() % 9;
     }
     return static_cast<characterType>(role);
 }
