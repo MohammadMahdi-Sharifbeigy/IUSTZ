@@ -8,15 +8,12 @@ using namespace std;
 class Throwable : public Item
 {
 protected:
-    int Number;
     double Synergydamage;
 
 public:
-    Throwable(string name, double price, bool vIP, int number, double synergydamage);
+    Throwable(string name, double price, bool vIP, double synergydamage);
     virtual ~Throwable();
     double getSynengyDmg();
-    int getNumber();
-    void setNumber(int newNumber);
 };
 
 #endif

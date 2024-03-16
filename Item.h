@@ -11,9 +11,10 @@ class Item {
   string name;
   double price;
   bool VIP;
+  int count;
 
  public:
-  Item(const string& name, double price, bool VIP = false);
+  Item(const string& name, double price, bool VIP = false, int count);
   virtual ~Item();
 
   virtual void use(Character& target) = 0;
@@ -21,6 +22,8 @@ class Item {
   string getName() const;
   double getPrice() const;
   bool isVIP() const;
+  int getCount() const;
+  void setCount(int newCount);
 };
 
 #endif  // ITEM_H
