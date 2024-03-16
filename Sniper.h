@@ -18,6 +18,8 @@ public:
   void performAttack(Character &target) override;
   void performDefense(Enemy &attacker) override;
   virtual void levelUp() override; 
+  void SniperToFile(string username);
+  void FileToSniper(string username);
 };
 
 #endif // SNIPER_H
