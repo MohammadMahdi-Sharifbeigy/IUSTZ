@@ -2,8 +2,11 @@
 #define HUMAN_H
 
 #include "Character.h"
+#include "Item.h"
 
 using namespace std;
+
+
 
 class Human : public Character
 {
@@ -21,8 +24,6 @@ protected:
     Item* armor;
     Item* weapon;
     vector<Item *> inventory;
-    virtual void takeDamage(int damage);
-
 public:
     Human() = default;
     Human(const std::string &name,int age, double hp, double attack, double defense, characterType role)
@@ -42,6 +43,7 @@ public:
     virtual void performDefense(Enemy &attacker) = 0;
     virtual std::string NameMaker() override;
     virtual void levelUp();
+    virtual void takeDamage() override;
     int getAge();
     void setName(int age);
     int getCurrXP();
@@ -63,6 +65,7 @@ public:
     int getCoin();
     void setCoin(int coin);
     // Item Functions
+    
     Item *itemsAt(int index); 
     void showInventory();
     void addInventory(Item *item);
@@ -74,10 +77,8 @@ public:
     Item *getWeapon();
     void setArmor(Item* aromor);
     void setWeapon(Item* weapon);
-
-    /*
+    Item *stringToItem(const std::string &line);
     
-    */
 };
 
 #endif /* Human_h */

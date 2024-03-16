@@ -95,9 +95,4 @@ bool Character::isAlive() const
 {
   return currHP > 0;
 }
-void Character::takeDamage(double amount)
-{
-  currHP -= amount;
-  if (currHP < 0)
-    currHP = 0;
-}
+void Character::takeDamage() {};

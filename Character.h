@@ -82,7 +82,7 @@ public:
 
     // Utility methods
     bool isAlive() const;
-    void takeDamage(double amount);
+    virtual void takeDamage() = 0;
 
     virtual std::string NameMaker();
 };
