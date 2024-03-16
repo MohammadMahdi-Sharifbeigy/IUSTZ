@@ -12,7 +12,7 @@ private:
   AttackStrategy *attackStrategy;
 
 public:
-  Sniper(const std::string &name, double hp, double attack, double defense, characterType gold);
+  Sniper(const std::string &name,int age, double hp, double attack, double defense, characterType gold);
   ~Sniper();
 
   void performAttack(Character &target) override;

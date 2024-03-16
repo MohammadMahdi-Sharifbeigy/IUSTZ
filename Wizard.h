@@ -12,7 +12,7 @@ private:
   AttackStrategy *attackStrategy;
 
 public:
-  Wizard(const std::string &name, double hp, double attack, double defense, characterType role);
+  Wizard(const std::string &name,int age, double hp, double attack, double defense, characterType role);
   ~Wizard();
 
   void performAttack(Character &target) override;

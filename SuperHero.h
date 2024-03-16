@@ -13,7 +13,7 @@ private:
 
 public:
 
-  SuperHero(const std::string &name, double hp, double attack, double defense, characterType role);
+  SuperHero(const std::string &name,int age, double hp, double attack, double defense, characterType role);
   ~SuperHero();
 
   void performAttack(Character &target) override;
