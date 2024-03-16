@@ -6,6 +6,7 @@ enum characterType
     PALADIN,
     SUPERHERO,
     ASSASSIN,
+    ASIANMOM,
     CYBORG,
     SNIPER,
     WIZARD,

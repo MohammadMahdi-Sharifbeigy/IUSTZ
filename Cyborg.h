@@ -13,7 +13,7 @@ private:
   AttackStrategy *attackStrategy;
 
 public:
-  Cyborg(const std::string &name, double hp, double attack, double defense, characterType role);
+  Cyborg(const std::string &name,int age, double hp, double attack, double defense, characterType role);
   ~Cyborg();
 
   void performAttack(Character &target) override;

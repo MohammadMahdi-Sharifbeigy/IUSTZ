@@ -13,7 +13,7 @@ private:
   AttackStrategy *attackStrategy;
 
 public:
-  Assassin(const std::string &name, double hp, double attack, double defense, characterType role);
+  Assassin(const std::string &name,int age, double hp, double attack, double defense, characterType role);
   ~Assassin();
 
   void performAttack(Character &target) override;

@@ -12,7 +12,7 @@ private:
   AttackStrategy *attackStrategy;
 
 public:
-  Paladin(const std::string &name, double hp, double attack, double defense, characterType role);
+  Paladin(const std::string &name,int age, double hp, double attack, double defense, characterType role);
   ~Paladin();
 
   void performAttack(Character &target) override;
