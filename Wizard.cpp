@@ -81,3 +81,85 @@ void Wizard::levelUp()
     std::cout << "Your level is now " << getLevel() << "!" << std::endl;
   }
 }
+
+
+    void Wizard::WizardToFile(string username){
+        string checktxt = username.substr(username.size() - 4, 4);
+         if (checktxt != ".csv") {
+             username = username + ".csv";
+         }
+        ofstream file(username);
+        file << this->name << '\n' << this->age << '\n' << this->role << '\n' << this->level << '\n' << this->coin << '\n' << this->currHP << '\n' << this->currXP << '\n'<< this->maxHP << '\n' << this->maxXP << '\n' << this->attack << '\n' << this->defense << '\n' << this->stamin <<'\n'<< this->armor <<'\n'<< this->weapon<<'\n'<<this->strenght << '\n' << this->endurance << '\n'<< this->accuracy << '\n' << this->pace << '\n' << this->mind << '\n' << this->inventorySize()<<'\n';
+        for(int i=0; i<this->inventorySize(); i++){
+            file<<inventory[i]->getName()<<'\n'<<inventory[i]->getCount()<<'\n'<<inventory[i]->isVIP()<<'\n'<<inventory[i]->getPrice()<<'\n';
+        }
+        std::ifstream users;
+        users.open("usernames.csv");
+        string name;
+        string role;
+        int check=0;
+        While(getline(users , name)){
+            getline(users , role);
+            if (name == username && role == "Wizard"){
+                check++;
+                break;
+            }
+        }
+        if(check==0){
+            ofstream usersfile("usernames." , ios::app);
+            usersfile<<username<<'\n'<<"Wizard"<<'\n';
+        }
+    }
+    
+    
+    void Wizard::FileToWizard(string username){
+        string checktxt = username.substr(username.size() - 4, 4);
+         if (checktxt != ".csv") {
+             username = username + ".csv";
+         }
+        ifstream file(username);
+        getline(file , this->name);
+        getline(file,this->age);
+        getline(file , this->role);
+        getline(file,this->level);
+        getline(file , this->coin);
+        getline(file,this->currHP);
+        getline(file , this->currXP);
+        getline(file,this->maxHP);
+        getline(file , this->maxXP);
+        getline(file,this->attack);
+        getline(file , this->defence);
+        getline(file,this->stamin);
+        getline(file , this->armor);
+        getline(file,this->weapon);
+        getline(file,this->strenght);
+        getline(file , this->endurance);
+        getline(file,this->accuracy);
+        getline(file , this->pace);
+        getline(file,this->mind);
+        strin inventorysize;
+        getline(file,inventorysize);
+        int n = stoi(inventorysize);
+        for(int i=0; i<n; i++){
+            string name,scount,vip,sprice;
+            int count;
+            double price;
+            getline(file,name);
+            getline(file , scount);
+            getline(file,vip);
+            getline(file,sprice);
+            count = stoi(scount);
+            price = atof(sprice);
+            if(vip == "true"){
+                Item* item = Item(name,price,true,count );
+                inventory.push_back(item);
+            }else{
+                Item* item = Item(name,price,false,count );
+                inventory.push_back(item);
+            }
+        }
+           }
+    
+    
+
+
