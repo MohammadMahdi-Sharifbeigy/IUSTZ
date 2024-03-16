@@ -16,6 +16,7 @@ public:
     virtual ~Throwable();
     double getSynengyDmg();
     int getNumber();
+    void setNumber(int newNumber);
 };
 
 #endif
