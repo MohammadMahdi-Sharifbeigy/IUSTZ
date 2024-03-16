@@ -19,6 +19,8 @@ public:
   void performAttack(Character &target) override;
   void performDefense(Enemy &attacker) override;
   virtual void levelUp() override; 
+  void CyborgToFile(string username);
+  void FileToCyborg(string username);
 };
 
 #endif // CYBORG_H
