@@ -18,7 +18,9 @@ public:
 
   void performAttack(Character &target) override;
   void performDefense(Enemy &attacker) override;
-  virtual void levelUp() override; 
+  virtual void levelUp() override;
+  void SuperHeroToFile(string username);
+  void FileToSuperHero(string username);
 };
 
 #endif // SUPERHERO_H
