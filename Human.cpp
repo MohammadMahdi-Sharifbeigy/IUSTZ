@@ -126,9 +126,11 @@ void Human::addInventory(Item *item){
           }
         if (check == 0){
             inventory.pushback(item);
+          //  inventory[inventory.size()-1]->setCount(1);            
         }
      }else{
            inventory.pushback(item);
+          // inventory[inventory.size()-1]->setCount(1);             
      }
 }
 
