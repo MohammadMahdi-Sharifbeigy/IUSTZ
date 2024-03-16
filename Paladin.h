@@ -18,6 +18,11 @@ public:
   void performAttack(Character &target) override;
   void performDefense(Enemy &attacker) override;
   virtual void levelUp() override; 
+  void PaladinToFile(string username);
+  void FileToPaladin(string username);
+    
+
+
 };
 
 #endif // PALADIN_H
