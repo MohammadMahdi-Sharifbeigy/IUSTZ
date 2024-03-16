@@ -12,7 +12,7 @@ private:
   AttackStrategy *attackStrategy;
 
 public:
-  AsianMom(const std::string &name, double hp, double attack, double defense, characterType role);
+  AsianMom(const std::string &name,int age, double hp, double attack, double defense, characterType role);
   ~AsianMom();
 
   void performAttack(Character &target) override;
