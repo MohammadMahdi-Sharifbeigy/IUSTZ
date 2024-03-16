@@ -18,6 +18,8 @@ public:
   void performAttack(Character &target) override;
   void performDefense(Enemy &attacker) override;
   virtual void levelUp() override; 
+  void WizardToFile(string username);
+  void FileToWizard(string username);
 };
 
 #endif // WIZARD_H
