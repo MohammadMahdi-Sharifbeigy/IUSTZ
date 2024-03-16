@@ -18,14 +18,17 @@ protected:
     double pace;
     double mind;
     int coin;
-    // vector<Items *> inventory;
+    Item* armor;
+    Item* weapon;
+    vector<Item *> inventory;
     virtual void takeDamage(int damage);
 
 public:
     Human() = default;
-    Human(const std::string &name, double hp, double attack, double defense, characterType role)
+    Human(const std::string &name,int age, double hp, double attack, double defense, characterType role)
     {
         this->name = name;
+        this->age = age;
         this->maxHP = hp;
         this->currHP = hp;
         this->attack = attack;
@@ -59,48 +62,21 @@ public:
     void setMind(double mind);
     int getCoin();
     void setCoin(int coin);
-
-    // Items Functions
+    // Item Functions
+    Item *itemsAt(int index); 
+    void showInventory();
+    void addInventory(Item *item);
+    void removeInventory(int index);
+    void addInventory(Item *item , int count);
+    void removeInventory(int index , int count);
+    int inventorySize();
+    Item *getArmor();
+    Item *getWeapon();
+    void setArmor(Item* aromor);
+    void setWeapon(Item* weapon);
 
     /*
-    void showEquipments();
-    void showConsumables();
-
-    void addInventory(Items *item)
-    {
-        inventory.push_back(item);
-    }
-
-    void removeInventory(int index)
-    {
-        if (index < this->inventorySize())
-        {
-            inventory.erase(inventory.begin() + index);
-        }
-    }
-
-    int inventorySize()
-    {
-        return inventory.size();
-    }
-
-    Items *itemssAt(int index)
-    {
-        if (this->inventorySize())
-        {
-            return inventory.at(index);
-        }
-        return nullptr;
-    }
-
-    Items *getArmor()
-    {
-        return Armor;
-    }
-    Items *getWeapon()
-    {
-        return weapon;
-    }
+    
     */
 };
 
