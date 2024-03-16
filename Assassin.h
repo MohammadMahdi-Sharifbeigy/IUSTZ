@@ -19,6 +19,8 @@ public:
   void performAttack(Character &target) override;
   void performDefense(Enemy &attacker) override;
   virtual void levelUp() override; 
+  void AssasinToFile(string username);
+  void FileToAssasin(string username);
 };
 
 #endif // ASSASSIN_H
