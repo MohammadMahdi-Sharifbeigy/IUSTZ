@@ -48,9 +48,11 @@ void SuperHero::performAttack(Character& target) {
 void SuperHero::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      attackStrategy->defenseEnemy(this, enemy);
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      SuperHero::currHP -= damage;
     }
   } else {
+    SuperHero::currHP -= SuperHero::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
               << " with a basic defense." << endl;
   }

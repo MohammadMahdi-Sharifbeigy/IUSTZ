@@ -12,6 +12,6 @@ class WeakZombie : public Enemy {
 
   WeakZombie(int level);
 
-  virtual int attackChar(double charDefense) override;
+  virtual double attackChar(double charDefense) override;
 };
 #endif /* WEAKZOMBIE_H */

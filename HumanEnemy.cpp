@@ -40,7 +40,7 @@ void HumanEnemy::setRoleBasedOnHuman(Human& human) {
   this->role = human.getRole();
 }
 
-int HumanEnemy::attackChar(double charDefense) {
+double HumanEnemy::attackChar(double charDefense) {
   return abs((((((2 * level / 3) + 2) * (40 + (level * 9 / 10)) * attack) /
                charDefense) /
               50) +

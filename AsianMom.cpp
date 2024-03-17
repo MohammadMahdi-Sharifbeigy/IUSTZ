@@ -40,7 +40,6 @@ void AsianMom::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       attackStrategy->attackEnemy(this, enemy);
-    } else {
     }
   } else {
     cout << getName() << " attacks " << target.getName()
@@ -55,6 +54,7 @@ void AsianMom::performDefense(Character& attacker) {
       AsianMom::currHP -= damage;
     }
   } else {
+    AsianMom::currHP -= AsianMom::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }

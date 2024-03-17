@@ -14,7 +14,7 @@ class HumanEnemy : public Enemy {
 
   HumanEnemy(int level, Human& human, Human& humanRef);
 
-  virtual int attackChar(double charDefense) override;
+  virtual double attackChar(double charDefense) override;
   characterType getRandomRole();
   void setRoleBasedOnHuman(Human& humanref);
 

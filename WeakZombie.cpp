@@ -16,7 +16,7 @@ WeakZombie::WeakZombie(int level) : Enemy(level) {
   giveExp = level * 10 * attack / defense;
 }
 
-int WeakZombie::attackChar(double charDefense) {
+double WeakZombie::attackChar(double charDefense) {
   return abs((((((2 * level / 5) + 2) * (35 + (level * 9 / 10)) * attack) /
                     charDefense) /
                    50) +

@@ -37,8 +37,7 @@ void Cyborg::performAttack(Character& target) {
   if (attackStrategy) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      attackStrategy->attackEnemy(this, enemy);
-    } else {
+        attackStrategy->attackEnemy(this,enemy);
     }
   } else {
     cout << getName() << " attacks " << target.getName()
@@ -49,9 +48,10 @@ void Cyborg::performAttack(Character& target) {
 void Cyborg::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      attackStrategy->defenseEnemy(this, enemy);
-    }
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      Cyborg::currHP -= damage;    }
   } else {
+    Cyborg::currHP -= Cyborg::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
               << " with a basic defense." << endl;
   }

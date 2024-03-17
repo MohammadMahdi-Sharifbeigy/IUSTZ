@@ -48,9 +48,11 @@ void Wizard::performAttack(Character& target) {
 void Wizard::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      attackStrategy->defenseEnemy(this, enemy);
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      Wizard::currHP -= damage;
     }
   } else {
+    Wizard::currHP -= Wizard::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
               << " with a basic defense." << endl;
   }

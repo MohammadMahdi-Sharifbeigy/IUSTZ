@@ -12,7 +12,7 @@ class StrongZombie : public Enemy {
 
   StrongZombie(int level);
 
-  virtual int attackChar(double charDefense) override;
+  virtual double attackChar(double charDefense) override;
 };
 
 #endif /* STRONGZOMBIE_H */

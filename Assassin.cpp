@@ -47,11 +47,13 @@ void Assassin::performAttack(Character& target) {
 void Assassin::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      attackStrategy->defenseEnemy(this, enemy);
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      Assassin::currHP -= damage;
     }
   } else {
+    Assassin::currHP -= Assassin::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
-              << " with a basic defense." << endl;
+                << " with a basic defense." << endl;
   }
 }
 

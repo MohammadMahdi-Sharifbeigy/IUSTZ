@@ -15,9 +15,7 @@ StrongZombie::StrongZombie(int level) : Enemy(level) {
   giveExp = level * 10 * attack / defense;
 }
 
-int StrongZombie::attackChar(double charDefense) {
+double StrongZombie::attackChar(double charDefense) {
   return abs((((((2 * level / 5) + 2) * (35 + (level * 9 / 10)) * attack) /
-               charDefense) /
-              50) +
-             2);
+                  charDefense) /50) + 2);
 }

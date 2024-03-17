@@ -36,7 +36,7 @@ class Enemy : public Character {
   characterType role;
 
  public:
-  virtual int attackChar(double charDefense) = 0;
+  virtual double attackChar(double charDefense) = 0;
 
   virtual void takeDamage(double amount) override {
     hp -= amount;
