@@ -1,19 +1,18 @@
 #ifndef STRONGZOMBIE_H
 #define STRONGZOMBIE_H
 
-#include "Enemy.h"
 #include "Character.h"
-#include "Human.h"
 #include "CharacterType.h"
+#include "Enemy.h"
+#include "Human.h"
 
-class StrongZombie : public Enemy
-{
-public:
-    StrongZombie();
+class StrongZombie : public Enemy {
+ public:
+  StrongZombie();
 
-    StrongZombie(int level);
+  StrongZombie(int level);
 
-    virtual int attackChar(double charDefense) override;
+  virtual int attackChar(double charDefense) override;
 };
 
 #endif /* STRONGZOMBIE_H */

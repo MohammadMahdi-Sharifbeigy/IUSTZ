@@ -12,7 +12,8 @@ class LaserGun : public Passive {
            bool vIP,
            string perk,
            string type,
-           double synergyDamage);
+           double synergyDamage,
+           int count);
 };
 
 #endif  // LASERGUN_H

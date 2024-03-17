@@ -1,23 +1,36 @@
-//
-//  Zombie.cpp
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
-
-#include "Zombie.hpp"
-#include <Zombie.h>
+#include "Zombie.h"
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <random>
-
+#include "Character.h"
 
 using namespace std;
-using namespace Zombie;
 
+Zombie::Zombie(const string& name,
+               double hp,
+               int level,
+               double attack,
+               double defense,
+               characterType role)
+    : Character(name, hp, level, attack, defense, role){};
 
-Zombie() = default;
-virtual int attack_func(Human* curenemy) = 0;
-virtual void takeDamage()=0;
+int Zombie::attack_func(Human* curenemy) {
+  double damage = this->getAttack() - curenemy->getDefense();
+  if (damage < 0) {
+    damage = 0;
+  }
+  curenemy->setCurrentHPAttack(damage);
+  cout << this->getName() << " attacked " << curenemy->getName() << " for "
+       << damage << " damage." << endl;
+  return damage;
+};
 
+void Zombie::takeDamage(double amount) {
+  double damage = amount - this->getDefense();
+  if (damage < 0) {
+    damage = 0;
+  }
+  this->setCurrentHPAttack(damage);
+  cout << this->getName() << " took " << damage << " damage." << endl;
+  if (this->getCurrentHP() <= 0) {
+    cout << this->getName() << " has died." << endl;
+  }
+}

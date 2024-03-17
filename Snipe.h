@@ -12,7 +12,8 @@ class Snipe : public Passive {
         bool vIP,
         string perk,
         string type,
-        double synergyDamage);
+        double synergyDamage,
+        int count);
 };
 
 #endif  // SNIPE_H

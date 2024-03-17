@@ -3,12 +3,14 @@
 
 using namespace std;
 
-void Nuts::increaseStamina(chara &target)
-{
-    cout << "Stamina Increased Dear Mom!";
-}
-Nuts::Nuts(string name,
-           double price,
-           bool vIP,
-           double potency)
-    : Consumable(name, price, vIP, potency) {}
+Nuts::Nuts(string name, double price, bool vIP, double potency, int count)
+    : Consumable(name, price, vIP, potency, count) {}
+
+// void Nuts::increaseStamina(Character& target) {
+//   target.setCurrentStamina(target.getCurrentStamina() + potency);
+//   cout << target.getName() << "'s stamina has increased by " << potency
+//        << " points." << endl;
+//   count--;
+//   if (count == 0) {
+//     cout << "You have run out of " << name << "." << endl;
+//   }

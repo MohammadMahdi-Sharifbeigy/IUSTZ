@@ -1,26 +1,31 @@
 #ifndef CYBORG_H
 #define CYBORG_H
 
-#include "CyborgAttack.h"
 #include "Character.h"
-#include "Human.h"
 #include "CharacterType.h"
+#include "CyborgAttack.h"
+#include "Human.h"
 
+using namespace std;
 
-class Cyborg : public Human
-{
-private:
-  AttackStrategy *attackStrategy;
+class Cyborg : public Human {
+ private:
+  AttackStrategy* attackStrategy;
 
-public:
-  Cyborg(const std::string &name,int age, double hp, double attack, double defense, characterType role);
+ public:
+  Cyborg(const string& name,
+         int age,
+         double hp,
+         double attack,
+         double defense,
+         characterType role);
   ~Cyborg();
 
-  void performAttack(Character &target) override;
-  void performDefense(Enemy &attacker) override;
-  virtual void levelUp() override; 
+  void performAttack(Character& target) override;
+  void performDefense(Character& attacker) override;
+  virtual void levelUp() override;
   void CyborgToFile(string username);
   void FileToCyborg(string username);
 };
 
-#endif // CYBORG_H
+#endif  // CYBORG_H

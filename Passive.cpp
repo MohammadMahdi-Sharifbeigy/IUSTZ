@@ -10,12 +10,16 @@ Passive::Passive(string name,
                  bool vIP,
                  string perk,
                  string type,
-                 double synergyDamage)
-    : Item(name, price, vIP) {
+                 double synergyDamage,
+                 int count)
+    : Item(name, price, vIP, count) {
   Perk = perk;
   SynergyDamage = synergyDamage;
   Type = type;
 };
+
+Passive::~Passive(){};
+
 double Passive::getSynergyDamage() {
   return SynergyDamage;
 };

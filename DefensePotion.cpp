@@ -3,11 +3,19 @@
 
 using namespace std;
 
-void DefensePotion::increaseDefense(chara& target) {
-  cout << "Defense Increased!";
-}
 DefensePotion::DefensePotion(string name,
                              double price,
                              bool vIP,
-                             double potency)
-    : Consumable(name, price, vIP, potency) {}
+                             double potency,
+                             int count)
+    : Consumable(name, price, vIP, potency, count) {}
+
+void DefensePotion::increaseDefense(Character& target) {
+  target.setDefense(target.getDefense() + potency);
+  cout << target.getName() << "'s defense has increased by " << potency
+       << " points." << endl;
+  count--;
+  if (count == 0) {
+    cout << "You have run out of " << name << "." << endl;
+  }
+}

@@ -3,24 +3,29 @@
 
 #include "AssassinAttack.h"
 #include "Character.h"
-#include "Human.h"
 #include "CharacterType.h"
+#include "Human.h"
 
+using namespace std;
 
-class Assassin : public Human
-{
-private:
-  AttackStrategy *attackStrategy;
+class Assassin : public Human {
+ private:
+  AttackStrategy* attackStrategy;
 
-public:
-  Assassin(const std::string &name,int age, double hp, double attack, double defense, characterType role);
+ public:
+  Assassin(const string& name,
+           int age,
+           double hp,
+           double attack,
+           double defense,
+           characterType role);
   ~Assassin();
 
-  void performAttack(Character &target) override;
-  void performDefense(Enemy &attacker) override;
-  virtual void levelUp() override; 
+  void performAttack(Character& target) override;
+  void performDefense(Character& attacker) override;
+  virtual void levelUp() override;
   void AssasinToFile(string username);
   void FileToAssasin(string username);
 };
 
-#endif // ASSASSIN_H
+#endif  // ASSASSIN_H

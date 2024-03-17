@@ -4,8 +4,6 @@
 #include "Passive.h"
 using namespace std;
 
-class chara;
-
 class MagicShield : public Passive {
  public:
   MagicShield(string name,
@@ -13,7 +11,8 @@ class MagicShield : public Passive {
               bool vIP,
               string perk,
               string type,
-              double synergyDamage);
+              double synergyDamage,
+              int count);
 };
 
 #endif

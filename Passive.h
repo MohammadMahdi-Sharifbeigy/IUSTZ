@@ -17,7 +17,8 @@ class Passive : public Item {
           bool vIP,
           string perk,
           string type,
-          double synergyDamage);
+          double synergyDamage,
+          int number);
   virtual ~Passive();
   double getSynergyDamage();
   string getPerk();

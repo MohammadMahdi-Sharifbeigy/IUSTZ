@@ -1,21 +1,18 @@
-//
-//  Zombie.h
-//  
-//
-//  Created by Lilia Rouhi on 12/21/1402 AP.
-//
-
 #ifndef Zombie_h
 #define Zombie_h
+#include "Character.h"
+#include "Human.h"
 
-
-class Zombie : public Character
-{
-public :
-    Zombie() ;
-    virtual int attack_func(Human* curenemy);
-    virtual void takeDamage();
+class Zombie : public Character {
+ public:
+  Zombie(const string& name,
+         double hp,
+         int level,
+         double attack,
+         double defense,
+         characterType role);
+  int attack_func(Human* curenemy);
+  void takeDamage(double amount);
 };
-
 
 #endif /* Zombie_h */

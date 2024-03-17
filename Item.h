@@ -14,15 +14,16 @@ class Item {
   int count;
 
  public:
-  Item(const string& name, double price, bool VIP = false, int count);
+  Item(const string& name, double price, bool VIP, int count);
   virtual ~Item();
 
   virtual void use(Character& target) = 0;
 
   string getName() const;
   double getPrice() const;
-  bool isVIP() const;
   int getCount() const;
+  bool isVIP() const;
+
   void setCount(int newCount);
 };
 

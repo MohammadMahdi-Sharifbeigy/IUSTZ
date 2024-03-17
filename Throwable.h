@@ -5,15 +5,18 @@
 #include "Item.h"
 using namespace std;
 
-class Throwable : public Item
-{
-protected:
-    double Synergydamage;
+class Throwable : public Item {
+ protected:
+  double Synergydamage;
 
-public:
-    Throwable(string name, double price, bool vIP, double synergydamage);
-    virtual ~Throwable();
-    double getSynengyDmg();
+ public:
+  Throwable(string name,
+            double price,
+            bool vIP,
+            double synergydamage,
+            int count);
+  virtual ~Throwable();
+  double getSynengyDmg();
 };
 
 #endif

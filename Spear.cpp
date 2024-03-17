@@ -7,5 +7,6 @@ Spear::Spear(string name,
              bool vIP,
              string perk,
              string type,
-             double synergyDamage)
-    : Passive(name, price, vIP, perk, type, synergyDamage){};
+             double synergyDamage,
+             int count)
+    : Passive(name, price, vIP, perk, type, synergyDamage, count){};

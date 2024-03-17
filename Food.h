@@ -2,15 +2,14 @@
 #define FOOD_H
 
 #include <string>
+#include "Character.h"
 #include "Consumable.h"
 using namespace std;
 
-class chara;
-
 class Food : public Consumable {
  public:
-  Food(string name, double price, bool vIP, double potency);
-  void increaseStats(chara& target);
+  Food(string name, double price, bool vIP, double potency, int count);
+  void increaseStats(Character& target);
 };
 
 #endif  // FOOD_H

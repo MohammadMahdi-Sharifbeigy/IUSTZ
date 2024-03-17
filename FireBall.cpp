@@ -3,8 +3,8 @@
 using namespace std;
 
 FireBall::FireBall(string name,
-           double price,
-           bool vIP,
-           int number,
-           double synergyDamage)
-            : Throwable ( name, price, vIP, number, synergyDamage){};
+                   double price,
+                   bool vIP,
+                   double synergyDamage,
+                   int count)
+    : Throwable(name, price, vIP, synergyDamage, count){};

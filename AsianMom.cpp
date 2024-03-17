@@ -1,15 +1,21 @@
-#include "Asianmom.h"
-#include "Character.h"
+#include "AsianMom.h"
+#include <fstream>
+#include <iostream>
 #include "AttackStrategy.h"
-#include "Human.h"
+#include "Character.h"
 #include "CharacterType.h"
 #include "Enemy.h"
-#include <iostream>
-#include <fstream>
+#include "Human.h"
 
-AsianMom::AsianMom(const std::string &name, int age, double hp, double defense, double attack, characterType role)
-    : Human(name, age, hp, attack, defense, role)
-{
+using namespace std;
+
+AsianMom::AsianMom(const string& name,
+                   int age,
+                   double hp,
+                   double defense,
+                   double attack,
+                   characterType role)
+    : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new AsianmomAttack();
   age = 1;
   maxHP = 1000;
@@ -25,53 +31,38 @@ AsianMom::AsianMom(const std::string &name, int age, double hp, double defense, 
   coin = 0;
 }
 
-AsianMom::~AsianMom()
-{
+AsianMom::~AsianMom() {
   delete attackStrategy;
 }
 
-#include "CharacterType.h"
-
-void AsianMom::performAttack(Character &target)
-{
-  if (attackStrategy)
-  {
-    Enemy *enemy = dynamic_cast<Enemy *>(&target);
-    if (enemy)
-    {
+void AsianMom::performAttack(Character& target) {
+  if (attackStrategy) {
+    Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (enemy) {
       attackStrategy->attackEnemy(this, enemy);
+    } else {
     }
-    else
-    {
-    }
-  }
-  else
-  {
-    std::cout << getName() << " attacks " << target.getName() << " with a basic attack." << std::endl;
+  } else {
+    cout << getName() << " attacks " << target.getName()
+         << " with a basic attack." << endl;
   }
 }
 
-void AsianMom::performDefense(Enemy &attacker)
-{
-  if (attackStrategy)
-  {
-    if (Enemy *enemy = dynamic_cast<Enemy *>(&attacker))
-    {
+void AsianMom::performDefense(Character& attacker) {
+  if (attackStrategy) {
+    if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       AsianMom::currHP -= damage;
     }
-  }
-  else
-  {
-    std::cout << getName() << " defends against " << attacker.getcharType() << " with a basic defense." << std::endl;
+  } else {
+    cout << getName() << " defends against " << attacker.getcharType()
+         << " with a basic defense." << endl;
   }
 }
 
-void AsianMom::levelUp()
-{
-  while (getCurrentXP() >= getMaxXP())
-  {
-    std::cout << "You have leveled up!" << std::endl;
+void AsianMom::levelUp() {
+  while (getCurrentXP() >= getMaxXP()) {
+    cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 30);
     setAttack(getAttack() + 10);
     setDefense(getDefense() + 5);
@@ -85,12 +76,11 @@ void AsianMom::levelUp()
     setCurrXP(getCurrXP() - getMaxXP());
     setMaxXP(getMaxXP() + 25);
 
-    std::cout << "Your level is now " << getLevel() << "!" << std::endl;
+    cout << "Your level is now " << getLevel() << "!" << endl;
   }
 }
 
-characterType stringToCharacterType(const std::string &str)
-{
+inline characterType stringToCharacterType(const string& str) {
   if (str == "PALADIN")
     return PALADIN;
   else if (str == "SUPERHERO")
@@ -107,15 +97,15 @@ characterType stringToCharacterType(const std::string &str)
     return WIZARD;
   else if (str == "WEAKZOMBIE")
     return WEAKZOMBIE;
-  else if (str == "STRONGZOMBIE")
+  else
     return STRONGZOMBIE;
+  // else if (str == "STRONGZOMBIE")
+  //   return STRONGZOMBIE;
 }
 
-void AsianMom::AsianMomToFile(string username)
-{
+void AsianMom::AsianMomToFile(string username) {
   string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv")
-  {
+  if (checktxt != ".csv") {
     username = username + ".csv";
   }
   ofstream file(username);
@@ -139,50 +129,43 @@ void AsianMom::AsianMomToFile(string username)
        << this->pace << '\n'
        << this->mind << '\n'
        << this->inventorySize() << '\n';
-  for (int i = 0; i < this->inventorySize(); i++)
-  {
+  for (int i = 0; i < this->inventorySize(); i++) {
     file << inventory[i]->getName() << '\n'
          << inventory[i]->getCount() << '\n'
          << inventory[i]->isVIP() << '\n'
          << inventory[i]->getPrice() << '\n';
   }
-  std::ifstream users;
+  ifstream users;
   users.open("usernames.csv");
   string name;
   string role;
   int check = 0;
-  while (getline(users, name))
-  {
+  while (getline(users, name)) {
     getline(users, role);
-    if (name == username && role == "AsianMom")
-    {
+    if (name == username && role == "AsianMom") {
       check++;
       break;
     }
   }
-  if (check == 0)
-  {
+  if (check == 0) {
     ofstream usersfile("usernames.", ios::app);
-    usersfile << username << '\n'
-              << "AsianMom" << '\n';
+    usersfile << username << '\n' << "AsianMom" << '\n';
   }
 }
 
-void AsianMom::FileToAsianMom(string username)
-{
+void AsianMom::FileToAsianMom(string username) {
   string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv")
-  {
+  if (checktxt != ".csv") {
     username = username + ".csv";
   }
   ifstream file(username);
-  std::string line;
+  string line;
   getline(file, line);
   this->name = line;
   getline(file, line);
   this->age = stoi(line);
   getline(file, line);
-this->role = stringToCharacterType(line);
+  this->role = stringToCharacterType(line);
   getline(file, line);
   this->level = stoi(line);
   getline(file, line);
@@ -214,17 +197,16 @@ this->role = stringToCharacterType(line);
   string inventorysize;
   getline(file, inventorysize);
   int n = stoi(inventorysize);
-  for (int i = 0; i < n; i++)
-  {
+  for (int i = 0; i < n; i++) {
     string name, scount, vip, sprice;
     int count;
-    double price;
+    // double price;
     getline(file, name);
     getline(file, scount);
     getline(file, vip);
     getline(file, sprice);
     count = stoi(scount);
-    double convertedPrice = atof(sprice.c_str());
+    // double convertedPrice = atof(sprice.c_str());
     //   if (vip == "true")
     //   {
     //     Item *item = Item(name, price, true, count);

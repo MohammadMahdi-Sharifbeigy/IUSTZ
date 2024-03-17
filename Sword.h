@@ -1,11 +1,8 @@
 #ifndef SWORD_H
 #define SWORD_H
 
-#include <iostream>
 #include "Passive.h"
 using namespace std;
-
-class Character;
 
 class Sword : public Passive {
  public:
@@ -14,7 +11,8 @@ class Sword : public Passive {
         bool vIP,
         string perk,
         string type,
-        double synergyDamage);
+        double synergyDamage,
+        int count);
 };
 
 #endif

@@ -5,8 +5,9 @@ using namespace std;
 Consumable::Consumable(string name,
                        double price,
                        bool vIP,
-                       double potency)
-    : Item(name, price, vIP) {
+                       double potency,
+                       int count)
+    : Item(name, price, vIP, count) {
   this->potency = potency;
 }
 
@@ -19,4 +20,3 @@ double Consumable::getPotency() {
 void Consumable::setPotency(double newPotency) {
   potency = newPotency;
 }
-

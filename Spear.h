@@ -1,7 +1,6 @@
 #ifndef SPEAR_H
 #define SPEAR_H
 
-#include <iostream>
 #include "Passive.h"
 using namespace std;
 
@@ -14,7 +13,8 @@ class Spear : public Passive {
         bool vIP,
         string perk,
         string type,
-        double synergyDamage);
+        double synergyDamage,
+        int count);
 };
 
 #endif  // SPEAR_H

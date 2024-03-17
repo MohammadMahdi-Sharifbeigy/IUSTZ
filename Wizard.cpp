@@ -1,14 +1,20 @@
 #include "Wizard.h"
-#include "Character.h"
-#include "AttackStrategy.h"
-#include "Human.h"
-#include "CharacterType.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include "AttackStrategy.h"
+#include "Character.h"
+#include "CharacterType.h"
+#include "Human.h"
 
-Wizard::Wizard(const std::string &name, int age, double hp, double defense, double attack, characterType role)
-    : Human(name, age, hp, attack, defense, role)
-{
+using namespace std;
+
+Wizard::Wizard(const string& name,
+               int age,
+               double hp,
+               double defense,
+               double attack,
+               characterType role)
+    : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new WizardAttack();
   age = 1;
   maxXP = 100;
@@ -22,50 +28,37 @@ Wizard::Wizard(const std::string &name, int age, double hp, double defense, doub
   coin = 0;
 }
 
-Wizard::~Wizard()
-{
+Wizard::~Wizard() {
   delete attackStrategy;
 }
 
-void Wizard::performAttack(Character &target)
-{
-  if (attackStrategy)
-  {
-    Enemy *enemy = dynamic_cast<Enemy *>(&target);
-    if (enemy)
-    {
+void Wizard::performAttack(Character& target) {
+  if (attackStrategy) {
+    Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (enemy) {
       attackStrategy->attackEnemy(this, enemy);
+    } else {
     }
-    else
-    {
-    }
-  }
-  else
-  {
-    std::cout << getName() << " attacks " << target.getName() << " with a basic attack." << std::endl;
+  } else {
+    cout << getName() << " attacks " << target.getName()
+              << " with a basic attack." << endl;
   }
 }
 
-void Wizard::performDefense(Enemy &attacker)
-{
-  if (attackStrategy)
-  {
-    if (Enemy *enemy = dynamic_cast<Enemy *>(&attacker))
-    {
+void Wizard::performDefense(Character& attacker) {
+  if (attackStrategy) {
+    if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
       attackStrategy->defenseEnemy(this, enemy);
     }
-  }
-  else
-  {
-    std::cout << getName() << " defends against " << attacker.getcharType() << " with a basic defense." << std::endl;
+  } else {
+    cout << getName() << " defends against " << attacker.getcharType()
+              << " with a basic defense." << endl;
   }
 }
 
-void Wizard::levelUp()
-{
-  while (getCurrentXP() >= getMaxXP())
-  {
-    std::cout << "You have leveled up!" << std::endl;
+void Wizard::levelUp() {
+  while (getCurrentXP() >= getMaxXP()) {
+    cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 30);
     setAttack(getAttack() + 10);
     setDefense(getDefense() + 5);
@@ -79,12 +72,11 @@ void Wizard::levelUp()
     setCurrXP(getCurrXP() - getMaxXP());
     setMaxXP(getMaxXP() + 25);
 
-    std::cout << "Your level is now " << getLevel() << "!" << std::endl;
+    cout << "Your level is now " << getLevel() << "!" << endl;
   }
 }
 
-characterType stringToCharacterType(const std::string &str)
-{
+inline characterType stringToCharacterType(const string& str) {
   if (str == "PALADIN")
     return PALADIN;
   else if (str == "SUPERHERO")
@@ -103,13 +95,13 @@ characterType stringToCharacterType(const std::string &str)
     return WEAKZOMBIE;
   else if (str == "STRONGZOMBIE")
     return STRONGZOMBIE;
+  else
+    return STRONGZOMBIE;
 }
 
-void Wizard::WizardToFile(string username)
-{
+void Wizard::WizardToFile(string username) {
   string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv")
-  {
+  if (checktxt != ".csv") {
     username = username + ".csv";
   }
   ofstream file(username);
@@ -133,50 +125,43 @@ void Wizard::WizardToFile(string username)
        << this->pace << '\n'
        << this->mind << '\n'
        << this->inventorySize() << '\n';
-  for (int i = 0; i < this->inventorySize(); i++)
-  {
+  for (int i = 0; i < this->inventorySize(); i++) {
     file << inventory[i]->getName() << '\n'
          << inventory[i]->getCount() << '\n'
          << inventory[i]->isVIP() << '\n'
          << inventory[i]->getPrice() << '\n';
   }
-  std::ifstream users;
+  ifstream users;
   users.open("usernames.csv");
   string name;
   string role;
   int check = 0;
-  while (getline(users, name))
-  {
+  while (getline(users, name)) {
     getline(users, role);
-    if (name == username && role == "Wizard")
-    {
+    if (name == username && role == "Wizard") {
       check++;
       break;
     }
   }
-  if (check == 0)
-  {
+  if (check == 0) {
     ofstream usersfile("usernames.", ios::app);
-    usersfile << username << '\n'
-              << "Wizard" << '\n';
+    usersfile << username << '\n' << "Wizard" << '\n';
   }
 }
 
-void Wizard::FileToWizard(string username)
-{
+void Wizard::FileToWizard(string username) {
   string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv")
-  {
+  if (checktxt != ".csv") {
     username = username + ".csv";
   }
   ifstream file(username);
-  std::string line;
+  string line;
   getline(file, line);
   this->name = line;
   getline(file, line);
   this->age = stoi(line);
   getline(file, line);
-this->role = stringToCharacterType(line);
+  this->role = stringToCharacterType(line);
   getline(file, line);
   this->level = stoi(line);
   getline(file, line);
@@ -208,17 +193,16 @@ this->role = stringToCharacterType(line);
   string inventorysize;
   getline(file, inventorysize);
   int n = stoi(inventorysize);
-  for (int i = 0; i < n; i++)
-  {
+  for (int i = 0; i < n; i++) {
     string name, scount, vip, sprice;
     int count;
-    double price;
+    // double price;
     getline(file, name);
     getline(file, scount);
     getline(file, vip);
     getline(file, sprice);
     count = stoi(scount);
-    double convertedPrice = atof(sprice.c_str());
+    // double convertedPrice = atof(sprice.c_str());
     // if (vip == "true")
     // {
     //   Item *item = Item(name, price, true, count);

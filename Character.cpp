@@ -1,14 +1,13 @@
 #include "Character.h"
-#include "CharacterType.h"
-#include <iostream>
 #include <fstream>
-#include <vector>
+#include <iostream>
 #include <random>
+#include <vector>
+#include "CharacterType.h"
 
 using namespace std;
 
-
-Character::Character(const string &name,
+Character::Character(const string& name,
                      double hp,
                      int lvl,
                      double attack,
@@ -20,79 +19,71 @@ Character::Character(const string &name,
       level(lvl),
       role(role),
       attack(attack),
-      defense(defense)
-{
-}
+      defense(defense) {}
 
 Character::~Character() = default;
 
-string Character::getName() const
-{
+string Character::getName() const {
   return name;
 }
 
-double Character::getMaxHP() const
-{
+double Character::getMaxHP() const {
   return maxHP;
 }
 
-double Character::getCurrentHP() const
-{
+double Character::getCurrentHP() const {
   return currHP;
 }
 
-double Character::getAttack() const
-{
+double Character::getAttack() const {
   return attack;
 }
 
-double Character::getDefense() const
-{
+double Character::getDefense() const {
   return defense;
 }
 
-int Character::getLevel() const
-{
+int Character::getLevel() const {
   return level;
 }
 
-characterType Character::getRole() const
-{
+characterType Character::getRole() const {
   return role;
 }
 
-void Character::setName(const string &newName)
-{
+void Character::setName(const string& newName) {
   name = newName;
 }
 
-void Character::setMaxHP(double newMaxHP)
-{
+void Character::setMaxHP(double newMaxHP) {
   maxHP = newMaxHP;
 }
 
-void Character::setAttack(double newAttack)
-{
+void Character::setAttack(double newAttack) {
   attack = newAttack;
 }
 
-void Character::setDefense(double newDefense)
-{
+void Character::setDefense(double newDefense) {
   defense = newDefense;
 }
 
-void Character::setLevel(int newLevel)
-{
+void Character::setLevel(int newLevel) {
   level = newLevel;
 }
 
-void Character::setRole(characterType newRole)
-{
+void Character::setRole(characterType newRole) {
   role = newRole;
 }
 
-bool Character::isAlive() const
-{
+bool Character::isAlive() const {
   return currHP > 0;
 }
-void Character::takeDamage() {};
+void Character::takeDamage(double amount){};
+
+int Character::getCurrentXP() const {
+  return currXP;
+}
+
+int Character::getMaxXP() const {
+  return maxXP;
+}

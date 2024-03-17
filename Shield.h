@@ -4,8 +4,6 @@
 #include "Passive.h"
 using namespace std;
 
-class chara;
-
 class Shield : public Passive {
  public:
   Shield(string name,
@@ -13,7 +11,8 @@ class Shield : public Passive {
          bool vIP,
          string perk,
          string type,
-         double synergyDamage);
+         double synergyDamage,
+         int count);
 };
 
 #endif

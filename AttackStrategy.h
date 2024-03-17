@@ -7,8 +7,9 @@ class Enemy;
 class AttackStrategy {
  public:
   AttackStrategy() {}
-  virtual double attackEnemy(Character *currCharacter, Enemy * currenemy) = 0;
-  virtual double defenseEnemy(Character *currCharacter, Enemy *currenemy) = 0;
+  virtual ~AttackStrategy() {}
+  virtual double attackEnemy(Character* currCharacter, Enemy* currenemy) = 0;
+  virtual double defenseEnemy(Character* currCharacter, Enemy* currenemy) = 0;
 };
 
-#endif //__ATTACKSTRATEGY_H__
+#endif  //__ATTACKSTRATEGY_H__

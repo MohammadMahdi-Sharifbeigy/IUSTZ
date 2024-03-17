@@ -5,8 +5,6 @@
 #include "Passive.h"
 using namespace std;
 
-class Character;
-
 class Book : public Passive {
  public:
   Book(string name,
@@ -14,7 +12,8 @@ class Book : public Passive {
        bool vIP,
        string perk,
        string type,
-       double synergyDamage);
+       double synergyDamage,
+       int count);
 };
 
 #endif  // Book_H

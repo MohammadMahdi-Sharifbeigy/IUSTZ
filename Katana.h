@@ -10,11 +10,12 @@ class Character;
 class Katana : public Passive {
  public:
   Katana(string name,
-        double price,
-        bool vIP,
-        string perk,
-        string type,
-        double synergyDamage);
+         double price,
+         bool vIP,
+         string perk,
+         string type,
+         double synergyDamage,
+         int count);
 };
 
 #endif  // KATANA_H

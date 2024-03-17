@@ -10,11 +10,12 @@ class Character;
 class PoisonDagger : public Passive {
  public:
   PoisonDagger(string name,
-         double price,
-         bool vIP,
-         string perk,
-         string type,
-         double synergyDamage);
+               double price,
+               bool vIP,
+               string perk,
+               string type,
+               double synergyDamage,
+               int count);
 };
 
 #endif  // POISONDAGGER_H

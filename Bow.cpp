@@ -2,9 +2,5 @@
 #include <iostream>
 using namespace std;
 
-Bow::Bow(string name,
-           double price,
-           bool vIP,
-           int number,
-           double synergyDamage)
-            : Throwable ( name, price, vIP, number, synergyDamage){};
+Bow::Bow(string name, double price, bool vIP, double synergyDamage, int count)
+    : Throwable(name, price, vIP, synergyDamage, count){};

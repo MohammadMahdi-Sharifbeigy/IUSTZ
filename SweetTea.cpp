@@ -3,12 +3,19 @@
 
 using namespace std;
 
-void SweetTea::increaseHP(chara &target)
-{
-    cout << "HP Increased Dear Mom!";
-}
 SweetTea::SweetTea(string name,
                    double price,
                    bool vIP,
-                   double potency)
-    : Consumable(name, price, vIP, potency) {}
+                   double potency,
+                   int count)
+    : Consumable(name, price, vIP, potency, count) {}
+
+void SweetTea::increaseHP(Character& target) {
+  target.setCurrentHP(target.getCurrentHP() + potency);
+  cout << target.getName() << "'s HP has increased by " << potency << " points."
+       << endl;
+  count--;
+  if (count == 0) {
+    cout << "You have run out of " << name << "." << endl;
+  }
+}

@@ -1,25 +1,31 @@
 #ifndef SNIPER_H
 #define SNIPER_H
 
-#include "SniperAttack.h"
 #include "Character.h"
-#include "Human.h"
 #include "CharacterType.h"
+#include "Human.h"
+#include "SniperAttack.h"
 
-class Sniper : public Human
-{
-private:
-  AttackStrategy *attackStrategy;
+using namespace std;
 
-public:
-  Sniper(const std::string &name,int age, double hp, double attack, double defense, characterType gold);
+class Sniper : public Human {
+ private:
+  AttackStrategy* attackStrategy;
+
+ public:
+  Sniper(const string& name,
+         int age,
+         double hp,
+         double attack,
+         double defense,
+         characterType gold);
   ~Sniper();
 
-  void performAttack(Character &target) override;
-  void performDefense(Enemy &attacker) override;
-  virtual void levelUp() override; 
+  void performAttack(Character& target) override;
+  void performDefense(Character& attacker) override;
+  virtual void levelUp() override;
   void SniperToFile(string username);
   void FileToSniper(string username);
 };
 
-#endif // SNIPER_H
+#endif  // SNIPER_H

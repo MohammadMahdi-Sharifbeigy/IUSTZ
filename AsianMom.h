@@ -3,23 +3,29 @@
 
 #include "AsianmomAttack.h"
 #include "Character.h"
-#include "Human.h"
 #include "CharacterType.h"
+#include "Human.h"
 
-class AsianMom : public Human
-{
-private:
-  AttackStrategy *attackStrategy;
+using namespace std;
 
-public:
-  AsianMom(const std::string &name,int age, double hp, double attack, double defense, characterType role);
+class AsianMom : public Human {
+ private:
+  AttackStrategy* attackStrategy;
+
+ public:
+  AsianMom(const string& name,
+           int age,
+           double hp,
+           double attack,
+           double defense,
+           characterType role);
   ~AsianMom();
 
-  void performAttack(Character &target) override;
-  void performDefense(Enemy &attacker) override {};
-  virtual void levelUp() override; 
+  void performAttack(Character& target) override;
+  void performDefense(Character& attacker) override;
+  virtual void levelUp() override;
   void AsianMomToFile(string username);
   void FileToAsianMom(string username);
 };
 
-#endif // ASIANMOM_H
+#endif  // ASIANMOM_H
