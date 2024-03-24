@@ -75,6 +75,11 @@ class Human : public Character {
   void addInventory(Item* item, int count);
   void removeInventory(int index, int count);
   int inventorySize();
+ bool existInInventory(Item* item);
+  int countInInventory(Item* item);
+  int indexInInventory(Item* item);
+  double priceItemsAt(int index);
+  int countItemsAt(int index);
   Item* getArmor();
   Item* getWeapon();
   void setArmor(Item* aromor);
