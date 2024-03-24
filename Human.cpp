@@ -191,6 +191,52 @@ void Human::removeInventory(int index, int count) {
   }
 }
 
+
+  bool Human::existInInventory(Item* item){
+        for(int i=0; i < this->inventory.size(); i++){
+            if(this->inventory[i]->getName() == item->getName()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+
+    int Human::countInInventory(Item* item){
+        for(int i=0; i < this->inventory.size(); i++){
+            if(this->inventory[i]->getName() == item->getName()){
+                return inventory[i]->getCount();
+            }
+        }
+        return 0;
+    }
+
+
+
+    int Human::indexInInventory(Item* item){
+        for(int i=0; i < this->inventory.size(); i++){
+            if(this->inventory[i]->getName() == item->getName()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    double Human::priceItemsAt(int index){
+        return inventory[index-1]->getPrice();
+        
+    }
+
+
+    int Human::countItemsAt(int index){
+        return inventory[index-1]->getCount();
+    }
+    
+
+
+
 Item* Human::getArmor() {
   return armor;
 }
