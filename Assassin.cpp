@@ -36,11 +36,18 @@ Assassin::~Assassin() {
 void Assassin::performAttack(Character& target) {
   if (attackStrategy) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&target)) {
-      attackStrategy->attackEnemy(this, enemy);
+      double damage = attackStrategy->attackEnemy(this, enemy);
+      //enemy->set_enemy_hp(damage);
+      enemy->takeDamage(damage);
     }
   } else {
-    cout << getName() << " attacks " << target.getName()
-              << " with a basic attack." << endl;
+    cout << getName() << " attacks " << target.getcharType()
+         << " with a basic attack." << endl;
+    Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (enemy) {
+      enemy->set_enemy_hp(Assassin::getAttack());
+      //enemy->takeDamage(Assassin::getAttack());
+    }
   }
 }
 

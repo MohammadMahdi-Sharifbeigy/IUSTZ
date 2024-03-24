@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Enemy.h"
+#include "HumanEnemyAttack.h"
 #include "Human.h"
 
 class HumanEnemy : public Enemy {
@@ -14,17 +15,17 @@ class HumanEnemy : public Enemy {
 
   HumanEnemy(int level, Human& human, Human& humanRef);
 
+  ~HumanEnemy();
+
   virtual double attackChar(double charDefense) override;
+  
   characterType getRandomRole();
+
   void setRoleBasedOnHuman(Human& humanref);
 
-  virtual void performAttack(Character& target) {
-    humanRef.performAttack(target);
-  }
+  void performAttack(Character& target);
 
-  virtual void performDefense(Human& attacker) {
-    humanRef.performDefense(attacker);
-  }
+  void performDefense(Human& attacker);
 
   // Items Functions
   void showInventory() { humanRef.showInventory(); }
@@ -37,6 +38,7 @@ class HumanEnemy : public Enemy {
 
  private:
   Human& humanRef;
+  AttackStrategy* attackStrategy;
 };
 
 #endif /* HUMANENEMY_H */

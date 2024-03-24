@@ -36,12 +36,18 @@ void Paladin::performAttack(Character& target) {
   if (attackStrategy) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      attackStrategy->attackEnemy(this, enemy);
-    } else {
+      double damage = attackStrategy->attackEnemy(this, enemy);
+      //enemy->set_enemy_hp(damage);
+      enemy->takeDamage(damage);
     }
   } else {
-    cout << getName() << " attacks " << target.getName()
-              << " with a basic attack." << endl;
+    cout << getName() << " attacks " << target.getcharType()
+         << " with a basic attack." << endl;
+    Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (enemy) {
+      enemy->set_enemy_hp(Paladin::getAttack());
+      //enemy->takeDamage(Paladin::getAttack());
+    }
   }
 }
 
