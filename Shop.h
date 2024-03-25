@@ -1,12 +1,6 @@
-//
-//  Shop.h
-//  
-//
-//  Created by Lilia Rouhi on 1/5/1403 AP.
-//
+#ifndef SHOP_H
+#define SHOP_H
 
-#ifndef Shop_h
-#define Shop_h
 #include "Character.h"
 #include "Human.h"
 #include "Item.h"
@@ -18,7 +12,7 @@
 #include "BulletproofJacket.h"
 #include "Cloak.h"
 #include "Colt.h"
-#include "Counsumable.h"
+#include "Consumable.h"
 #include "DamagePotion.h"
 #include "DefensePotion.h"
 #include "EyeLaser.h"
@@ -35,15 +29,15 @@
 #include "NinjaStar.h"
 #include "Nuts.h"
 #include "Pepper.h"
-#include "AsianDad.h"
+#include "PersianDad.h"
 #include "PoisonDagger.h"
 #include "Rocket.h"
 #include "Saffron.h"
 #include "Shield.h"
 #include "Snipe.h"
 #include "Spear.h"
-#include "SpideNet.h"
-#include "StaminPotion.h"
+#include "SpiderNet.h"
+#include "StaminaPotion.h"
 #include "Swatter.h"
 #include "SweetTea.h"
 #include "Sword.h"
@@ -67,4 +61,4 @@ public:
 };
 
 
-#endif /* Shop_h */
+#endif /* SHOP_H */
