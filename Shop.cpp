@@ -43,6 +43,7 @@
 #include "WhipOfTruth.h"
 #include "CheckNumber.h"
 #include "Shop.h"
+#include "ItemFactory.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -50,10 +51,9 @@
 
 using namespace std;
 
-Shop::Shop() = default;
+Shop::Shop() {}
 
-void Shop::showShop()
-{
+void Shop::showShop(){
     cout << "********SHOP ITEMS********" << endl
          << endl
          << endl;
@@ -241,1532 +241,157 @@ void Shop::showShop()
          << endl;
 }
 
-void Shop::buy(Human *human)
-{
+void Shop::buyItem(Human *human){
     int choice = 1;
     Shop shop = Shop();
-    while (choice != 0)
-    {
-    menu:
+    
+    while (choice != 0){
         shop.showShop();
-        cout << "Enter the number of the Item you wanna buy or enter 0 to exit:" << endl;
+        cout << "Enter the number of the Item you want to buy or enter 0 to exit:" << endl;
         string schoice;
-        try
-        {
+        
+        try{
             cin >> schoice;
-            if (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 37)
-            {
+            if (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 37){
                 throw schoice;
             }
         }
-        catch (...)
-        {
-            while (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 37)
-            {
+        catch (...){
+            while (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 37){
                 cout << "Invalid choice." << endl
-                     << "Enter the number of the Item you wanna buy or enter 0 to exit:" << endl;
+                     << "Enter the number of the Item you want to buy or enter 0 to exit:" << endl;
                 cin >> schoice;
             }
         }
+        
         choice = stoi(schoice);
-        if (choice == 1)
-        {
-            Armor *item = new Armor();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
+        
+        if (choice >= 1 && choice <= 36){
+            buy(choice, human);
         }
-        else if (choice == 2)
-        {
-            Shield *item = new Shield();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 3)
-        {
-            MagicShield *item = new MagicShield();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 4)
-        {
-            IronBody *item = new IronBody();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 5)
-        {
-            if (human->getLevel() < 5)
-            {
-                cout << "Sorry you should be at least at level 5 to buy this item" << endl;
-                goto menu;
-            }
-            BulletproofJacket *item = new BulletproofJacket();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 6)
-        {
-            Cloak *item = new Cloak();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 7)
-        {
-            if (human->getLevel() < 5)
-            {
-                cout << "Sorry you should be at least at level 5 to buy this item" << endl;
-                goto menu;
-            }
-            PersianDad *item = new PersianDad();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 8)
-        {
-            Sword *item = new Sword();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 9)
-        {
-            if (human->getLevel() < 5)
-            {
-                cout << "Sorry you should be at least at level 5 to buy this item" << endl;
-                goto menu;
-            }
-            Spear *item = new Spear();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 10)
-        {
-            Katana *item = new Katana();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 11)
-        {
-            if (human->getLevel() < 5)
-            {
-                cout << "Sorry you should be at least at level 5 to buy this item" << endl;
-                goto menu;
-            }
-            PoisonDagger *item = new PoisonDagger();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item)
-            }
-        }
-        else if (choice == 12)
-        {
-            Wand *item = new Wand();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 13)
-        {
-            if (human->getLevel() < 5)
-            {
-                cout << "Sorry you should be at least at level 5 to buy this item" << endl;
-                goto menu;
-            }
-            Book *item = new Book();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 14)
-        {
-            LaserGun *item = new LaserGun();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 15)
-        {
-            if (human->getLevel() < 5)
-            {
-                cout << "Sorry you should be at least at level 5 to buy this item" << endl;
-                goto menu;
-            }
-            LittleRobots *item = new LittleRobots();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 16)
-        {
-            Snipe *item = new Snipe();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 17)
-        {
-            Colt *item = new Colt();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 18)
-        {
-            EyeLaser *item = new EyeLaser();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 19)
-        {
-            if (human->getLevel() < 5)
-            {
-                cout << "Sorry you should be at least at level 5 to buy this item" << endl;
-                goto menu;
-            }
-            WhipOfTruth *item = new WhipOfTruth();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 20)
-        {
-            Swatter *item = new Swatter();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 21)
-        {
-            Pepper *item = new Pepper();
-            if (human->getCoin() < item->getPrice())
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-            bool exist = human->existInInventory(item);
-            if (exist == true)
-            {
-                cout << "You already have the item!" << endl;
-                goto menu;
-            }
-            else
-            {
-                human->setCoin(human->getCoin() - item->getPrice());
-                human->addInventory(item);
-            }
-        }
-        else if (choice == 22)
-        {
-            Bow *item = new Bow();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 23)
-        {
-            NinjaStar *item = new NinjaStar();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 24)
-        {
-            FireBall *item = new FireBall();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    ;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 25)
-        {
-            Rocket *item = new Rocket();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 26)
-        {
-            Grenade *item = new Grenade();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 27)
-        {
-            SpiderNet *item = new SpiderNet();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 28)
-        {
-            Flipflops *item = new Flipflops();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    ;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 29)
-        {
-            HealingPotion *item = new HealingPotion();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 30)
-        {
-            DamagePotion *item = new DamagePotion();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 31)
-        {
-            DefensePotion *item = new DefensePotion();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        ;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 32)
-        {
-            StaminaPotion *item = new StaminaPotion();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 33)
-        {
-            Food *item = new Food();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    ;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 34)
-        {
-            SweetTea *item = new SweetTea();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 35)
-        {
-            Saffron *item = new Saffron();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 36)
-        {
-            AraghNana *item = new AraghNana();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 37)
-        {
-            Bow *item = new Bow();
-            int count = 0;
-            string scount;
-            int nowcount = human->countInInventory(item);
-            if (nowcount == 5)
-            {
-                cout << "Sorry you already have 5 of this item you can't buy more!" << endl;
-                goto menu;
-            }
-            cout << "How many do you want?";
-            try
-            {
-                cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    throw scount;
-                }
-            }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1)
-                {
-                    cout << "Invalid input." << endl;
-                    ;
-                    cin >> scount;
-                }
-            }
-            count = stoi(scount);
-            while (count + nowcount > 5)
-            {
-                cout << "Sorry you can't have more than 5 of this item!" << endl;
-                cout << "How many do you want?";
-                try
-                {
-                    cin >> scount;
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        throw scount;
-                    }
-                }
-                catch (...)
-                {
-                    while (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
-                        cout << "Invalid input." << endl;
-                        ;
-                        cin >> scount;
-                    }
-                }
-                count = stoi(scount);
-            }
-
-            if (human->getCoin() < item->getPrice() * count)
-            {
-                cout << "Sorry you don't have enogh coin to buy the item" << endl;
-                goto menu;
-            }
-
-            human->setCoin(human->getCoin() - item->getPrice() * count);
-            human->addInventory(item, count);
-        }
-        else if (choice == 0)
-        {
-            break;
+        else{
+            cout << "Invalid choice. Please try again." << endl;
         }
     }
 }
 
-void Shop::sell(Human *human)
-{
+void Shop::buyItemWithCountLimit(int choice, Human* human, Item* item, int maxCount){
+    int count = 0;
+    string scount;
+    int nowcount = human->countInInventory(item);
+
+    if (nowcount == maxCount){
+        cout << "Sorry, you already have the maximum limit of " << maxCount << " of this item. You can't buy more!" << endl;
+        return;
+    }
+
+    cout << "How many do you want? ";
+
+    try{
+        cin >> scount;
+        if (check_number(scount) == 0 || stoi(scount) < 1){
+            throw scount;
+        }
+    }
+    catch (...){
+        while (check_number(scount) == 0 || stoi(scount) < 1){
+            cout << "Invalid input. Please enter a positive number." << endl;
+            cin >> scount;
+        }
+    }
+
+    count = stoi(scount);
+
+    while (count + nowcount > maxCount){
+        cout << "Sorry, you can't have more than " << maxCount << " of this item!" << endl;
+        cout << "How many do you want? ";
+        try{
+            cin >> scount;
+            if (check_number(scount) == 0 || stoi(scount) < 1){
+                throw scount;
+            }
+        }
+        catch (...){
+            while (check_number(scount) == 0 || stoi(scount) < 1){
+                cout << "Invalid input. Please enter a positive number." << endl;
+                cin >> scount;
+            }
+        }
+
+        count = stoi(scount);
+    }
+
+    int totalPrice = item->getPrice() * count;
+    if (human->getCoin() < totalPrice){
+        cout << "Sorry, you don't have enough coins to buy the item." << endl;
+        return;
+    }
+
+    human->setCoin(human->getCoin() - totalPrice);
+    human->addInventory(item, count);
+}
+
+void Shop::buy(int choice, Human *human){
+    Item *item = ItemFactory::createItem(choice, human);
+
+    if (item == nullptr){
+        cout << "Invalid choice." << endl;
+        return;
+    }
+
+    if (human->getCoin() < item->getPrice()){
+        cout << "Sorry, you don't have enough coins to buy the item." << endl;
+    }
+    else if (human->existInInventory(item)){
+        cout << "You already have the item!" << endl;
+    }
+    else{
+        human->setCoin(human->getCoin() - item->getPrice());
+        human->addInventory(item);
+    }
+    delete item;
+}
+
+void Shop::sell(Human *human){
     human->showInventory();
     int index = 1;
     string sindex;
-    while (index != 0)
-    {
+    while (index != 0){
         cout << "Enter the number of the item that you want to sell or enter 0 to exit:" << endl;
-        try
-        {
+        try{
             cin >> sindex;
-            if (check_number(sindex) == 0 || stoi(sindex) < 0 || stoi(sindex) > human->inventorySize())
-            {
+            if (check_number(sindex) == 0 || stoi(sindex) < 0 || stoi(sindex) > human->inventorySize()){
                 throw sindex;
             }
         }
-        catch (...)
-        {
-            while (check_number(sindex) == 0 || stoi(sindex) < 0 || stoi(sindex) > human->inventorySize())
-            {
+        catch (...){
+            while (check_number(sindex) == 0 || stoi(sindex) < 0 || stoi(sindex) > human->inventorySize()) {
                 cout << "Invalid choice." << endl
                      << "Enter the number of the Item you want to sell or enter 0 to exit:" << endl;
                 cin >> sindex;
             }
         }
         index = stoi(sindex);
-        if (index == 0)
-        {
+        if (index == 0){
             break;
         }
         int nowcount = human->countItemsAt(index);
         int count = 0;
         string scount;
-        if (nowcount > 1)
-        {
+        if (nowcount > 1){
             cout << "How many do you want to sell?" << endl;
-            try
-            {
+            try{
                 cin >> scount;
-                if (check_number(scount) == 0 || stoi(scount) < 1 || stoi(scount) > nowcount)
-                {
+                if (check_number(scount) == 0 || stoi(scount) < 1 || stoi(scount) > nowcount){
                     throw scount;
                 }
             }
-            catch (...)
-            {
-                while (check_number(scount) == 0 || stoi(scount) < 1 || stoi(scount) > nowcount)
-                {
-                    if (check_number(scount) == 0 || stoi(scount) < 1)
-                    {
+            catch (...){
+                while (check_number(scount) == 0 || stoi(scount) < 1 || stoi(scount) > nowcount){
+                    if (check_number(scount) == 0 || stoi(scount) < 1){
                         cout << "Invalid input." << endl;
                     }
-                    else
-                    {
+                    else{
                         cout << "You don't have enough of this item to sell this many!" << endl;
                     }
                     cin >> scount;
@@ -1777,8 +402,7 @@ void Shop::sell(Human *human)
             human->removeInventory(index, count);
             human->setCoin(human->getCoin() + price * count);
         }
-        else
-        {
+        else{
             double price = human->priceItemsAt(index);
             human->removeInventory(index);
             human->setCoin(human->getCoin() + price);
@@ -1786,26 +410,21 @@ void Shop::sell(Human *human)
     }
 }
 
-void Shop::welcom(Human *human)
-{
+void Shop::welcom(Human *human){
     cout << "**********WELCOME TO THE SHOP**********" << endl
          << endl;
     int choice = 1;
     string schoice;
     cout << "What do you want to do?" << endl << "1.Buy Items" << endl << "2.Sell Items" << endl
          << "Enter the number of your choice or 0 to exit the shop:" << endl;
-    try
-    {
+    try{
         cin >> schoice;
-        if (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 2)
-        {
+        if (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 2){
             throw schoice;
         }
     }
-    catch (...)
-    {
-        while (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 37)
-        {
+    catch (...){
+        while (check_number(schoice) == 0 || stoi(schoice) < 0 || stoi(schoice) > 37){
             cout << "Invalid choice." << endl
                  << "Enter 1 to buy items , 2 to sell items or 0 to exit the shop:" << endl;
             cin >> schoice;
@@ -1813,12 +432,10 @@ void Shop::welcom(Human *human)
     }
     choice = stoi(schoice);
     Shop shop = Shop();
-    if (choice == 1)
-    {
-        shop.buy(human);
+    if (choice == 1){
+        shop.buy(choice, human);
     }
-    else if (choice == 2)
-    {
+    else if (choice == 2){
         shop.sell(human);
     }
 }

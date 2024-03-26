@@ -49,10 +49,15 @@
 
 class Shop{
 public:
-    Shop() = default;
+    Shop();
+
     void showShop();
+
+    void buyItem(Human *human);
     
-    void buy (Human* human);
+    void buyItemWithCountLimit(int choice, Human* human, Item* item, int maxCount);
+
+    void buy (int choice, Human* human);
     
     void sell(Human* human);
     
