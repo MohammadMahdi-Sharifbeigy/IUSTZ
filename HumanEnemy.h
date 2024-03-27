@@ -8,7 +8,7 @@
 #include "Human.h"
 
 class HumanEnemy : public Enemy {
- public:
+public:
   HumanEnemy(Human& humanRef);
 
   HumanEnemy(int level, Human& humanRef);
@@ -17,7 +17,7 @@ class HumanEnemy : public Enemy {
 
   ~HumanEnemy();
 
-  virtual double attackChar(double charDefense) override;
+  // virtual double attackChar(double charDefense) override;
   
   characterType getRandomRole();
 
@@ -30,13 +30,23 @@ class HumanEnemy : public Enemy {
   // Items Functions
   void showInventory() { humanRef.showInventory(); }
   void addInventory(Item* item) { humanRef.addInventory(item); }
+  void addInventory(Item* item, int count){humanRef.addInventory(item, count); }
+  void removeInventory(int index, int count) {humanRef.removeInventory(index, count); }
   void removeInventory(int index) { humanRef.removeInventory(index); }
   int inventorySize() { return humanRef.inventorySize(); }
+  bool existInInventory(Item* item){return humanRef.existInInventory(item); }
+  int countInInventory(Item* item){return humanRef.countInInventory(item); }
+  int indexInInventory(Item* item){return humanRef.indexInInventory(item); }
+  double priceItemsAt(int index){return humanRef.priceItemsAt(index); }
+  int countItemsAt(int index){return humanRef.countItemsAt(index); }
   Item* itemsAt(int index) { return humanRef.itemsAt(index); }
   Item* getArmor() { return humanRef.getArmor(); }
   Item* getWeapon() { return humanRef.getWeapon(); }
+  void setArmor(Item* armor){return humanRef.setArmor(armor); }
+  void setWeapon(Item* weapon){return humanRef.setWeapon(weapon); }
+  Item* stringToItem(const string& line){return humanRef.stringToItem(line); }
 
- private:
+private:
   Human& humanRef;
   AttackStrategy* attackStrategy;
 };

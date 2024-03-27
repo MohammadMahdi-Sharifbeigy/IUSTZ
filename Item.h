@@ -17,8 +17,6 @@ class Item {
   Item(const string& name, double price, bool VIP, int count);
   virtual ~Item();
 
-  virtual void use(Character& target) = 0;
-
   string getName() const;
   double getPrice() const;
   int getCount() const;

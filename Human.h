@@ -82,7 +82,7 @@ class Human : public Character {
   int countItemsAt(int index);
   Item* getArmor();
   Item* getWeapon();
-  void setArmor(Item* aromor);
+  void setArmor(Item* armor);
   void setWeapon(Item* weapon);
   Item* stringToItem(const string& line);
 };
