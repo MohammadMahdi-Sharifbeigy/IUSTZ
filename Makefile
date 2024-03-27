@@ -1,3 +1,6 @@
+# Detect the operating system
+UNAME_S := $(shell uname -s)
+
 # Define the compiler
 CXX = g++
 
@@ -5,7 +8,11 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall
 
 # Define the name of the executable
-TARGET = game
+ifeq ($(UNAME_S),Windows_NT)
+    TARGET = game.exe
+else
+    TARGET = game
+endif
 
 # Automatically find all cpp files in the current directory
 SOURCES = $(wildcard *.cpp)
@@ -26,6 +33,10 @@ $(TARGET): $(OBJECTS)
 
 # Clean up the build
 clean:
+ifeq ($(UNAME_S),Windows_NT)
+	del /f $(TARGET) $(OBJECTS)
+else
 	rm -f $(TARGET) $(OBJECTS)
+endif
 
 .PHONY: all clean
