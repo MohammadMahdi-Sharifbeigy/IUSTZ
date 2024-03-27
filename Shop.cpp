@@ -54,189 +54,70 @@ using namespace std;
 Shop::Shop() {}
 
 void Shop::showShop() {
-  cout << "********SHOP ITEMS********" << endl << endl << endl;
-  cout << "ARMORS:" << endl << endl;
-  cout << "1.Armor" << endl
-       << "Price:" << endl
-       << "Best Match : Paladin" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "2.Shield" << endl
-       << "Price:" << endl
-       << "Best Match : Assasin" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "3.Magic Shield" << endl
-       << "Price:" << endl
-       << "Best Match : Wizard" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "4.Iron Body" << endl
-       << "Price:" << endl
-       << "Best Match : Cyborg" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "5.Bulletproof Jaket" << endl
-       << "Price:" << endl
-       << "Best Match : Sniper" << endl
-       << "Is VIP : Yes" << endl
-       << endl;
-  cout << "6.Cloak" << endl
-       << "Price:" << endl
-       << "Best Match : SuperHero" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "7.Asian Dad" << endl
-       << "Price:" << endl
-       << "Best Match : Asian Mom" << endl
-       << "Is VIP : Yes" << endl
-       << endl
-       << endl;
-  cout << "WEAPONS:" << endl << endl;
-  cout << "8.Sward" << endl
-       << "Price:" << endl
-       << "Best Match : Paladin" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "9.Spear" << endl
-       << "Price:" << endl
-       << "Best Match : Paladin" << endl
-       << "Is VIP : Yes" << endl
-       << endl;
-  cout << "10.Katana" << endl
-       << "Price:" << endl
-       << "Best Match : Assasin" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "11.Poison Dagger" << endl
-       << "Price:" << endl
-       << "Best Match : Assasin" << endl
-       << "Is VIP : Yes" << endl
-       << endl;
-  cout << "12.Wand " << endl
-       << "Price:" << endl
-       << "Best Match : Wizard" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "13.Book" << endl
-       << "Price:" << endl
-       << "Best Match : Wizard" << endl
-       << "Is VIP : Yes" << endl
-       << endl;
-  cout << "14.Laser Gun" << endl
-       << "Price:" << endl
-       << "Best Match : Cyborg" << endl
-       << "Is VIP : No" << endl
-       << endl
-       << endl;
-  cout << "15.Little Robots" << endl
-       << "Price:" << endl
-       << "Best Match : Cyborg" << endl
-       << "Is VIP : Yes" << endl
-       << endl;
-  cout << "16.Snipe" << endl
-       << "Price:" << endl
-       << "Best Match : Sniper" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "17.Colt" << endl
-       << "Price:" << endl
-       << "Best Match : Sniper" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "18.Eyelaser" << endl
-       << "Price:" << endl
-       << "Best Match : SuperHero" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "19.Whip of Truth " << endl
-       << "Price:" << endl
-       << "Best Match : SuperHero" << endl
-       << "Is VIP : Yes" << endl
-       << endl;
-  cout << "20.Swatter" << endl
-       << "Price:" << endl
-       << "Best Match : Asian Mom" << endl
-       << "Is VIP : No" << endl
-       << endl;
-  cout << "21.Pepper" << endl
-       << "Price:" << endl
-       << "Best Match : Asian Mom" << endl
-       << "Is VIP : Yes" << endl
-       << endl
-       << endl;
-  cout << "THROWABLE ITEMS:" << endl << endl;
-  cout << "22.Bow" << endl
-       << "Price:" << endl
-       << "Best Match : Paladin" << endl
-       << endl;
-  cout << "23.Ninja Star" << endl
-       << "Price:" << endl
-       << "Best Match : Assasin" << endl
-       << endl;
-  cout << "24.Fireball" << endl
-       << "Price:" << endl
-       << "Best Match : Wizard" << endl
-       << endl;
-  cout << "25.Rocket" << endl
-       << "Price:" << endl
-       << "Best Match : Cyborg" << endl
-       << endl;
-  cout << "26.Grenade" << endl
-       << "Price:" << endl
-       << "Best Match : Sniper" << endl
-       << endl;
-  cout << "27.Spider Net" << endl
-       << "Price:" << endl
-       << "Best Match : SuperHero" << endl
-       << endl;
-  cout << "28.FlipFlop" << endl
-       << "Price:" << endl
-       << "Best Match : Asian Mom" << endl
-       << endl
-       << endl;
-  cout << "COUNSUMEABLE ITEMS:" << endl << endl;
-  cout << "29.Healing Potion" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : HP" << endl
-       << endl;
-  cout << "30.Damage Potion" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : Attack" << endl
-       << endl;
-  cout << "31.Defense Poition" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : Defense" << endl
-       << endl;
-  cout << "32.Stamin Potion" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : Stamin" << endl
-       << endl;
-  cout << "33.Food" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : HP and Stamin" << endl
-       << endl;
-  cout << "34.Sweet Tea" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : HP" << endl
-       << "Best Match : Asian Mom" << endl
-       << endl;
-  cout << "35.Saffron" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : Attack" << endl
-       << "Best Match : Asian Mom" << endl
-       << endl;
-  cout << "36.Aragh Nana" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on : Defense" << endl
-       << "Best Match : Asian Mom" << endl
-       << endl;
-  cout << "37.Nuts" << endl
-       << "Price:" << endl
-       << "Reinforcing effect on :  Stamin" << endl
-       << "Best Match : Asian Mom" << endl
-       << endl;
+    cout << "****************************************************************************************" << endl;
+    cout << "*                                      SHOP ITEMS                                      *" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+
+    // ARMORS
+    cout << "| ARMORS               |   Price   |  Quantity  |         VIP          |    BestMach   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+    cout << "| 1. Armor             |    150    |     2      |         \033[1;31mNo\033[0m           |    Paladin    |" << endl;
+    cout << "| 2. Shield            |    120    |     5      |         \033[1;31mNo\033[0m           |    Assassin   |" << endl;
+    cout << "| 3. Magic Shield      |    200    |     3      |         \033[1;31mNo\033[0m           |    Wizard     |" << endl;
+    cout << "| 4. Iron Body         |    250    |     1      |         \033[1;31mNo\033[0m           |    Cyborg     |" << endl;
+    cout << "| 5. Bulletproof Jaket |    180    |     10     |         \033[1;34mYes\033[0m          |    Sniper     |" << endl;
+    cout << "| 6. Cloak             |    160    |     4      |         \033[1;31mNo\033[0m           |    SuperHero  |" << endl;
+    cout << "| 7. Pesian Dad        |    300    |     7      |         \033[1;34mYes\033[0m          |    AsianMom   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+
+    // WEAPONS
+    cout << "| WEAPONS              |   Price   |  Quantity  |         VIP          |    BestMach   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+    cout << "| 8. Sword             |    110    |     6      |         \033[1;31mNo\033[0m           |    Paladin    |" << endl;
+    cout << "| 9. Spear             |    115    |     3      |         \033[1;34mYes\033[0m          |    Assassin   |" << endl;
+    cout << "| 10. Katana           |    220    |     2      |         \033[1;31mNo\033[0m           |    Assasson   |" << endl;
+    cout << "| 11. Poison Dagger    |    130    |     4      |         \033[1;34mYes\033[0m          |    Wizard     |" << endl;
+    cout << "| 12. Wand             |    140    |     8      |         \033[1;31mNo\033[0m           |    Wizard     |" << endl;
+    cout << "| 13. Book             |    90     |     5      |         \033[1;34mYes\033[0m          |    Wizard     |" << endl;
+    cout << "| 14. Laser Gun        |    210    |     2      |         \033[1;31mNo\033[0m           |    Cyborg     |" << endl;
+    cout << "| 15. Little Robots    |    310    |     10     |         \033[1;34mYes\033[0m          |    Cyborg     |" << endl;
+    cout << "| 16. Snipe            |    250    |     3      |         \033[1;31mNo\033[0m           |    Sniper     |" << endl;
+    cout << "| 17. Colt             |    170    |     5      |         \033[1;31mNo\033[0m           |    SuperHero  |" << endl;
+    cout << "| 18. Eyelaser         |    280    |     2      |         \033[1;31mNo\033[0m           |    SuperHero  |" << endl;
+    cout << "| 19. Whip of Truth    |    150    |     3      |         \033[1;34mYes\033[0m          |    SuperHero  |" << endl;
+    cout << "| 20. Swatter          |    60     |     8      |         \033[1;31mNo\033[0m           |    AsianMom   |" << endl;
+    cout << "| 21. Pepper           |    40     |     6      |         \033[1;34mYes\033[0m          |    AsianMom   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+
+    // THROWABLE ITEMS
+    cout << "| THROWABLE ITEMS      |   Price   |  Quantity  |         VIP          |    BestMach   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+    cout << "| 22. Bow              |    190    |     6      |         ---          |    Paladin    |" << endl;
+    cout << "| 23. Ninja Star       |    75     |     3      |         ---          |    Assassin   |" << endl;
+    cout << "| 24. Fireball         |    205    |     2      |         ---          |    Wizard     |" << endl;
+    cout << "| 25. Rocket           |    320    |     4      |         ---          |    Cyborg     |" << endl;
+    cout << "| 26. Grenade          |    180    |     5      |         ---          |    Sniper     |" << endl;
+    cout << "| 27. Spider Net       |    50     |     1      |         ---          |    SuperHero  |" << endl;
+    cout << "| 28. FlipFlop         |    30     |     3      |         ---          |    AsianMom   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+
+    // CONSUMABLE ITEMS
+    cout << "| CONSUMABLE ITEMS     |   Price   |  Quantity  | Reinforcing effect on|    BestMach   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+    cout << "| 29. Healing Potion   |    100    |     10     |          HP          |    --------   |" << endl;
+    cout << "| 30. Damage Potion    |    110    |     8      |        Attack        |    --------   |" << endl;
+    cout << "| 31. Defense Potion   |    95     |     5      |        Defense       |    --------   |" << endl;
+    cout << "| 32. Stamina Potion   |    85     |     7      |        Stamina       |    --------   |" << endl;
+    cout << "| 33. Food             |    45     |     9      |     HP and Stamina   |    --------   |" << endl;
+    cout << "| 34. Sweet Tea        |    25     |     3      |          HP          |    AsianMom   |" << endl;
+    cout << "| 35. Saffron          |    220    |     2      |        Attack        |    AsianMom   |" << endl;
+    cout << "| 36. Aragh Nana       |    65     |     4      |        Defense       |    AsianMom   |" << endl;
+    cout << "| 37. Nuts             |    55     |     6      |        Defense       |    AsianMom   |" << endl;
+    cout << "----------------------------------------------------------------------------------------" << endl;
+
+    cout << "****************************************************************************************" << endl;
 }
+
 
 void Shop::buyItem(Human* human) {
   int choice = 1;
@@ -267,10 +148,8 @@ void Shop::buyItem(Human* human) {
 
     choice = stoi(schoice);
 
-    if (choice >= 1 && choice < 37) {
+    if (choice >= 1 && choice <= 37) {
       buy(choice, human);
-      // } else if (choice >= 22 && choice < 37) {
-      // pass
     } else {
       cout << "Invalid choice. Please try again." << endl;
     }
