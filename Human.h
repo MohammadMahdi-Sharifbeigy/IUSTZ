@@ -66,6 +66,7 @@ class Human : public Character {
   void setMind(double mind);
   int getCoin();
   void setCoin(int coin);
+  vector<Item*> getInventory();
   // Item Functions
 
   Item* itemsAt(int index);
@@ -75,7 +76,7 @@ class Human : public Character {
   void addInventory(Item* item, int count);
   void removeInventory(int index, int count);
   int inventorySize();
- bool existInInventory(Item* item);
+  bool existInInventory(Item* item);
   int countInInventory(Item* item);
   int indexInInventory(Item* item);
   double priceItemsAt(int index);

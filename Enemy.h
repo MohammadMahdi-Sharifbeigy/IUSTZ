@@ -36,8 +36,6 @@ class Enemy : public Character {
   characterType role;
 
  public:
-  virtual double attackChar(double charDefense) = 0;
-
   virtual void takeDamage(double amount) override {
     hp -= amount;
     if (hp < 0) {
@@ -58,6 +56,23 @@ class Enemy : public Character {
   void set_enemy_hp(int value) { hp -= value; }
   characterType getcharType() const { return role; }
   characterType setRole(characterType newRole) { return newRole; }
+  void levelUp() override {
+    level++;
+    hp += 10;
+    attack += 5;
+    defense += 5;
+    giveExp = level * 10 * attack / defense;
+  }
+  string NameMaker() override {
+    string name = "Enemy";
+    return name;
+  }
+  virtual double attackChar(double charDefense) {
+    return abs((((((2 * level / 5) + 2) * (35 + (level * 9 / 10)) * attack) /
+                 charDefense) /
+                50) +
+               2);
+  }
 };
 
 #endif  //__Enemy_H__

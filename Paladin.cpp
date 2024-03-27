@@ -13,7 +13,8 @@ Paladin::Paladin(const string& name,
                  double hp,
                  double defense,
                  double attack,
-                 characterType role)
+                 characterType role,
+                 int coin)
     : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new PaladinAttack();
   age = 1;
@@ -25,7 +26,7 @@ Paladin::Paladin(const string& name,
   accuracy = 10.0;
   pace = 10.0;
   mind = 10.0;
-  coin = 0;
+  this->coin = coin; 
 }
 
 Paladin::~Paladin() {
@@ -37,7 +38,7 @@ void Paladin::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      //enemy->set_enemy_hp(damage);
+      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
     }
   } else {
@@ -46,7 +47,7 @@ void Paladin::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       enemy->set_enemy_hp(Paladin::getAttack());
-      //enemy->takeDamage(Paladin::getAttack());
+      // enemy->takeDamage(Paladin::getAttack());
     }
   }
 }
@@ -60,7 +61,7 @@ void Paladin::performDefense(Character& attacker) {
   } else {
     Paladin::currHP -= Paladin::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
-              << " with a basic defense." << endl;
+         << " with a basic defense." << endl;
   }
 }
 

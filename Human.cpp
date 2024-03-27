@@ -105,6 +105,10 @@ void Human::setCoin(int coin) {
   this->coin = coin;
 }
 
+vector<Item*> Human::getInventory() {
+  return inventory;
+}
+
 int Human::inventorySize() {
   return inventory.size();
 }
@@ -118,9 +122,9 @@ Item* Human::itemsAt(int index) {
 
 void Human::showInventory() {
   if (this->inventorySize() > 0) {
-    for (int i = 0; i < this->inventorySize(); i++) {
-      cout << i + 1 << ". " << inventory[i] << " X" << inventory[i]->getCount()
-           << endl;
+    for (int i = 0; i < inventory.size(); i++) {
+      cout << i + 1 << ". " << inventory[i]->getName()
+           << " - count:" << inventory[i]->getCount() << endl;
     }
   } else {
     cout << "Your inventory is empty!" << endl;
@@ -191,51 +195,40 @@ void Human::removeInventory(int index, int count) {
   }
 }
 
-
-  bool Human::existInInventory(Item* item){
-        for(int i=0; i < this->inventory.size(); i++){
-            if(this->inventory[i]->getName() == item->getName()){
-                return true;
-            }
-        }
-        return false;
+bool Human::existInInventory(Item* item) {
+  for (int i = 0; i < this->inventory.size(); i++) {
+    if (this->inventory[i]->getName() == item->getName()) {
+      return true;
     }
-    
+  }
+  return false;
+}
 
-
-    int Human::countInInventory(Item* item){
-        for(int i=0; i < this->inventory.size(); i++){
-            if(this->inventory[i]->getName() == item->getName()){
-                return inventory[i]->getCount();
-            }
-        }
-        return 0;
+int Human::countInInventory(Item* item) {
+  for (int i = 0; i < this->inventory.size(); i++) {
+    if (this->inventory[i]->getName() == item->getName()) {
+      return inventory[i]->getCount();
     }
+  }
+  return 0;
+}
 
-
-
-    int Human::indexInInventory(Item* item){
-        for(int i=0; i < this->inventory.size(); i++){
-            if(this->inventory[i]->getName() == item->getName()){
-                return i;
-            }
-        }
-        return -1;
+int Human::indexInInventory(Item* item) {
+  for (int i = 0; i < this->inventory.size(); i++) {
+    if (this->inventory[i]->getName() == item->getName()) {
+      return i;
     }
+  }
+  return -1;
+}
 
+double Human::priceItemsAt(int index) {
+  return inventory[index - 1]->getPrice();
+}
 
-    double Human::priceItemsAt(int index){
-        return inventory[index-1]->getPrice();
-        
-    }
-
-
-    int Human::countItemsAt(int index){
-        return inventory[index-1]->getCount();
-    }
-    
-
-
+int Human::countItemsAt(int index) {
+  return inventory[index - 1]->getCount();
+}
 
 Item* Human::getArmor() {
   return armor;

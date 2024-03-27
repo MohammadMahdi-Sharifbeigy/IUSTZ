@@ -18,7 +18,8 @@ class Paladin : public Human {
           double hp,
           double attack,
           double defense,
-          characterType role);
+          characterType role,
+          int coin);
   ~Paladin();
 
   void performAttack(Character& target) override;

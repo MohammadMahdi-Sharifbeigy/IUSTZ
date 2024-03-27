@@ -10,9 +10,11 @@ HealingPotion::HealingPotion(string name,
                              int count)
     : Consumable(name, price, vIP, potency, count) {}
 
-void HealingPotion::increaseHP(Character& target) {
+void HealingPotion::increaseHP(Human& target) {
   target.setCurrentHP(target.getCurrentHP() + potency);
   cout << target.getName() << "'s HP has increased by " << potency << " points."
+       << endl;
+  cout << target.getName() << "'s current HP: " << target.getCurrentHP()
        << endl;
   count--;
   if (count == 0) {
