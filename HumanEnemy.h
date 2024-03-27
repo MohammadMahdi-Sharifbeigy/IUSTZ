@@ -17,7 +17,7 @@ public:
 
   ~HumanEnemy();
 
-  virtual double attackChar(double charDefense) override;
+  // virtual double attackChar(double charDefense) override;
   
   characterType getRandomRole();
 
@@ -36,9 +36,9 @@ public:
   int inventorySize() { return humanRef.inventorySize(); }
   bool existInInventory(Item* item){return humanRef.existInInventory(item); }
   int countInInventory(Item* item){return humanRef.countInInventory(item); }
-  int indexInInventory(Item* item){humanRef.indexInInventory(item); }
-  double priceItemsAt(int index){humanRef.priceItemsAt(index); }
-  int countItemsAt(int index){humanRef.countItemsAt(index); }
+  int indexInInventory(Item* item){return humanRef.indexInInventory(item); }
+  double priceItemsAt(int index){return humanRef.priceItemsAt(index); }
+  int countItemsAt(int index){return humanRef.countItemsAt(index); }
   Item* itemsAt(int index) { return humanRef.itemsAt(index); }
   Item* getArmor() { return humanRef.getArmor(); }
   Item* getWeapon() { return humanRef.getWeapon(); }

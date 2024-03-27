@@ -5,9 +5,9 @@ Item* ItemFactory::createItem(int choice, Human *human) {
 
     Item *item = nullptr;
     string name, perk, type;
-    bool VIP;
-    double synergyDamage, price;
-    int count, number;
+    bool VIP = false;
+    double synergyDamage = 0, price = 0;
+    int count = 1, number = 1;
     switch (choice)
     {
         case 1:

@@ -1,12 +1,7 @@
-//
-//  CheckNumber.h
-//  
-//
-//  Created by Lilia Rouhi on 1/5/1403 AP.
-//
-
 #ifndef CheckNumber_h
 #define CheckNumber_h
+#include <string>
+using namespace std;
 
 bool check_number(string str);
 
