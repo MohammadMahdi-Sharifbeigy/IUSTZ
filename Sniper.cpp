@@ -13,7 +13,8 @@ Sniper::Sniper(const string& name,
                double hp,
                double defense,
                double attack,
-               characterType role)
+               characterType role,
+               int coin)
     : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new SniperAttack();
   age = 1;
@@ -25,7 +26,7 @@ Sniper::Sniper(const string& name,
   accuracy = 10.0;
   pace = 10.0;
   mind = 10.0;
-  coin = 0;
+  this->coin = coin;
 }
 
 Sniper::~Sniper() {

@@ -18,7 +18,8 @@ class SuperHero : public Human {
             double hp,
             double attack,
             double defense,
-            characterType role);
+            characterType role,
+            int coin);
   ~SuperHero();
 
   void performAttack(Character& target) override;

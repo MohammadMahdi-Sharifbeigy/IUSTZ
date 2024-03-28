@@ -18,7 +18,8 @@ class Cyborg : public Human {
          double hp,
          double attack,
          double defense,
-         characterType role);
+         characterType role,
+         int coin);
   ~Cyborg();
 
   void performAttack(Character& target) override;

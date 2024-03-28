@@ -18,7 +18,8 @@ class Wizard : public Human {
          double hp,
          double attack,
          double defense,
-         characterType role);
+         characterType role,
+         int coin);
   ~Wizard();
 
   void performAttack(Character& target) override;

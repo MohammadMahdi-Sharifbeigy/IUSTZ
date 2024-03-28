@@ -18,7 +18,8 @@ class Assassin : public Human {
            double hp,
            double attack,
            double defense,
-           characterType role);
+           characterType role,
+           int coin);
   ~Assassin();
 
   void performAttack(Character& target) override;

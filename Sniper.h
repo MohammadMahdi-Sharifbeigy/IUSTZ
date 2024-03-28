@@ -18,7 +18,8 @@ class Sniper : public Human {
          double hp,
          double attack,
          double defense,
-         characterType gold);
+         characterType gold,
+         int coin);
   ~Sniper();
 
   void performAttack(Character& target) override;
