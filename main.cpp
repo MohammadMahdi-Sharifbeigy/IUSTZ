@@ -192,11 +192,8 @@ void combat(Human* player, Enemy* enemy) {
 
     if (enemy->get_enemy_hp() <= 0) {
       cout << "\nYou defeated the " << enemy->getName() << "!" << endl;
-      displayHealthBar(player->getName(), player->getCurrentHP(),
-                       player->getMaxHP());
-      cout << endl;
-      displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
-      cout << endl << "\033[38;2;45;220;45m" << well2 << "\033[38;2;255;255;255m" ;
+      cout << endl
+           << "\033[38;2;45;220;45m" << well2 << "\033[38;2;255;255;255m";
       break;
     }
 
@@ -204,17 +201,14 @@ void combat(Human* player, Enemy* enemy) {
     player->takeDamage(enemy->get_enemy_atk());
     cout << enemy->getName() << " attacks! " << player->getName() << " has "
          << player->getCurrentHP() << " HP left." << endl;
+    if (player->getCurrentHP() <= 0) {
+      cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
+      return;
+    }
     displayHealthBar(player->getName(), player->getCurrentHP(),
                      player->getMaxHP());
     cout << endl;
     displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
-    if (player->getCurrentHP() <= 0) {
-      // cout << "\nYou were defeated by the " << enemy->getName() << "." <<
-      // endl;
-      cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
-      return;
-      // break;
-    }
   }
 }
 
