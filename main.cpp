@@ -196,7 +196,7 @@ void combat(Human* player, Enemy* enemy) {
                        player->getMaxHP());
       cout << endl;
       displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
-      cout << endl << "\033[38;2;45;220;45;0m" << well2 << "\033[38;2;255;255;255;0m" ;
+      cout << endl << "\033[38;2;45;220;45m" << well2 << "\033[38;2;255;255;255m" ;
       break;
     }
 
