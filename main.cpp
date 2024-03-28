@@ -14,6 +14,71 @@
 
 using namespace std;
 
+const string You_Died = R"(
+                                              ▓██   ██▓ ▒█████   █    ██    ▓█████▄  ██▓▓█████ ▓█████▄ 
+                                               ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▒██▀ ██▌▓██▒▓█   ▀ ▒██▀ ██▌
+                                                ▒██ ██░▒██░  ██▒▓██  ▒██░   ░██   █▌▒██▒▒███   ░██   █▌
+                                                ░ ▐██▓░▒██   ██░▓▓█  ░██░   ░▓█▄   ▌░██░▒▓█  ▄ ░▓█▄   ▌
+                                                ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░▒████▓ ░██░░▒████▒░▒████▓ 
+                                                 ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒     ▒▒▓  ▒ ░▓  ░░ ▒░ ░ ▒▒▓  ▒ 
+                                               ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░     ░ ▒  ▒  ▒ ░ ░ ░  ░ ░ ▒  ▒ 
+                                               ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░     ░ ░  ░  ▒ ░   ░    ░ ░  ░ 
+                                               ░ ░         ░ ░     ░           ░     ░     ░  ░   ░    
+                                               ░ ░                           ░                  ░       
+)";
+const string Wasted = R"(
+                                                    ▄▄▌ ▐ ▄▌ ▄▄▄· .▄▄ · ▄▄▄▄▄▄▄▄ .·▄▄▄▄  
+                                                    ██· █▌▐█▐█ ▀█ ▐█ ▀. •██  ▀▄.▀·██▪ ██ 
+                                                    ██▪▐█▐▐▌▄█▀▀█ ▄▀▀▀█▄ ▐█.▪▐▀▀▪▄▐█· ▐█▌
+                                                    ▐█▌██▐█▌▐█ ▪▐▌▐█▄▪▐█ ▐█▌·▐█▄▄▌██. ██ 
+                                                     ▀▀▀▀ ▀▪ ▀  ▀  ▀▀▀▀  ▀▀▀  ▀▀▀ ▀▀▀▀▀• 
+)";
+const string You_fallen = R"(
+                           ▓██   ██▓ ▒█████   █    ██  ██▒   █▓▓█████      █████▒▄▄▄       ██▓     ██▓    ▓█████  ███▄    █ 
+                            ▒██  ██▒▒██▒  ██▒ ██  ▓██▒▓██░   █▒▓█   ▀    ▓██   ▒▒████▄    ▓██▒    ▓██▒    ▓█   ▀  ██ ▀█   █ 
+                             ▒██ ██░▒██░  ██▒▓██  ▒██░ ▓██  █▒░▒███      ▒████ ░▒██  ▀█▄  ▒██░    ▒██░    ▒███   ▓██  ▀█ ██▒
+                             ░ ▐██▓░▒██   ██░▓▓█  ░██░  ▒██ █░░▒▓█  ▄    ░▓█▒  ░░██▄▄▄▄██ ▒██░    ▒██░    ▒▓█  ▄ ▓██▒  ▐▌██▒
+                             ░ ██▒▓░░ ████▓▒░▒▒█████▓    ▒▀█░  ░▒████▒   ░▒█░    ▓█   ▓██▒░██████▒░██████▒░▒████▒▒██░   ▓██░
+                              ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▐░  ░░ ▒░ ░    ▒ ░    ▒▒   ▓▒█░░ ▒░▓  ░░ ▒░▓  ░░░ ▒░ ░░ ▒░   ▒ ▒ 
+                            ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░    ░ ░░   ░ ░  ░    ░       ▒   ▒▒ ░░ ░ ▒  ░░ ░ ▒  ░ ░ ░  ░░ ░░   ░ ▒░
+                            ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░░     ░       ░ ░     ░   ▒     ░ ░     ░ ░      ░      ░   ░ ░ 
+                            ░ ░         ░ ░     ░           ░     ░  ░                ░  ░    ░  ░    ░  ░   ░  ░         ░ 
+                            ░ ░                            ░                                                                
+)";
+const string TryAgain = R"(
+                                 ▄▄▄█████▓ ██▀███ ▓██   ██▓    ▄▄▄        ▄████  ▄▄▄       ██▓ ███▄    █  ▐██▌ 
+                                 ▓  ██▒ ▓▒▓██ ▒ ██▒▒██  ██▒   ▒████▄     ██▒ ▀█▒▒████▄    ▓██▒ ██ ▀█   █  ▐██▌ 
+                                 ▒ ▓██░ ▒░▓██ ░▄█ ▒ ▒██ ██░   ▒██  ▀█▄  ▒██░▄▄▄░▒██  ▀█▄  ▒██▒▓██  ▀█ ██▒ ▐██▌ 
+                                 ░ ▓██▓ ░ ▒██▀▀█▄   ░ ▐██▓░   ░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██ ░██░▓██▒  ▐▌██▒ ▓██▒ 
+                                   ▒██▒ ░ ░██▓ ▒██▒ ░ ██▒▓░    ▓█   ▓██▒░▒▓███▀▒ ▓█   ▓██▒░██░▒██░   ▓██░ ▒▄▄  
+                                   ▒ ░░   ░ ▒▓ ░▒▓░  ██▒▒▒     ▒▒   ▓▒█░ ░▒   ▒  ▒▒   ▓▒█░░▓  ░ ▒░   ▒ ▒  ░▀▀▒ 
+                                     ░      ░▒ ░ ▒░▓██ ░▒░      ▒   ▒▒ ░  ░   ░   ▒   ▒▒ ░ ▒ ░░ ░░   ░ ▒░ ░  ░ 
+                                   ░        ░░   ░ ▒ ▒ ░░       ░   ▒   ░ ░   ░   ░   ▒    ▒ ░   ░   ░ ░     ░ 
+                                             ░     ░ ░              ░  ░      ░       ░  ░ ░           ░  ░    
+                                                   ░ ░                                                         
+)";
+const string well2 = R"(
+
+                                  ██╗    ██╗███████╗██╗     ██╗         ██████╗  ██████╗ ███╗   ██╗███████╗          
+                                  ██║    ██║██╔════╝██║     ██║         ██╔══██╗██╔═══██╗████╗  ██║██╔════╝          
+                                  ██║ █╗ ██║█████╗  ██║     ██║         ██║  ██║██║   ██║██╔██╗ ██║█████╗            
+                                  ██║███╗██║██╔══╝  ██║     ██║         ██║  ██║██║   ██║██║╚██╗██║██╔══╝            
+                        ██╗██╗    ╚███╔███╔╝███████╗███████╗███████╗    ██████╔╝╚██████╔╝██║ ╚████║███████╗    ██╗██╗
+                        ╚═╝╚═╝     ╚══╝╚══╝ ╚══════╝╚══════╝╚══════╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚══════╝    ╚═╝╚═╝
+)";
+const string Well = R"(
+                                               █     █░▓█████  ██▓     ██▓       ▓█████▄  ▒█████   ███▄    █ ▓█████              
+                                              ▓█░ █ ░█░▓█   ▀ ▓██▒    ▓██▒       ▒██▀ ██▌▒██▒  ██▒ ██ ▀█   █ ▓█   ▀              
+                                              ▒█░ █ ░█ ▒███   ▒██░    ▒██░       ░██   █▌▒██░  ██▒▓██  ▀█ ██▒▒███                
+                                              ░█░ █ ░█ ▒▓█  ▄ ▒██░    ▒██░       ░▓█▄   ▌▒██   ██░▓██▒  ▐▌██▒▒▓█  ▄              
+                                  ██▓  ██▓    ░░██▒██▓ ░▒████▒░██████▒░██████▒   ░▒████▓ ░ ████▓▒░▒██░   ▓██░░▒████▒    ██▓  ██▓ 
+                                  ▒▓▒  ▒▓▒    ░ ▓░▒ ▒  ░░ ▒░ ░░ ▒░▓  ░░ ▒░▓  ░    ▒▒▓  ▒ ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ░░ ▒░ ░    ▒▓▒  ▒▓▒ 
+                                  ░▒   ░▒       ▒ ░ ░   ░ ░  ░░ ░ ▒  ░░ ░ ▒  ░    ░ ▒  ▒   ░ ▒ ▒░ ░ ░░   ░ ▒░ ░ ░  ░    ░▒   ░▒  
+                                  ░    ░        ░   ░     ░     ░ ░     ░ ░       ░ ░  ░ ░ ░ ░ ▒     ░   ░ ░    ░       ░    ░   
+                                   ░    ░         ░       ░  ░    ░  ░    ░  ░      ░        ░ ░           ░    ░  ░     ░    ░  
+                                   ░    ░                                         ░                                      ░    ░  
+)";
+
 bool containsHealingPotion(const vector<Item*>& items) {
   return any_of(items.begin(), items.end(), [](Item* item) {
     return dynamic_cast<HealingPotion*>(item) != nullptr;
@@ -66,9 +131,31 @@ void combatMenu(Human* player) {
   cout << "3. View Inventory" << endl;
   cout << "Choose an action: ";
 }
-void combat(Human* player, Enemy* enemy) {
-  cout << "\nA wild " << enemy->getName() << " appears!\n" << endl;
 
+void displayHealthBar(string name, int currentHP, int maxHP) {
+  int barLength = 50;
+  double healthRatio = static_cast<double>(currentHP) / maxHP;
+  int healthUnits = static_cast<int>(barLength * healthRatio);
+  const string bar = R"(█)";
+  cout << name << " HP: ";
+  cout << "[";
+  for (int i = 0; i < healthUnits; ++i) {
+    cout << "\033[31;40m" << bar << "\033[30;0m";
+  }
+
+  for (int i = 0; i < barLength - healthUnits; ++i) {
+    cout << "-";
+  }
+
+  cout << "] " << currentHP << "/" << maxHP << endl;
+}
+
+void combat(Human* player, Enemy* enemy) {
+  int enemy_max_hp = enemy->get_enemy_hp();
+  cout << "\nA wild " << enemy->getName() << " appears!\n" << endl;
+  displayHealthBar(player->getName(), player->getCurrentHP(),
+                   player->getMaxHP());
+  displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
   while (player->getCurrentHP() > 0 && enemy->get_enemy_hp() > 0) {
     combatMenu(player);
     int choice;
@@ -76,7 +163,7 @@ void combat(Human* player, Enemy* enemy) {
     switch (choice) {
       case 1:
         enemy->takeDamage(player->getAttack());
-        cout << player->getName() << " attacks! " << enemy->getName() << " has "
+        cout << player->getName() << " attacks! " << enemy->getName() << "has "
              << enemy->get_enemy_hp() << " health left." << endl;
         break;
       case 2:
@@ -105,6 +192,11 @@ void combat(Human* player, Enemy* enemy) {
 
     if (enemy->get_enemy_hp() <= 0) {
       cout << "\nYou defeated the " << enemy->getName() << "!" << endl;
+      displayHealthBar(player->getName(), player->getCurrentHP(),
+                       player->getMaxHP());
+      cout << endl;
+      displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
+      cout << endl << "\033[38;2;45;220;45;48;2;24;24;24m" << well2 << "\033[38;2;255;255;255;48;2;24;24;24m" ;
       break;
     }
 
@@ -112,9 +204,16 @@ void combat(Human* player, Enemy* enemy) {
     player->takeDamage(enemy->get_enemy_atk());
     cout << enemy->getName() << " attacks! " << player->getName() << " has "
          << player->getCurrentHP() << " HP left." << endl;
+    displayHealthBar(player->getName(), player->getCurrentHP(),
+                     player->getMaxHP());
+    cout << endl;
+    displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
     if (player->getCurrentHP() <= 0) {
-      cout << "\nYou were defeated by the " << enemy->getName() << "." << endl;
-      break;
+      // cout << "\nYou were defeated by the " << enemy->getName() << "." <<
+      // endl;
+      cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
+      return;
+      // break;
     }
   }
 }
@@ -179,8 +278,8 @@ void gameLoop(GameState& gameState) {
 
 int main() {
   // Initialize a player character with some gold
-  Human* playerCharacter = new Paladin("Player", 18, 100.0, 10.0, 5.0,
-                                       characterType::PALADIN, 10000000);
+  Human* playerCharacter =
+      new Paladin("Player", 18, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
   GameState gameState(playerCharacter);
   gameLoop(gameState);
 

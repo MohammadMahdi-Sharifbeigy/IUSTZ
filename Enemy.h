@@ -23,8 +23,9 @@ class Enemy : public Character {
  public:
   Enemy() {}
   Enemy(int characterLevel) {
-    hp = getRandomNumber(characterLevel, characterLevel + 10);
+    hp = getRandomNumber(characterLevel, characterLevel + 10) + 100;
     giveExp = level * 10 * attack / defense;
+    // attack = getRandomNumber(characterLevel, characterLevel + 10) + 10;
   }
 
  protected:
