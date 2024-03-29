@@ -86,6 +86,24 @@ void displayHealthBar(string name, int currentHP, int maxHP) {
   cout << "] " << currentHP << "/" << maxHP << endl;
 }
 
+void displayXPBar(Human* player) {
+  int barLength = 50;
+  double xpRatio =
+      static_cast<double>(player->getCurrXP()) / player->getMaxXP();
+  int xpUnits = static_cast<int>(barLength * xpRatio);
+  const string bar = R"(█)";
+  cout << "XP: ";
+  cout << "[";
+  for (int i = 0; i < xpUnits; ++i) {
+    cout << "\033[31;37m" << bar << "\033[30;0m";
+  }
+
+  for (int i = 0; i < barLength - xpUnits; ++i) {
+    cout << "-";
+  }
+
+  cout << "] " << player->getCurrXP() << "/" << player->getMaxXP() << endl;
+}
 void combat(Human* player, Enemy* enemy) {
   int enemy_max_hp = enemy->get_enemy_hp();
   cout << "\nA wild " << enemy->getName() << " appears!\n" << endl;
@@ -128,8 +146,19 @@ void combat(Human* player, Enemy* enemy) {
 
     if (enemy->get_enemy_hp() <= 0) {
       cout << "\nYou defeated the " << enemy->getName() << "!" << endl;
-      cout << endl
-           << "\033[38;2;45;220;45m" << well2 << "\033[38;2;255;255;255m";
+      if (player->getCurrXP() + enemy->get_enemy_exp() >= player->getMaxXP()) {
+        cout << "You gained " << enemy->get_enemy_exp() << " experience points."
+             << endl;
+        player->levelUp();
+        cout << "You leveled up! You are now level " << player->getLevel()
+             << "!" << endl;
+      } else {
+        player->setCurrXP(player->getCurrXP() + enemy->get_enemy_exp());
+        cout << "You gained " << enemy->get_enemy_exp() << " experience points."
+             << endl;
+        displayXPBar(player);
+      }
+      cout << endl << "\033[38;2;45;220;45m" << well2 << "\033[0m";
       break;
     }
 
@@ -139,7 +168,7 @@ void combat(Human* player, Enemy* enemy) {
          << player->getCurrentHP() << " HP left." << endl;
     if (player->getCurrentHP() <= 0) {
       cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
-      return;
+      exit(0);
     }
     displayHealthBar(player->getName(), player->getCurrentHP(),
                      player->getMaxHP());

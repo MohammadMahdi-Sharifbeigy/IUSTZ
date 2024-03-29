@@ -26,7 +26,7 @@ Paladin::Paladin(const string& name,
   accuracy = 10.0;
   pace = 10.0;
   mind = 10.0;
-  this->coin = coin; 
+  this->coin = coin;
 }
 
 Paladin::~Paladin() {
@@ -62,26 +62,6 @@ void Paladin::performDefense(Character& attacker) {
     Paladin::currHP -= Paladin::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
-  }
-}
-
-void Paladin::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
-    cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
-    setDefense(getDefense() + 5);
-    setLevel(getLevel() + 1);
-    setStamina(getStamina() + 15);
-    setStrength(getStrength() + 2);
-    setEndurance(getEndurance() + 2);
-    setAccuracy(getAccuracy() + 2);
-    setPace(getPace() + 2);
-    setMind(getMind() + 2);
-    setCurrXP(getCurrXP() - getMaxXP());
-    setMaxXP(getMaxXP() + 25);
-
-    cout << "Your level is now " << getLevel() << "!" << endl;
   }
 }
 

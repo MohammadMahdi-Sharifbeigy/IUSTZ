@@ -24,7 +24,6 @@ class Paladin : public Human {
 
   void performAttack(Character& target) override;
   void performDefense(Character& attacker) override;
-  virtual void levelUp() override;
   void PaladinToFile(string username);
   void FileToPaladin(string username);
 };

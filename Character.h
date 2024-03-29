@@ -56,7 +56,7 @@ class Character {
   }
   void setCurrentHPAttack(double additionalHP) { currHP -= additionalHP; }
   void setCurrentXP(int XP) {
-    currXP += XP;
+    currXP = XP;
     if (currXP >= maxXP) {
       this->levelUp();
     }
