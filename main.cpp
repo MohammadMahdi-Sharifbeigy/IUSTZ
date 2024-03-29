@@ -155,6 +155,7 @@ void combat(Human* player, Enemy* enemy) {
   cout << "\nA wild " << enemy->getName() << " appears!\n" << endl;
   displayHealthBar(player->getName(), player->getCurrentHP(),
                    player->getMaxHP());
+  cout << endl;
   displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
   while (player->getCurrentHP() > 0 && enemy->get_enemy_hp() > 0) {
     combatMenu(player);

@@ -1,6 +1,7 @@
 #include "RecommendCharacter.h"
 #include <iostream>
 #include <vector>
+
 #include "CheckNumber.h"
 
 using namespace std;

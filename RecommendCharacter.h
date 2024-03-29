@@ -1,6 +1,10 @@
 #ifndef RecommendCharacter_h
 #define RecommendCharacter_h
 
+#include <string>
+
+using namespace std;
+
 struct question {
   string question;
   string option1;
