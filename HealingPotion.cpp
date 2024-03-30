@@ -8,7 +8,7 @@ HealingPotion::HealingPotion(string name,
                              bool vIP,
                              double potency,
                              int count)
-    : Consumable(name, price, vIP, potency, count), ID(29) {}
+    : Consumable(name, price, vIP, potency, count){this->ID=29;};
 
 void HealingPotion::increaseHP(Human& target) {
   target.setCurrentHP(target.getCurrentHP() + potency);
