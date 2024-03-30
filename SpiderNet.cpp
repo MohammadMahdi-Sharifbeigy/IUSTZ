@@ -7,4 +7,4 @@ SpiderNet::SpiderNet(string name,
                      bool vIP,
                      double synergyDamage,
                      int count)
-    : Throwable(name, price, vIP, synergyDamage, count), ID(27){};
+    : Throwable(name, price, vIP, synergyDamage, count){this->ID=27;};
