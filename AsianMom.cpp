@@ -148,14 +148,14 @@ void AsianMom::AsianMomToFile(string username) {
   int check = 0;
   while (getline(users, name)) {
     getline(users, role);
-    if (name == username && role == "AsianMom") {
+    if (name == username && role == "ASAINMOM") {
       check++;
       break;
     }
   }
   if (check == 0) {
     ofstream usersfile("usernames.", ios::app);
-    usersfile << username << '\n' << "AsianMom" << '\n';
+    usersfile << username << '\n' << "ASIANMOM" << '\n';
   }
 }
 
@@ -210,9 +210,8 @@ void AsianMom::FileToAsianMom(string username) {
     getline(file, scount);
     count = stoi(scount);
     ID = stoi(sID);
-    Human* human = Human();
-    ItemFactory itemfactory = ItemFactory();
-    Item* item = itemfactory.createItem(ID,human,true);
+      Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+    Item* item = ItemFactory::createItem(ID,human,true);
     item->setCount(count);
     this->addInventory(item);}
 }
@@ -227,5 +226,4 @@ void AsianMom::FileToAsianMom(string username) {
     //     Item *item = Item(name, price, false, count);
     //     inventory.push_back(item);
     //   }
-  }
-}
+ 
