@@ -13,6 +13,7 @@ class Sniper : public Human {
   AttackStrategy* attackStrategy;
 
  public:
+  Sniper() = default;
   Sniper(const string& name,
          int age,
          double hp,

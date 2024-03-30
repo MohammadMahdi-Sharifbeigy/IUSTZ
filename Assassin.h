@@ -13,6 +13,7 @@ class Assassin : public Human {
   AttackStrategy* attackStrategy;
 
  public:
+  Assassin() = default;
   Assassin(const string& name,
            int age,
            double hp,

@@ -13,6 +13,7 @@ class AsianMom : public Human {
   AttackStrategy* attackStrategy;
 
  public:
+  AsianMom() = default;
   AsianMom(const string& name,
            int age,
            double hp,
