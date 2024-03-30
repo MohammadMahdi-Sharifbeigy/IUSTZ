@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Human.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -68,8 +69,8 @@ void Wizard::performDefense(Character& attacker) {
 void Wizard::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
+    setMaxHP(getMaxHP() + 20); // Lower HP increase
+    setAttack(getAttack() + 10); // Moderate attack increase
     setDefense(getDefense() + 5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
@@ -77,7 +78,7 @@ void Wizard::levelUp() {
     setEndurance(getEndurance() + 2);
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
-    setMind(getMind() + 2);
+    setMind(getMind() + 5); // Wizards are known for their wisdom and magic
     setCurrXP(getCurrXP() - getMaxXP());
     setMaxXP(getMaxXP() + 25);
 
@@ -224,5 +225,3 @@ for (int i = 0; i < n; i++) {
     //   Item *item = Item(name, price, false, count);
     //   inventory.push_back(item);
     // }
-  }
-}

@@ -6,6 +6,7 @@
 #include "CharacterType.h"
 #include "Enemy.h"
 #include "Human.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -71,16 +72,16 @@ void AsianMom::performDefense(Character& attacker) {
 void AsianMom::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
-    setDefense(getDefense() + 5);
+    setMaxHP(getMaxHP() + 20); // Lower HP increase
+    setAttack(getAttack() + 5); // Lower attack increase
+    setDefense(getDefense() + 5); // Lower defense increase
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
     setEndurance(getEndurance() + 2);
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
-    setMind(getMind() + 2);
+    setMind(getMind() + 10); // Asian Moms are known for their wisdom
     setCurrXP(getCurrXP() - getMaxXP());
     setMaxXP(getMaxXP() + 25);
 
@@ -148,7 +149,7 @@ void AsianMom::AsianMomToFile(string username) {
   int check = 0;
   while (getline(users, name)) {
     getline(users, role);
-    if (name == username && role == "ASAINMOM") {
+    if (name == username && role == "ASIANMOM") {
       check++;
       break;
     }
@@ -210,7 +211,7 @@ void AsianMom::FileToAsianMom(string username) {
     getline(file, scount);
     count = stoi(scount);
     ID = stoi(sID);
-      Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+    Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
     Item* item = ItemFactory::createItem(ID,human,true);
     item->setCount(count);
     this->addInventory(item);}
@@ -226,4 +227,3 @@ void AsianMom::FileToAsianMom(string username) {
     //     Item *item = Item(name, price, false, count);
     //     inventory.push_back(item);
     //   }
- 

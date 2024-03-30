@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Human.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -68,9 +69,9 @@ void SuperHero::performDefense(Character& attacker) {
 void SuperHero::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
-    setDefense(getDefense() + 5);
+    setMaxHP(getMaxHP() + 30); // Moderate HP increase
+    setAttack(getAttack() + 15); // Superheroes have strong attacks
+    setDefense(getDefense() + 5); // Moderate defense increase
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
@@ -224,5 +225,3 @@ void SuperHero::FileToSuperHero(string username) {
     //   Item *item = Item(name, price, false, count);
     //   inventory.push_back(item);
     // }
-  }
-}

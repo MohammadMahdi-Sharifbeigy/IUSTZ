@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Human.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -68,14 +69,14 @@ void Sniper::performDefense(Character& attacker) {
 void Sniper::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
+    setMaxHP(getMaxHP() + 20); // Moderate HP increase
+    setAttack(getAttack() + 20); // Snipers have high attack due to precision strikes
     setDefense(getDefense() + 5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
     setEndurance(getEndurance() + 2);
-    setAccuracy(getAccuracy() + 2);
+    setAccuracy(getAccuracy() + 5); // High accuracy increase, crucial for snipers
     setPace(getPace() + 2);
     setMind(getMind() + 2);
     setCurrXP(getCurrXP() - getMaxXP());
@@ -224,5 +225,3 @@ void Sniper::FileToSniper(string username) {
     //   Item *item = Item(name, price, false, count);
     //   inventory.push_back(item);
     // }
-  }
-}

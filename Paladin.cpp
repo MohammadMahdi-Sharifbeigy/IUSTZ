@@ -1,10 +1,13 @@
 #include "Paladin.h"
 #include <fstream>
 #include <iostream>
+#include <string>
 #include "AttackStrategy.h"
 #include "Character.h"
 #include "CharacterType.h"
 #include "Human.h"
+#include "Enemy.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -62,6 +65,26 @@ void Paladin::performDefense(Character& attacker) {
     Paladin::currHP -= Paladin::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
+  }
+}
+
+void Paladin::levelUp() {
+  while (getCurrentXP() >= getMaxXP()) {
+    cout << "You have leveled up!" << endl;
+    setMaxHP(getMaxHP() + 50); // Paladins get a big HP boost
+    setAttack(getAttack() + 5); // Moderate attack increase
+    setDefense(getDefense() + 10); // Paladins are known for their strong defense
+    setLevel(getLevel() + 1);
+    setStamina(getStamina() + 15);
+    setStrength(getStrength() + 2);
+    setEndurance(getEndurance() + 2);
+    setAccuracy(getAccuracy() + 2);
+    setPace(getPace() + 2);
+    setMind(getMind() + 2);
+    setCurrXP(getCurrXP() - getMaxXP());
+    setMaxXP(getMaxXP() + 25);
+
+    cout << "Your level is now " << getLevel() << "!" << endl;
   }
 }
 
@@ -201,5 +224,3 @@ void Paladin::FileToPaladin(string username) {
     //     Item* item = Item(name,price,false,count );
     //     inventory.push_back(item);
     // }
-  }
-}

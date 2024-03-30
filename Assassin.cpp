@@ -6,6 +6,7 @@
 #include "CharacterType.h"
 #include "Enemy.h"
 #include "Human.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -68,16 +69,16 @@ void Assassin::performDefense(Character& attacker) {
 void Assassin::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
-    setDefense(getDefense() + 5);
+    setMaxHP(getMaxHP() + 25); // Assassins have moderate HP increase
+    setAttack(getAttack() + 30); // Assassins have very high attack due to their deadly skills
+    setDefense(getDefense() + 10);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
-    setEndurance(getEndurance() + 2);
-    setAccuracy(getAccuracy() + 2);
+    setEndurance(getEndurance() + 10); // Increase endurance, representing physical stamina
+    setAccuracy(getAccuracy() + 10); // High accuracy increase, crucial for assassins
     setPace(getPace() + 2);
-    setMind(getMind() + 2);
+    setMind(getMind() + 7); // Increase mind, representing strategic thinking
     setCurrXP(getCurrXP() - getMaxXP());
     setMaxXP(getMaxXP() + 25);
 
@@ -224,5 +225,3 @@ void Assassin::FileToAssasin(string username) {
     //   Item *item = Item(name, price, false, count);
     //   inventory.push_back(item);
     // }
-  }
-}

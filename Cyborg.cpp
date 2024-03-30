@@ -6,6 +6,8 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Human.h"
+#include "Enemy.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -68,9 +70,9 @@ void Cyborg::performDefense(Character& attacker) {
 void Cyborg::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
-    setDefense(getDefense() + 5);
+    setMaxHP(getMaxHP() + 40); // Cyborgs have high HP due to their mechanical nature
+    setAttack(getAttack() + 15); // High attack increase due to advanced weaponry
+    setDefense(getDefense() + 10); // High defense increase due to armored body
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
@@ -223,5 +225,3 @@ void Cyborg::FileToCyborg(string username) {
     //   Item *item = new RegularItem(name, convertedPrice, count);
     //   inventory.push_back(item);
     // }
-  }
-}
