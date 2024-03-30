@@ -135,10 +135,8 @@ void SuperHero::SuperHeroToFile(string username) {
        << this->mind << '\n'
        << this->inventorySize() << '\n';
   for (int i = 0; i < this->inventorySize(); i++) {
-    file << inventory[i]->getName() << '\n'
-         << inventory[i]->getCount() << '\n'
-         << inventory[i]->isVIP() << '\n'
-         << inventory[i]->getPrice() << '\n';
+    file << inventory[i]->getID() << '\n'
+         << inventory[i]->getCount() << '\n';
   }
   ifstream users;
   users.open("usernames.csv");
@@ -153,7 +151,7 @@ void SuperHero::SuperHeroToFile(string username) {
     }
   }
   if (check == 0) {
-    ofstream usersfile("usernames", ios::app);
+    ofstream usersfile("usernames.", ios::app);
     usersfile << username << '\n' << "SuperHero" << '\n';
   }
 }
