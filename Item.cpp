@@ -7,8 +7,9 @@ Item::Item(const string& name, double price, bool VIP, int count)
 
 Item::~Item() {}
 
-int getID(){
-   return ID}
+int Item::getID() const {
+   return ID;
+       }
 
 string Item::getName() const {
   return name;
