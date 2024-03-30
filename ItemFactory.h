@@ -53,6 +53,7 @@
 
 class ItemFactory{
 public:
+    ItemFactory() =  default;
     static Item *createItem(int choice, Human *human, bool login);
 };
 
