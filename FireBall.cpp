@@ -7,4 +7,4 @@ FireBall::FireBall(string name,
                    bool vIP,
                    double synergyDamage,
                    int count)
-    : Throwable(name, price, vIP, synergyDamage, count), ID(24){};
+    : Throwable(name, price, vIP, synergyDamage, count){this->ID=24;};
