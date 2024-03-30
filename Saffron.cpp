@@ -4,7 +4,7 @@
 using namespace std;
 
 Saffron::Saffron(string name, double price, bool vIP, double potency, int count)
-    : Consumable(name, price, vIP, potency, count) {this->ID=36;}
+    : Consumable(name, price, vIP, potency, count) {this->ID=35;}
 
 void Saffron::increaseDamage(Character& target) {
   target.setAttack(target.getAttack() + potency);
