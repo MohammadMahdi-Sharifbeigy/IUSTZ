@@ -206,8 +206,9 @@ void Cyborg::FileToCyborg(string username) {
     getline(file, scount);
     count = stoi(scount);
     ID = stoi(sID);
+    Human* human = Human();
     ItemFactory itemfactory = ItemFactory();
-    Item* item = itemfactory.createItem(ID, ,true);
+    Item* item = itemfactory.createItem(ID,human,true);
     item->setCount(count);
     this->addInventory(item);}
 }
