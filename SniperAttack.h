@@ -10,16 +10,20 @@ class SniperAttack : public AttackStrategy {
  public:
   SniperAttack() : AttackStrategy(){};
   double attackEnemy(Character* currCharacter, Enemy* currEnemy) {
-    return ((((((2 * currCharacter->getLevel()) / 5) + 2) * 35 *
-                  currCharacter->getAttack()) *
-                  currCharacter->getMaxHP() / currCharacter->getCurrentHP()) /
-                  currCharacter->getDefense() * 5) + 2;
+    // Snipers have very high attack due to precision strikes
+    Human* human = dynamic_cast<Human*>(currCharacter);
+    if (human) {
+      return (3 * human->getLevel() * human->getAccuracy() * human->getMaxHP() / human->getCurrentHP()) / currEnemy->get_enemy_def();
+    }
+    return 0;  // or some default value
   }
   double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
-    return ((((((2 * currCharacter->getLevel()) / 5) + 2) * 35 *
-                  currCharacter->getDefense()) *
-                  currCharacter->getMaxHP() / currCharacter->getCurrentHP()) /
-                  currEnemy->get_enemy_atk() * 5) + 2;
+    // Snipers have low defense
+    Human* human = dynamic_cast<Human*>(currCharacter);
+    if (human) {
+      return (0.5 * human->getLevel() * human->getDefense() * human->getMaxHP() / human->getCurrentHP()) / currEnemy->get_enemy_atk();
+    }
+    return 0;  // or some default value
   }
 };
 

@@ -10,17 +10,22 @@ class WizardAttack : public AttackStrategy {
  public:
   WizardAttack() : AttackStrategy(){};
   double attackEnemy(Character* currCharacter, Enemy* currEnemy) {
-    return ((((((2 * currCharacter->getLevel()) / 5) + 2) * 35 *
-                  currCharacter->getAttack()) *
-                  currCharacter->getMaxHP() / currCharacter->getCurrentHP()) /
-                  currCharacter->getDefense() * 5) + 2;
+    // Wizards have high attack due to their magic
+    Human* human = dynamic_cast<Human*>(currCharacter);
+    if (human) {
+      return (2 * human->getLevel() * human->getMind() * human->getMaxHP() / human->getCurrentHP())
+                / currEnemy->get_enemy_def();
+    }
+    return 0;  // or some default value
   }
-  double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
-    return ((((((2 * currCharacter->getLevel()) / 5) + 2) * 35 *
-                  currCharacter->getDefense()) *
-                  currCharacter->getMaxHP() / currCharacter->getCurrentHP()) /
-                  currEnemy->get_enemy_atk() * 5) + 2;
-  }
+    double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
+      // Wizards have high defense due to their magic
+      Human* human = dynamic_cast<Human*>(currCharacter);
+      if (human) {
+        return (2 * human->getLevel() * human->getMind() * human->getMaxHP() / human->getCurrentHP()) / currEnemy->get_enemy_atk();
+      }
+      return 0;  // or some default value
+    }
 };
 
 #endif  // WIZARDATTACK_H

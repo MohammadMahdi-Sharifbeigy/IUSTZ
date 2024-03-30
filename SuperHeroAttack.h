@@ -10,16 +10,15 @@ class SuperHeroAttack : public AttackStrategy {
  public:
   SuperHeroAttack() : AttackStrategy(){};
   double attackEnemy(Character* currCharacter, Enemy* currEnemy) {
-    return ((((((2 * currCharacter->getLevel()) / 5) + 2) * 35 *
-                  currCharacter->getAttack()) *
-                  currCharacter->getMaxHP() / currCharacter->getCurrentHP()) /
-                  currCharacter->getDefense() * 5) + 2;
+    // Superheroes have high attack
+    return (2 * currCharacter->getLevel() * currCharacter->getAttack() * currCharacter->getMaxHP() 
+          /currCharacter->getCurrentHP()) / currEnemy->get_enemy_def();
   }
+
   double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
-    return ((((((2 * currCharacter->getLevel()) / 5) + 2) * 35 *
-                  currCharacter->getDefense()) *
-                  currCharacter->getMaxHP() / currCharacter->getCurrentHP()) /
-                  currEnemy->get_enemy_atk() * 5) + 2;
+    // Superheroes have balanced defense
+    return (currCharacter->getLevel() * currCharacter->getDefense() * currCharacter->getMaxHP()
+           /currCharacter->getCurrentHP()) / currEnemy->get_enemy_atk();
   }
 };
 
