@@ -53,7 +53,7 @@
 
 class ItemFactory{
 public:
-    static Item *createItem(int choice, Human *human);
+    static Item *createItem(int choice, Human *human, bool login);
 };
 
 #endif /* ITEMFACTORY_H */
