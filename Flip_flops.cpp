@@ -7,4 +7,4 @@ Flipflops::Flipflops(string name,
                      bool vIP,
                      double synergyDamage,
                      int count)
-    : Throwable(name, price, vIP, synergyDamage, count), ID(28){};
+    : Throwable(name, price, vIP, synergyDamage, count){this->ID=28;};
