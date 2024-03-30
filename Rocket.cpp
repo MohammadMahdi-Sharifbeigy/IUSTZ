@@ -8,4 +8,4 @@ Rocket::Rocket(string name,
                int number,
                double synergyDamage,
                int count)
-    : Throwable(name, price, vIP, synergyDamage, count), ID(25){};
+    : Throwable(name, price, vIP, synergyDamage, count){this->ID=25;};
