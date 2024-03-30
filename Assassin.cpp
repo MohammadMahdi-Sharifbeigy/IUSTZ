@@ -201,14 +201,18 @@ void Assassin::FileToAssasin(string username) {
   getline(file, inventorysize);
   int n = stoi(inventorysize);
   for (int i = 0; i < n; i++) {
-    string name, scount, vip, sprice;
-    int count;
-    // double price;
-    getline(file, name);
+    string sID, scount;
+    int count, ID;
+    getline(file, sID);
     getline(file, scount);
-    getline(file, vip);
-    getline(file, sprice);
     count = stoi(scount);
+    ID = stoi(sID);
+    Human* human = Human();
+    ItemFactory itemfactory = ItemFactory();
+    Item* item = itemfactory.createItem(ID,human,true);
+    item->setCount(count);
+    this->addInventory(item);}
+}
     // double convertedPrice = atof(sprice.c_str());
     // if (vip == "true")
     // {
