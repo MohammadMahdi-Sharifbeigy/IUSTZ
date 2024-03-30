@@ -8,7 +8,7 @@ AraghNana::AraghNana(string name,
                      bool vIP,
                      double potency,
                      int count)
-    : Consumable(name, price, vIP, potency, count) , ID(36) {}
+    : Consumable(name, price, vIP, potency, count)  {this->ID=36;}
 
 void AraghNana::increaseDefense(Character& target) {
   target.setDefense(target.getDefense() + getPotency());
