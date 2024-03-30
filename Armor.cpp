@@ -11,4 +11,4 @@ Armor::Armor(string name,
              string type,
              double synergyDamage,
              int count)
-    : Passive(name, price, vIP, perk, type, synergyDamage, count) {}
+    : Passive(name, price, vIP, perk, type, synergyDamage, count) , ID(1) {}
