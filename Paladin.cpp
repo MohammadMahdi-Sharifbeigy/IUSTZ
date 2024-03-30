@@ -210,7 +210,7 @@ void Paladin::FileToPaladin(string username) {
     getline(file, scount);
     count = stoi(scount);
     ID = stoi(sID);
-      Human* human = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+      Human* human = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
     Item* item = ItemFactory::createItem(ID,human,true);
     item->setCount(count);
     this->addInventory(item);}

@@ -208,7 +208,7 @@ for (int i = 0; i < n; i++) {
     getline(file, scount);
     count = stoi(scount);
     ID = stoi(sID);
-     Human* human = new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+     Human* human = new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
     Item* item = ItemFactory::createItem(ID,human,true);
     item->setCount(count);
     this->addInventory(item);}
