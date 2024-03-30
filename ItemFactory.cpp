@@ -5,7 +5,7 @@ using namespace std;
 
 
 
-ItemFactory() =  default;
+
 Item* ItemFactory::createItem(int choice, Human* human, bool login) {
   Item* item = nullptr;
   string name, perk = "Default Perk", type = "Default Type";
