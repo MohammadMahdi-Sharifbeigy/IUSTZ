@@ -135,10 +135,8 @@ void Sniper::SniperToFile(string username) {
        << this->mind << '\n'
        << this->inventorySize() << '\n';
   for (int i = 0; i < this->inventorySize(); i++) {
-    file << inventory[i]->getName() << '\n'
-         << inventory[i]->getCount() << '\n'
-         << inventory[i]->isVIP() << '\n'
-         << inventory[i]->getPrice() << '\n';
+    file << inventory[i]->getID() << '\n'
+         << inventory[i]->getCount() << '\n';
   }
   ifstream users;
   users.open("usernames.csv");
