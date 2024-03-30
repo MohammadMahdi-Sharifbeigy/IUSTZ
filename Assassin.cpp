@@ -109,7 +109,7 @@ inline characterType stringToCharacterType(const string& str) {
 }
 
 void Assassin::AssasinToFile(string username) {
-  string checktxt = username.substr(username.size() - 4, 4);
+   string checktxt = username.substr(username.size() - 4, 4);
   if (checktxt != ".csv") {
     username = username + ".csv";
   }
@@ -135,10 +135,8 @@ void Assassin::AssasinToFile(string username) {
        << this->mind << '\n'
        << this->inventorySize() << '\n';
   for (int i = 0; i < this->inventorySize(); i++) {
-    file << inventory[i]->getName() << '\n'
-         << inventory[i]->getCount() << '\n'
-         << inventory[i]->isVIP() << '\n'
-         << inventory[i]->getPrice() << '\n';
+    file << inventory[i]->getID() << '\n'
+         << inventory[i]->getCount() << '\n';
   }
   ifstream users;
   users.open("usernames.csv");
