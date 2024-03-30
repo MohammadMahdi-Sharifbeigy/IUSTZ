@@ -8,7 +8,7 @@ StaminaPotion::StaminaPotion(string name,
                              bool vIP,
                              double potency,
                              int count)
-    : Consumable(name, price, vIP, potency, count) {}
+    : Consumable(name, price, vIP, potency, count), ID(32) {}
 
 void StaminaPotion::increaseStamina(Character& target) {
   cout << "Stamina Increased!";
