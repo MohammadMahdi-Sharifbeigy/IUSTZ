@@ -13,8 +13,8 @@ class WizardAttack : public AttackStrategy {
     // Wizards have high attack due to their magic
     Human* human = dynamic_cast<Human*>(currCharacter);
     if (human) {
-      return (2 * human->getLevel() * human->getMind() * human->getMaxHP() / human->getCurrentHP())
-                / currEnemy->get_enemy_def();
+      return (2 * human->getLevel() * human->getMind() * ( human->getMaxHP() / human->getCurrentHP())
+                * (human->getAttack() / currEnemy->get_enemy_def()));
     }
     return 0;  // or some default value
   }
@@ -22,7 +22,8 @@ class WizardAttack : public AttackStrategy {
       // Wizards have high defense due to their magic
       Human* human = dynamic_cast<Human*>(currCharacter);
       if (human) {
-        return (2 * human->getLevel() * human->getMind() * human->getMaxHP() / human->getCurrentHP()) / currEnemy->get_enemy_atk();
+        return (2 * human->getLevel() * human->getMind() * (human->getMaxHP() / human->getCurrentHP()) 
+                  * ( human->getDefense()/currEnemy->get_enemy_atk()));
       }
       return 0;  // or some default value
     }

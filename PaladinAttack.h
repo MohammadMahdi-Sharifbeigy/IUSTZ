@@ -11,14 +11,14 @@ class PaladinAttack : public AttackStrategy {
   PaladinAttack() : AttackStrategy(){};
   double attackEnemy(Character* currCharacter, Enemy* currEnemy) {
   // Paladins have a balanced attack strategy
-  return (currCharacter->getLevel() * currCharacter->getAttack() * currCharacter->getMaxHP()
-         /currCharacter->getCurrentHP()) / currEnemy->get_enemy_def();
+  return (currCharacter->getLevel() * currCharacter->getAttack() * (currCharacter->getMaxHP()
+         /currCharacter->getCurrentHP()) * ( currCharacter->getAttack() / currEnemy->get_enemy_def()));
   }
 
   double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
   // Paladins have high defense
-  return (3 *currCharacter->getLevel() * currCharacter->getDefense() * currCharacter->getMaxHP() 
-         /currCharacter->getCurrentHP()) / currEnemy->get_enemy_atk();
+  return (3 *currCharacter->getLevel() * currCharacter->getDefense() * (currCharacter->getMaxHP() 
+            /currCharacter->getCurrentHP()) * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
   }
 };
 

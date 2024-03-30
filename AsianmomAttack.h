@@ -13,7 +13,7 @@ class AsianmomAttack : public AttackStrategy {
     // Asian Moms have moderate attack but high wisdom
     Human* human = dynamic_cast<Human*>(currCharacter);
     if (human) {
-      return (human->getLevel() * human->getMind() * human->getMaxHP() / human->getCurrentHP()) /currEnemy->get_enemy_def();
+      return (human->getLevel() * human->getMind() * (human->getAttack()  / currEnemy->get_enemy_def() - 1));
     }
     return 0;  // or some default value
   }
@@ -21,10 +21,10 @@ class AsianmomAttack : public AttackStrategy {
     // Asian Moms have high defense due to their wisdom
     Human* human = dynamic_cast<Human*>(currCharacter);
     if (human) {
-      return (human->getLevel() * human->getMind() * human->getMaxHP() / human->getCurrentHP()) / currEnemy->get_enemy_atk();
+      return (human->getLevel() * human->getMind() * ( human->getDefense()  / currEnemy->get_enemy_atk() - 1));
     }
     return 0;  // or some default value
   }
 };
 
-#endif  // SNIPERATTACK_H
+#endif  // ASIANMOMATTACK_H
