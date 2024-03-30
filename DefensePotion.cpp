@@ -8,7 +8,7 @@ DefensePotion::DefensePotion(string name,
                              bool vIP,
                              double potency,
                              int count)
-    : Consumable(name, price, vIP, potency, count),ID(31) {}
+    : Consumable(name, price, vIP, potency, count) {this->ID=31;}
 
 void DefensePotion::increaseDefense(Character& target) {
   target.setDefense(target.getDefense() + potency);
