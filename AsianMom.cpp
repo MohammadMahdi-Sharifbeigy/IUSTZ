@@ -149,14 +149,14 @@ void AsianMom::AsianMomToFile(string username) {
   int check = 0;
   while (getline(users, name)) {
     getline(users, role);
-    if (name == username && role == "ASIANMOM") {
+    if (name == username && role == "AsianMom") {
       check++;
       break;
     }
   }
   if (check == 0) {
     ofstream usersfile("usernames.", ios::app);
-    usersfile << username << '\n' << "ASIANMOM" << '\n';
+    usersfile << username << '\n' << "AsianMom" << '\n';
   }
 }
 
