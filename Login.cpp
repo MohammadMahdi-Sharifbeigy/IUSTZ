@@ -75,7 +75,8 @@ using namespace std;
 
 Human* Login(){
     cout<<"***Welcom to our game***"<<endl;
-    cout<<"1.Sign in"<<endl<<"2.Already have an account?"<<endl<<"Enter your choice:"<<endl;
+menu:
+    cout<<"1.Sign in"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
     int choice;
     string schoice;
     try{
@@ -324,34 +325,67 @@ Human* Login(){
                 if(role=="Paladin"){
                     Human* player = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
                     static_cast<Paladin*>(player)->FileToPaladin(username);
+                    if(player->getName() == "Error404" &&  player->getAge() == 0){
+                        cout<<"Sorry it seems like you don't have an account" <<endl;
+                        goto menu;
+                    }
                     return player;
                 }else if (role == "Assasin"){
                     Human* player =  new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
                     static_cast<Assassin*>(player)->FileToAssasin(username);
+                    if(player->getName() == "Error404"&&  player->getAge() == 0){
+                        cout<<"Sorry it seems like you don't have an account" <<endl;
+                        goto menu;
+                    }
                     return player;
                 }else if (role == "SuperHero"){
                     Human* player =  new SuperHero("name", 1, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
                     static_cast<SuperHero*>(player)->FileToSuperHero(username);
+                    if(player->getName() == "Error404" &&  player->getAge() == 0){
+                        cout<<"Sorry it seems like you don't have an account" <<endl;
+                        goto menu;
+                    }
                     return player;
                 }else if (role == "Sniper"){
                     Human* player =  new Sniper("name", 1, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
                     static_cast<Sniper*>(player)->FileToSniper(username);
+                    if(player->getName() == "Error404" &&  player->getAge() == 0){
+                        cout<<"Sorry it seems like you don't have an account" <<endl;
+                        goto menu;
+                    }
                     return player;
                 }else if (role == "Wizard"){
                     Human* player =  new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
                     static_cast<Wizard*>(player)->FileToWizard(username);
+                    if(player->getName() == "Error404" &&  player->getAge() == 0){
+                        cout<<"Sorry it seems like you don't have an account" <<endl;
+                        goto menu;
+                    }
                     return player;
                 }else if (role == "Cyborg"){
                     Human* player =  new Cyborg("name", 1, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
                     static_cast<Cyborg*>(player)->FileToCyborg(username);
+                    if(player->getName() == "Error404" &&  player->getAge() == 0){
+                        cout<<"Sorry it seems like you don't have an account" <<endl;
+                        goto menu;
+                    }
                     return player;
                 }else{
                     Human* player =  new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
                     static_cast<AsianMom*>(player)->FileToAsianMom(username);
+                    if(player->getName() == "Error404" &&  player->getAge() == 0){
+                        cout<<"Sorry it seems like you don't have an account" <<endl;
+                        goto menu;
+                    }
                     return player;
                     
                 }
+                break;
             }
+        }
+        if(check == 0){
+            cout<<"Sorry it seems like you don't have an account" <<endl;
+            goto menu;
         }
         
     }
