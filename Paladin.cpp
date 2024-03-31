@@ -168,7 +168,7 @@ void Paladin::FileToPaladin(string username) {
         username = username + ".csv";
     }
     ifstream file(username);
-    if( exists_test(username) && !std::filesystem::is_empty(username)){
+    if( file.good() && !std::filesystem::is_empty(username)){
         string line;
         getline(file, line);
         this->name = line;
