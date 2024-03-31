@@ -6,10 +6,11 @@
 #include "Enemy.h"
 #include "HumanEnemyAttack.h"
 #include "Human.h"
+#include "ItemFactory.h"
 
 class HumanEnemy : public Enemy {
 public:
-  HumanEnemy(Human& humanRef);
+  
 
   HumanEnemy(int level, Human& humanRef);
 

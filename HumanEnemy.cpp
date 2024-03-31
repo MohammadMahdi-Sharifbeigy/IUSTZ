@@ -2,10 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include "Paladin.h"
 
-HumanEnemy::HumanEnemy(Human& humanRef) : humanRef(humanRef) {
-    attackStrategy = new HumanEnemyAttack();
-}
+
 
 HumanEnemy::HumanEnemy(int level, Human& humanRef) : Enemy(level), humanRef(humanRef) {
     srand(time(NULL));
@@ -17,6 +16,22 @@ HumanEnemy::HumanEnemy(int level, Human& humanRef) : Enemy(level), humanRef(huma
     level = abs(level - 4 + rand() % 6) + 1;
     giveExp = level * 10 * attack / defense;
     role = getRandomRole();  // Set role randomly
+    Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+    int random = getRandomNumber(1,6);
+    Item* armor = ItemFactory::createItem(random,hum,true);
+    this->addInventory(armor);
+    random =  getRandomNumber(8,19);
+    Item* weapon = ItemFactory::createItem(random,hum,true);
+    this->addInventory(weapon);
+    random =  getRandomNumber(22,27);
+    Item* throwable = ItemFactory::createItem(random,hum,true);
+    this->addInventory(throwable,30);
+    random =  getRandomNumber(30,31);
+    Item* potion = ItemFactory::createItem(random,hum,true);
+    this->addInventory(potion);
+    Item* healingPotion = ItemFactory::createItem(29,hum,true);
+    this->addInventory(healingPotion,2);
+    
 }
 
 HumanEnemy::HumanEnemy(int level, Human& human, Human& humanRef) : Enemy(level), humanRef(humanRef) {
@@ -29,6 +44,21 @@ HumanEnemy::HumanEnemy(int level, Human& human, Human& humanRef) : Enemy(level),
     level = abs(level - 4 + rand() % 6) + 1;
     giveExp = level * 10 * attack / defense;
     setRoleBasedOnHuman(human);  // Set role based on the Human it is fighting
+    Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+    int random = getRandomNumber(1,6);
+    Item* armor = ItemFactory::createItem(random,hum,true);
+    this->addInventory(armor);
+    random =  getRandomNumber(8,19);
+    Item* weapon = ItemFactory::createItem(random,hum,true);
+    this->addInventory(weapon);
+    random =  getRandomNumber(22,27);
+    Item* throwable = ItemFactory::createItem(random,hum,true);
+    this->addInventory(throwable,30);
+    random =  getRandomNumber(30,31);
+    Item* potion = ItemFactory::createItem(random,hum,true);
+    this->addInventory(potion);
+    Item* healingPotion = ItemFactory::createItem(29,hum,true);
+    this->addInventory(healingPotion,2);
 }
 
 HumanEnemy::~HumanEnemy() {
