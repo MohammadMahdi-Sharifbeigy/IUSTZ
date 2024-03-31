@@ -11,6 +11,7 @@
 #include "Shop.h"
 #include "Sword.h"
 #include "Zombie.h"
+#include "Login.cpp"
 #include "font.h"
 
 using namespace std;
@@ -109,6 +110,7 @@ void combat(Human* player, Enemy* enemy) {
   cout << "\nA wild " << enemy->getName() << " appears!\n" << endl;
   displayHealthBar(player->getName(), player->getCurrentHP(),
                    player->getMaxHP());
+  cout << endl;
   displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
   while (player->getCurrentHP() > 0 && enemy->get_enemy_hp() > 0) {
     combatMenu(player);
@@ -237,8 +239,8 @@ void gameLoop(GameState& gameState) {
 
 int main() {
   // Initialize a player character with some gold
-  Human* playerCharacter =
-      new Paladin("Player", 18, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+  Human* playerCharacter = Login();
+      // new Paladin("Player", 18, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
   GameState gameState(playerCharacter);
   gameLoop(gameState);
 
