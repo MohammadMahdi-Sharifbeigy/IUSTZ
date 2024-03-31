@@ -11,6 +11,7 @@
 #include "Shop.h"
 #include "Sword.h"
 #include "Zombie.h"
+#include "Login.cpp"
 
 using namespace std;
 
@@ -273,8 +274,8 @@ void gameLoop(GameState& gameState) {
 
 int main() {
   // Initialize a player character with some gold
-  Human* playerCharacter =
-      new Paladin("Player", 18, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+  Human* playerCharacter = Login();
+      // new Paladin("Player", 18, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
   GameState gameState(playerCharacter);
   gameLoop(gameState);
 
