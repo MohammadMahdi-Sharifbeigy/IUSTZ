@@ -4,3 +4,4 @@
 *.o
 game
 game.exe
+*.csv
