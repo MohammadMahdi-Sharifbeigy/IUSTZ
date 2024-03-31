@@ -7,20 +7,20 @@
 #include "StrongZombie.h"
 #include "HumanEnemy.h"
 
-class EnemyFactory : public Enemy {
+
+class EnemyFactory
+{
 public:
-    static Enemy* CreatEnemy(characterType type, const string& name, int age, double hp, double attack, double defense, int level) {
-        switch (type) {
-            case WEAKZOMBIE:
-                return new WeakZombie(level);
-                break;
-            case STRONGZOMBIE:
-                return new StrongZombie(level);
-                break;
-            default:
-                return nullptr;
-        }
-    }
+    static Enemy *createEnemy(characterType type, int level, Human *humanRef = nullptr);
+        
+    static Enemy *createEnemy(characterType type, int level,Human* human, Human *humanRef = nullptr);
+        
+        
 };
+            
+            
+            
+            
+
 
 #endif  // HUMAN_FACTORY_H

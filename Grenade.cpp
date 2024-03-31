@@ -7,4 +7,4 @@ Grenade::Grenade(string name,
                  bool vIP,
                  double synergyDamage,
                  int count)
-    : Throwable(name, price, vIP, synergyDamage, count){};
+    : Throwable(name, price, vIP, synergyDamage, count){this->ID=26;};

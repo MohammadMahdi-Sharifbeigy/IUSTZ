@@ -13,6 +13,7 @@ class Wizard : public Human {
   AttackStrategy* attackStrategy;
 
  public:
+  Wizard() = default;
   Wizard(const string& name,
          int age,
          double hp,

@@ -10,7 +10,8 @@ enum characterType {
   SNIPER,
   WIZARD,
   WEAKZOMBIE,
-  STRONGZOMBIE
+  STRONGZOMBIE,
+  HUMANENEMY
 };
 
 #endif /* CHARACTER_TYPE_H */

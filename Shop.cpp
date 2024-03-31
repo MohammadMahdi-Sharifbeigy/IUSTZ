@@ -216,7 +216,7 @@ void Shop::buyItemWithCountLimit(int choice,
 }
 
 void Shop::buy(int choice, Human* human) {
-  Item* item = ItemFactory::createItem(choice, human);
+  Item* item = ItemFactory::createItem(choice, human, false);
   if (human->getCoin() < item->getPrice()) {
     cout << "Sorry, you don't have enough coins to buy the item." << endl;
   } else if (human->existInInventory(item)) {

@@ -5,6 +5,8 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Human.h"
+#include "ItemFactory.h"
+#include "FileCheck.h"
 
 using namespace std;
 
@@ -68,8 +70,8 @@ void Wizard::performDefense(Character& attacker) {
 void Wizard::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);
-    setAttack(getAttack() + 10);
+    setMaxHP(getMaxHP() + 20); // Lower HP increase
+    setAttack(getAttack() + 10); // Moderate attack increase
     setDefense(getDefense() + 5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
@@ -77,7 +79,7 @@ void Wizard::levelUp() {
     setEndurance(getEndurance() + 2);
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
-    setMind(getMind() + 2);
+    setMind(getMind() + 5); // Wizards are known for their wisdom and magic
     setCurrXP(getCurrXP() - getMaxXP());
     setMaxXP(getMaxXP() + 25);
 
@@ -134,12 +136,12 @@ void Wizard::WizardToFile(string username) {
        << this->pace << '\n'
        << this->mind << '\n'
        << this->inventorySize() << '\n';
-  for (int i = 0; i < this->inventorySize(); i++) {
-    file << inventory[i]->getName() << '\n'
-         << inventory[i]->getCount() << '\n'
-         << inventory[i]->isVIP() << '\n'
-         << inventory[i]->getPrice() << '\n';
-  }
+    if(this->inventorySize() > 0){
+        for (int i = 0; i < this->inventorySize(); i++) {
+            file << inventory[i]->getID() << '\n'
+            << inventory[i]->getCount() << '\n';
+        }
+    }
   ifstream users;
   users.open("usernames.csv");
   string name;
@@ -153,64 +155,74 @@ void Wizard::WizardToFile(string username) {
     }
   }
   if (check == 0) {
-    ofstream usersfile("usernames.", ios::app);
+    ofstream usersfile("usernames.csv", ios::app);
     usersfile << username << '\n' << "Wizard" << '\n';
   }
 }
 
 void Wizard::FileToWizard(string username) {
-  string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv") {
-    username = username + ".csv";
-  }
-  ifstream file(username);
-  string line;
-  getline(file, line);
-  this->name = line;
-  getline(file, line);
-  this->age = stoi(line);
-  getline(file, line);
-  this->role = stringToCharacterType(line);
-  getline(file, line);
-  this->level = stoi(line);
-  getline(file, line);
-  this->coin = stoi(line);
-  getline(file, line);
-  this->currHP = atof(line.c_str());
-  getline(file, line);
-  this->currXP = stoi(line);
-  getline(file, line);
-  this->attack = atof(line.c_str());
-  getline(file, line);
-  this->defense = atof(line.c_str());
-  getline(file, line);
-  this->stamina = atof(line.c_str());
-  // getline(file, line);
-  // this->armor = stringToItem(line);
-  // getline(file,line );
-  // this->weapon = stringToItem(line);
-  getline(file, line);
-  this->strength = atof(line.c_str());
-  getline(file, line);
-  this->endurance = atof(line.c_str());
-  getline(file, line);
-  this->accuracy = atof(line.c_str());
-  getline(file, line);
-  this->pace = atof(line.c_str());
-  getline(file, line);
-  this->mind = atof(line.c_str());
-  string inventorysize;
-  getline(file, inventorysize);
-  int n = stoi(inventorysize);
-  for (int i = 0; i < n; i++) {
-    string name, scount, vip, sprice;
-    int count;
-    // double price;
-    getline(file, name);
-    getline(file, scount);
-    getline(file, vip);
-    getline(file, sprice);
-    count = stoi(scount);
+    string checktxt = username.substr(username.size() - 4, 4);
+    if (checktxt != ".csv") {
+        username = username + ".csv";
+    }
+    ifstream file(username);
+    if( file.good() && !std::filesystem::is_empty(username)){
+        string line;
+        getline(file, line);
+        this->name = line;
+        getline(file, line);
+        this->age = stoi(line);
+        getline(file, line);
+        this->role = stringToCharacterType(line);
+        getline(file, line);
+        this->level = stoi(line);
+        getline(file, line);
+        this->coin = stoi(line);
+        getline(file, line);
+        this->currHP = atof(line.c_str());
+        getline(file, line);
+        this->currXP = stoi(line);
+        getline(file, line);
+        this->attack = atof(line.c_str());
+        getline(file, line);
+        this->defense = atof(line.c_str());
+        getline(file, line);
+        this->stamina = atof(line.c_str());
+        // getline(file, line);
+        // this->armor = stringToItem(line);
+        // getline(file,line );
+        // this->weapon = stringToItem(line);
+        getline(file, line);
+        this->strength = atof(line.c_str());
+        getline(file, line);
+        this->endurance = atof(line.c_str());
+        getline(file, line);
+        this->accuracy = atof(line.c_str());
+        getline(file, line);
+        this->pace = atof(line.c_str());
+        getline(file, line);
+        this->mind = atof(line.c_str());
+        string inventorysize;
+        getline(file, inventorysize);
+        int n = stoi(inventorysize);
+        if(n > 0){
+            for (int i = 0; i < n; i++) {
+                string sID, scount;
+                int count, ID;
+                getline(file, sID);
+                getline(file, scount);
+                count = stoi(scount);
+                ID = stoi(sID);
+                Human* human = new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+                Item* item = ItemFactory::createItem(ID,human,true);
+                item->setCount(count);
+                this->addInventory(item);}
+        }
+    }else{
+        this->name = "Error404";
+        this->age = 0;
+    }
+}
     // double convertedPrice = atof(sprice.c_str());
     // if (vip == "true")
     // {
@@ -222,5 +234,3 @@ void Wizard::FileToWizard(string username) {
     //   Item *item = Item(name, price, false, count);
     //   inventory.push_back(item);
     // }
-  }
-}

@@ -13,6 +13,7 @@ class Cyborg : public Human {
   AttackStrategy* attackStrategy;
 
  public:
+  Cyborg() = default;
   Cyborg(const string& name,
          int age,
          double hp,

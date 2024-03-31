@@ -3,7 +3,10 @@
 #include <string>
 using namespace std;
 
-Item* ItemFactory::createItem(int choice, Human* human) {
+
+
+
+Item* ItemFactory::createItem(int choice, Human* human, bool login) {
   Item* item = nullptr;
   string name, perk = "Default Perk", type = "Default Type";
   bool VIP = false;
@@ -125,7 +128,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Ancient Bow";
       price = 190.0;
       item = new Bow(name, price, VIP, synergyDamage, count);
-      if (item != nullptr) {
+      if (item != nullptr && login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -134,7 +137,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Stealth Ninja Star";
       price = 75.0;
       item = new NinjaStar(name, price, VIP, synergyDamage, count);
-      if (item != nullptr) {
+      if (item != nullptr && login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -143,7 +146,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Inferno Fireball";
       price = 205.0;
       item = new FireBall(name, price, VIP, synergyDamage, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -152,7 +155,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Skybreaker Rocket";
       price = 320.0;
       item = new Rocket(name, price, VIP, number, synergyDamage, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -161,7 +164,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Blast Grenade";
       price = 180.0;
       item = new Grenade(name, price, VIP, synergyDamage, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -170,7 +173,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Ensnaring Spider Net";
       price = 50.0;
       item = new SpiderNet(name, price, VIP, synergyDamage, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -179,7 +182,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Warrior's Flipflops";
       price = 30.0;
       item = new Flipflops(name, price, VIP, synergyDamage, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -188,7 +191,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Elixir of Healing";
       price = 100.0;
       item = new HealingPotion(name, price, VIP, 50.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -197,7 +200,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Potion of Ravaging";
       price = 110.0;
       item = new DamagePotion(name, price, VIP, 20.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -206,7 +209,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Potion of Fortification";
       price = 95.0;
       item = new DefensePotion(name, price, VIP, 20.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -215,7 +218,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Brew of Stamina";
       price = 85.0;
       item = new StaminaPotion(name, price, VIP, 20.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -224,7 +227,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Feast of Kings";
       price = 45.0;
       item = new Food(name, price, VIP, 10.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -233,7 +236,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Sweet Tea of Vigor";
       price = 25.0;
       item = new SweetTea(name, price, VIP, 10.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -242,7 +245,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Saffron of Sight";
       price = 220.0;
       item = new Saffron(name, price, VIP, 10.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -251,7 +254,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Aragh Nana - Spirit of the Forest";
       price = 65.0;
       item = new AraghNana(name, price, VIP, 10.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }
@@ -260,7 +263,7 @@ Item* ItemFactory::createItem(int choice, Human* human) {
       name = "Nuts of the Ancients";
       price = 55.0;
       item = new Nuts(name, price, VIP, 10.0, count);
-      if (item != nullptr) {
+      if (item != nullptr&& login==false) {
         Shop shop;
         shop.buyItemWithCountLimit(choice, human, item, 5);
       }

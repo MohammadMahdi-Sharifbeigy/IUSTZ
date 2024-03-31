@@ -8,7 +8,7 @@ SweetTea::SweetTea(string name,
                    bool vIP,
                    double potency,
                    int count)
-    : Consumable(name, price, vIP, potency, count) {}
+    : Consumable(name, price, vIP, potency, count){this->ID=34;}
 
 void SweetTea::increaseHP(Character& target) {
   target.setCurrentHP(target.getCurrentHP() + potency);

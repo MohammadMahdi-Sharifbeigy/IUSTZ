@@ -4,7 +4,7 @@
 using namespace std;
 
 Food::Food(string name, double price, bool vIP, double potency, int count)
-    : Consumable(name, price, vIP, potency, count) {}
+    : Consumable(name, price, vIP, potency, count){this->ID=33;}
 
 void Food::increaseStats(Character& target) {
   target.setCurrentHP(target.getCurrentHP() + potency);

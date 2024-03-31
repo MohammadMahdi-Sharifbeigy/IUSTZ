@@ -13,6 +13,7 @@ class Paladin : public Human {
   AttackStrategy* attackStrategy;
 
  public:
+  Paladin() = default;
   Paladin(const string& name,
           int age,
           double hp,

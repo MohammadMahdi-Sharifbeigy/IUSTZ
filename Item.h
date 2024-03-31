@@ -12,11 +12,12 @@ class Item {
   double price;
   bool VIP;
   int count;
+  int ID;
 
  public:
   Item(const string& name, double price, bool VIP, int count);
   virtual ~Item();
-
+  int getID() const;
   string getName() const;
   double getPrice() const;
   int getCount() const;

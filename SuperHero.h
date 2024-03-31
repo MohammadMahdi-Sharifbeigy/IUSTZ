@@ -13,6 +13,7 @@ class SuperHero : public Human {
   AttackStrategy* attackStrategy;
 
  public:
+  SuperHero() = default;
   SuperHero(const string& name,
             int age,
             double hp,

@@ -8,7 +8,7 @@ DamagePotion::DamagePotion(string name,
                            bool vIP,
                            double potency,
                            int count)
-    : Consumable(name, price, vIP, potency, count) {}
+    : Consumable(name, price, vIP, potency, count) {this->ID=30;}
 
 void DamagePotion::increaseDamage(Character& target) {
   target.setAttack(target.getAttack() + potency);
