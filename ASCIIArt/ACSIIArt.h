@@ -1,6 +1,7 @@
 #ifndef ASCIIART_h
 #define ASCIIART_h
 #include <iostream>
+#include <string>
 
 using namespace std;
 
