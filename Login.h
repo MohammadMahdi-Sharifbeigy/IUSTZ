@@ -25,7 +25,7 @@ struct question{
     string option7;
 };
 
-Human* Login();
+static Human* Login();
 
 
 

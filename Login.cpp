@@ -73,7 +73,7 @@ using namespace std;
 
 
 
-Human* Login(){
+static Human* Login(){
     cout<<"***Welcom to our game***"<<endl;
 menu:
     cout<<"1.Sign in"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
@@ -279,32 +279,33 @@ menu:
         }
         age = stoi(sage);
         if (choice == 1){
-            Human* player =  new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
-            static_cast<Paladin*>(player)->PaladinToFile(username);
+            Paladin* player =  new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+           // static_cast<Paladin*>(player)->PaladinToFile(username);
+            player->PaladinToFile(username);
             return player;
         }else if (choice == 2){
-            Human* player =  new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN , 1000);
-            static_cast<Assassin*>(player)->AssasinToFile(username);
+            Assassin* player =  new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN , 1000);
+            player->AssasinToFile(username);
             return player;
         }else if (choice == 3){
-            Human* player =  new SuperHero(name, age, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
-            static_cast<SuperHero*>(player)->SuperHeroToFile(username);
+            SuperHero* player =  new SuperHero(name, age, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
+            player->SuperHeroToFile(username);
             return player;
         }else if (choice == 4){
-            Human* player =  new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
-            static_cast<Sniper*>(player)->SniperToFile(username);
+            Sniper* player =  new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
+            player->SniperToFile(username);
             return player;
         }else if (choice == 5){
-            Human* player =  new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
-            static_cast<Wizard*>(player)->WizardToFile(username);
+            Wizard* player =  new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
+            player->WizardToFile(username);
             return player;
         }else if (choice == 6){
-            Human* player =  new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
-            static_cast<Cyborg*>(player)->CyborgToFile(username);
+            Cyborg* player =  new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
+           player->CyborgToFile(username);
             return player;
         }else{
-            Human* player =  new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-            static_cast<AsianMom*>(player)->AsianMomToFile(username);
+            AsianMom* player =  new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+            player->AsianMomToFile(username);
             return player;
         }
         
@@ -323,56 +324,56 @@ menu:
             if(username == checkusername){
                 check++;
                 if(role=="Paladin"){
-                    Human* player = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
-                    static_cast<Paladin*>(player)->FileToPaladin(username);
+                    Paladin* player = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+                    player->FileToPaladin(username);
                     if(player->getName() == "Error404" &&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
                     }
                     return player;
                 }else if (role == "Assasin"){
-                    Human* player =  new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
-                    static_cast<Assassin*>(player)->FileToAssasin(username);
+                    Assassin* player =  new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
+                    player->FileToAssasin(username);
                     if(player->getName() == "Error404"&&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
                     }
                     return player;
                 }else if (role == "SuperHero"){
-                    Human* player =  new SuperHero("name", 1, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
-                    static_cast<SuperHero*>(player)->FileToSuperHero(username);
+                    SuperHero* player =  new SuperHero("name", 1, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
+                    player->FileToSuperHero(username);
                     if(player->getName() == "Error404" &&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
                     }
                     return player;
                 }else if (role == "Sniper"){
-                    Human* player =  new Sniper("name", 1, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
-                    static_cast<Sniper*>(player)->FileToSniper(username);
+                    Sniper* player =  new Sniper("name", 1, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
+                    player->FileToSniper(username);
                     if(player->getName() == "Error404" &&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
                     }
                     return player;
                 }else if (role == "Wizard"){
-                    Human* player =  new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
-                    static_cast<Wizard*>(player)->FileToWizard(username);
+                    Wizard* player =  new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
+                    player->FileToWizard(username);
                     if(player->getName() == "Error404" &&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
                     }
                     return player;
                 }else if (role == "Cyborg"){
-                    Human* player =  new Cyborg("name", 1, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
-                    static_cast<Cyborg*>(player)->FileToCyborg(username);
+                    Cyborg* player =  new Cyborg("name", 1, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
+                    player ->FileToCyborg(username);
                     if(player->getName() == "Error404" &&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
                     }
                     return player;
                 }else{
-                    Human* player =  new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-                    static_cast<AsianMom*>(player)->FileToAsianMom(username);
+                    AsianMom* player =  new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+                    player->FileToAsianMom(username);
                     if(player->getName() == "Error404" &&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
