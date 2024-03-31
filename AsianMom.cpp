@@ -7,6 +7,8 @@
 #include "Enemy.h"
 #include "Human.h"
 #include "ItemFactory.h"
+#include "FileCheck.h"
+
 
 using namespace std;
 
@@ -138,10 +140,12 @@ void AsianMom::AsianMomToFile(string username) {
        << this->pace << '\n'
        << this->mind << '\n'
        << this->inventorySize() << '\n';
-  for (int i = 0; i < this->inventorySize(); i++) {
-    file << inventory[i]->getID() << '\n'
-         << inventory[i]->getCount() << '\n';
-  }
+    if(this->inventorySize() > 0){
+        for (int i = 0; i < this->inventorySize(); i++) {
+            file << inventory[i]->getID() << '\n'
+            << inventory[i]->getCount() << '\n';
+        }
+    }
   ifstream users;
   users.open("usernames.csv");
   string name;
@@ -155,66 +159,74 @@ void AsianMom::AsianMomToFile(string username) {
     }
   }
   if (check == 0) {
-    ofstream usersfile("usernames.", ios::app);
+    ofstream usersfile("usernames.csv", ios::app);
     usersfile << username << '\n' << "AsianMom" << '\n';
   }
 }
 
 void AsianMom::FileToAsianMom(string username) {
-  string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv") {
-    username = username + ".csv";
-  }
-  ifstream file(username);
-  string line;
-  getline(file, line);
-  this->name = line;
-  getline(file, line);
-  this->age = stoi(line);
-  getline(file, line);
-  this->role = stringToCharacterType(line);
-  getline(file, line);
-  this->level = stoi(line);
-  getline(file, line);
-  this->coin = stoi(line);
-  getline(file, line);
-  this->currHP = atof(line.c_str());
-  getline(file, line);
-  this->currXP = stoi(line);
-  getline(file, line);
-  this->attack = atof(line.c_str());
-  getline(file, line);
-  this->defense = atof(line.c_str());
-  getline(file, line);
-  this->stamina = atof(line.c_str());
-  // getline(file, line);
-  // this->armor = stringToItem(line);
-  // getline(file,line );
-  // this->weapon = stringToItem(line);
-  getline(file, line);
-  this->strength = atof(line.c_str());
-  getline(file, line);
-  this->endurance = atof(line.c_str());
-  getline(file, line);
-  this->accuracy = atof(line.c_str());
-  getline(file, line);
-  this->pace = atof(line.c_str());
-  getline(file, line);
-  this->mind = atof(line.c_str());
-  string inventorysize;
-  getline(file, inventorysize);
-  int n = stoi(inventorysize);
-  for (int i = 0; i < n; i++) {
-    string sID, scount;
-    int count, ID;
-    getline(file, sID);
-    getline(file, scount);
-    count = stoi(scount);
-    ID = stoi(sID);
-    Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-    Item* item = ItemFactory::createItem(ID,human,true);
-    item->setCount(count);
-    this->addInventory(item);}
+    string checktxt = username.substr(username.size() - 4, 4);
+    if (checktxt != ".csv") {
+        username = username + ".csv";
+    }
+    ifstream file(username);
+    if( exists_test(username) && !std::filesystem::is_empty(username)){
+        string line;
+        getline(file, line);
+        this->name = line;
+        getline(file, line);
+        this->age = stoi(line);
+        getline(file, line);
+        this->role = stringToCharacterType(line);
+        getline(file, line);
+        this->level = stoi(line);
+        getline(file, line);
+        this->coin = stoi(line);
+        getline(file, line);
+        this->currHP = atof(line.c_str());
+        getline(file, line);
+        this->currXP = stoi(line);
+        getline(file, line);
+        this->attack = atof(line.c_str());
+        getline(file, line);
+        this->defense = atof(line.c_str());
+        getline(file, line);
+        this->stamina = atof(line.c_str());
+        // getline(file, line);
+        // this->armor = stringToItem(line);
+        // getline(file,line );
+        // this->weapon = stringToItem(line);
+        getline(file, line);
+        this->strength = atof(line.c_str());
+        getline(file, line);
+        this->endurance = atof(line.c_str());
+        getline(file, line);
+        this->accuracy = atof(line.c_str());
+        getline(file, line);
+        this->pace = atof(line.c_str());
+        getline(file, line);
+        this->mind = atof(line.c_str());
+        string inventorysize;
+        getline(file, inventorysize);
+        int n = stoi(inventorysize);
+        if(n > 0){
+            for (int i = 0; i < n; i++) {
+                string sID, scount;
+                int count, ID;
+                getline(file, sID);
+                getline(file, scount);
+                count = stoi(scount);
+                ID = stoi(sID);
+                Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+                Item* item = ItemFactory::createItem(ID,human,true);
+                item->setCount(count);
+                this->addInventory(item);}
+        }
+    }else{
+        this->name = "Error404";
+        this->age = 0;
+    }
+    
 }
     // double convertedPrice = atof(sprice.c_str());
     //   if (vip == "true")
