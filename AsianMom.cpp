@@ -132,8 +132,8 @@ void AsianMom::AsianMomToFile(string username) {
        << this->attack << '\n'
        << this->defense << '\n'
        << this->stamina << '\n'
-       << this->armor << '\n'
-       << this->weapon << '\n'
+       << this->armor->getID() << '\n'
+       << this->weapon->getID() << '\n'
        << this->strength << '\n'
        << this->endurance << '\n'
        << this->accuracy << '\n'
@@ -187,15 +187,23 @@ void AsianMom::FileToAsianMom(string username) {
         getline(file, line);
         this->currXP = stoi(line);
         getline(file, line);
+        this->maxHP = atof(line.c_str());
+        getline(file, line);
+        this->maxXP = stoi(line);
+        getline(file, line);
         this->attack = atof(line.c_str());
         getline(file, line);
         this->defense = atof(line.c_str());
         getline(file, line);
         this->stamina = atof(line.c_str());
-        // getline(file, line);
-        // this->armor = stringToItem(line);
-        // getline(file,line );
-        // this->weapon = stringToItem(line);
+        getline(file, line);
+        Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+        this->armor = ItemFactory::createItem(stoi(line),human,true);
+        this->armor->setCount(1);
+        getline(file,line );
+       // this->weapon = stringToItem(line);
+        this->weapon = ItemFactory::createItem(stoi(line),human,true);
+        this->weapon->setCount(1);
         getline(file, line);
         this->strength = atof(line.c_str());
         getline(file, line);
