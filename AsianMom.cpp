@@ -177,8 +177,7 @@ void AsianMom::AsianMomToFile(string username) {
 }
 
 void AsianMom::FileToAsianMom(string username) {
-  string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv") {
+  if (!isCSV(username)) {
     username = username + ".csv";
   }
   ifstream file(username);

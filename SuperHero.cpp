@@ -174,8 +174,7 @@ void SuperHero::SuperHeroToFile(string username) {
 }
 
 void SuperHero::FileToSuperHero(string username) {
-  string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv") {
+  if (!isCSV(username)) {
     username = username + ".csv";
   }
   ifstream file(username);

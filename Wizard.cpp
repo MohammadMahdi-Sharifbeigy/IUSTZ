@@ -175,8 +175,7 @@ void Wizard::WizardToFile(string username) {
 }
 
 void Wizard::FileToWizard(string username) {
-  string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv") {
+  if (!isCSV(username)) {
     username = username + ".csv";
   }
   ifstream file(username);

@@ -178,8 +178,7 @@ void Assassin::AssasinToFile(string username) {
 }
 
 void Assassin::FileToAssasin(string username) {
-  string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv") {
+  if (!isCSV(username)) {
     username = username + ".csv";
   }
   ifstream file(username);
