@@ -5,10 +5,9 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Enemy.h"
+#include "FileCheck.h"
 #include "Human.h"
 #include "ItemFactory.h"
-#include "FileCheck.h"
-
 
 using namespace std;
 
@@ -44,7 +43,7 @@ void AsianMom::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      //enemy->set_enemy_hp(damage);
+      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
     }
   } else {
@@ -53,7 +52,7 @@ void AsianMom::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       enemy->set_enemy_hp(AsianMom::getAttack());
-      //enemy->takeDamage(AsianMom::getAttack());
+      // enemy->takeDamage(AsianMom::getAttack());
     }
   }
 }
@@ -74,16 +73,16 @@ void AsianMom::performDefense(Character& attacker) {
 void AsianMom::levelUp() {
   while (getCurrentXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 20); // Lower HP increase
-    setAttack(getAttack() + 5); // Lower attack increase
-    setDefense(getDefense() + 5); // Lower defense increase
+    setMaxHP(getMaxHP() + 20);     // Lower HP increase
+    setAttack(getAttack() + 5);    // Lower attack increase
+    setDefense(getDefense() + 5);  // Lower defense increase
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
     setEndurance(getEndurance() + 2);
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
-    setMind(getMind() + 10); // Asian Moms are known for their wisdom
+    setMind(getMind() + 10);  // Asian Moms are known for their wisdom
     setCurrXP(getCurrXP() - getMaxXP());
     setMaxXP(getMaxXP() + 25);
 
@@ -114,9 +113,23 @@ inline characterType stringToCharacterType(const string& str) {
   //   return STRONGZOMBIE;
 }
 
+static int itemID(Item* item) {
+  if (item == nullptr) {
+    return -1;
+  } else {
+    return item->getID();
+  }
+}
+static bool isCSV(const string& fileName) {
+  size_t pos = fileName.rfind(".csv");
+  if (pos != string::npos && pos == fileName.length() - 4) {
+    return true;
+  }
+  return false;
+}
+
 void AsianMom::AsianMomToFile(string username) {
-   string checktxt = username.substr(username.size() - 4, 4);
-  if (checktxt != ".csv") {
+  if (!isCSV(username)) {
     username = username + ".csv";
   }
   ofstream file(username);
@@ -140,12 +153,11 @@ void AsianMom::AsianMomToFile(string username) {
        << this->pace << '\n'
        << this->mind << '\n'
        << this->inventorySize() << '\n';
-    if(this->inventorySize() > 0){
-        for (int i = 0; i < this->inventorySize(); i++) {
-            file << inventory[i]->getID() << '\n'
-            << inventory[i]->getCount() << '\n';
-        }
+  if (this->inventorySize() > 0) {
+    for (int i = 0; i < this->inventorySize(); i++) {
+      file << inventory[i]->getID() << '\n' << inventory[i]->getCount() << '\n';
     }
+  }
   ifstream users;
   users.open("usernames.csv");
   string name;
@@ -165,85 +177,94 @@ void AsianMom::AsianMomToFile(string username) {
 }
 
 void AsianMom::FileToAsianMom(string username) {
-    string checktxt = username.substr(username.size() - 4, 4);
-    if (checktxt != ".csv") {
-        username = username + ".csv";
+  string checktxt = username.substr(username.size() - 4, 4);
+  if (checktxt != ".csv") {
+    username = username + ".csv";
+  }
+  ifstream file(username);
+  if (file.good() && !std::filesystem::is_empty(username)) {
+    string line;
+    getline(file, line);
+    this->name = line;
+    getline(file, line);
+    this->age = stoi(line);
+    getline(file, line);
+    this->role = stringToCharacterType(line);
+    getline(file, line);
+    this->level = stoi(line);
+    getline(file, line);
+    this->coin = stoi(line);
+    getline(file, line);
+    this->currHP = atof(line.c_str());
+    getline(file, line);
+    this->currXP = stoi(line);
+    getline(file, line);
+    this->maxHP = atof(line.c_str());
+    getline(file, line);
+    this->maxXP = stoi(line);
+    getline(file, line);
+    this->attack = atof(line.c_str());
+    getline(file, line);
+    this->defense = atof(line.c_str());
+    getline(file, line);
+    this->stamina = atof(line.c_str());
+    getline(file, line);
+    Human* human =
+        new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+    if (line == "-1") {
+      this->armor = nullptr;
+    } else {
+      this->armor = ItemFactory::createItem(stoi(line), human, true);
+      this->armor->setCount(1);
     }
-    ifstream file(username);
-    if(file.good() && !std::filesystem::is_empty(username)){
-        string line;
-        getline(file, line);
-        this->name = line;
-        getline(file, line);
-        this->age = stoi(line);
-        getline(file, line);
-        this->role = stringToCharacterType(line);
-        getline(file, line);
-        this->level = stoi(line);
-        getline(file, line);
-        this->coin = stoi(line);
-        getline(file, line);
-        this->currHP = atof(line.c_str());
-        getline(file, line);
-        this->currXP = stoi(line);
-        getline(file, line);
-        this->maxHP = atof(line.c_str());
-        getline(file, line);
-        this->maxXP = stoi(line);
-        getline(file, line);
-        this->attack = atof(line.c_str());
-        getline(file, line);
-        this->defense = atof(line.c_str());
-        getline(file, line);
-        this->stamina = atof(line.c_str());
-        getline(file, line);
-        Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-        this->armor = ItemFactory::createItem(stoi(line),human,true);
-        this->armor->setCount(1);
-        getline(file,line );
-       // this->weapon = stringToItem(line);
-        this->weapon = ItemFactory::createItem(stoi(line),human,true);
-        this->weapon->setCount(1);
-        getline(file, line);
-        this->strength = atof(line.c_str());
-        getline(file, line);
-        this->endurance = atof(line.c_str());
-        getline(file, line);
-        this->accuracy = atof(line.c_str());
-        getline(file, line);
-        this->pace = atof(line.c_str());
-        getline(file, line);
-        this->mind = atof(line.c_str());
-        string inventorysize;
-        getline(file, inventorysize);
-        int n = stoi(inventorysize);
-        if(n > 0){
-            for (int i = 0; i < n; i++) {
-                string sID, scount;
-                int count, ID;
-                getline(file, sID);
-                getline(file, scount);
-                count = stoi(scount);
-                ID = stoi(sID);
-                Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-                Item* item = ItemFactory::createItem(ID,human,true);
-                item->setCount(count);
-                this->addInventory(item);}
-        }
-    }else{
-        this->name = "Error404";
-        this->age = 0;
+    getline(file, line);
+    if (line == "-1") {
+      this->weapon = nullptr;
+    } else {
+      this->weapon = ItemFactory::createItem(stoi(line), human, true);
+      this->weapon->setCount(1);
     }
-    
+    getline(file, line);
+    this->strength = atof(line.c_str());
+    getline(file, line);
+    this->endurance = atof(line.c_str());
+    getline(file, line);
+    this->accuracy = atof(line.c_str());
+    getline(file, line);
+    this->pace = atof(line.c_str());
+    getline(file, line);
+    this->mind = atof(line.c_str());
+    string inventorysize;
+    getline(file, inventorysize);
+    int n = stoi(inventorysize);
+    if (n > 0) {
+      for (int i = 0; i < n; i++) {
+        string sID, scount;
+        int count, ID;
+        getline(file, sID);
+        getline(file, scount);
+        count = stoi(scount);
+        ID = stoi(sID);
+        Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0,
+                                    characterType::ASIANMOM, 1000);
+        Item* item = ItemFactory::createItem(ID, human, true);
+        item->setCount(count);
+        this->addInventory(item);
+      }
+    }
+  } else {
+    this->name = "Error404";
+    this->age = 0;
+  }
 }
-    // double convertedPrice = atof(sprice.c_str());
-    //   if (vip == "true")
-    //   {
-    //     Item *item = Item(name, price, true, count);
-    //     inventory.push_back(item);
-    //   }
-    //   else
-    //   {
-    //     Item *item = Item(name, price, false, count);
-    //     inventory.push_back(item);
-    //   }
+// double convertedPrice = atof(sprice.c_str());
+//   if (vip == "true")
+//   {
+//     Item *item = Item(name, price, true, count);
+//     inventory.push_back(item);
+//   }
+//   else
+//   {
+//     Item *item = Item(name, price, false, count);
+//     inventory.push_back(item);
+//   }
