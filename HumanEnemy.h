@@ -8,6 +8,12 @@
 #include "Human.h"
 #include "ItemFactory.h"
 
+enum State{
+  ATTACK,
+  DEFENSE,
+  IDLE  //for when first player reach to a HumanEnemy
+};
+
 class HumanEnemy : public Enemy {
 public:
   
@@ -27,6 +33,8 @@ public:
   void performAttack(Character& target);
 
   void performDefense(Human& attacker);
+  
+  void Update(Character &target);
 
   // Items Functions
   void showInventory() { humanRef.showInventory(); }
@@ -50,6 +58,7 @@ public:
 private:
   Human& humanRef;
   AttackStrategy* attackStrategy;
+  State state;
 };
 
 #endif /* HUMANENEMY_H */

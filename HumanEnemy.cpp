@@ -88,3 +88,37 @@ void HumanEnemy::performAttack(Character& target) {
         target.takeDamage(getAttack());
     }
 }
+
+void HumanEnemy::performDefense(Human& attacker) {
+    if (attackStrategy) {
+        // Get the character type of 'this' HumanEnemy
+        characterType currHumanRole = this->getRole();
+        // Apply the FSM to get modified attack and defense values
+        std::pair<double, double> modifiedValues = static_cast<HumanEnemyAttack*>(attackStrategy)->applyFSM(currHumanRole, &attacker, this);
+        double modifiedDefense = modifiedValues.second;
+        // Use the modified defense value to reduce damage taken
+        takeDamage(modifiedDefense);
+    } else {
+        std::cout << getcharType() << " defends against " << attacker.getName() << " with a basic defense." << std::endl;
+        takeDamage(attacker.getAttack());
+    }
+}
+
+
+void HumanEnemy::Update(Character& target) {
+    switch (state) {
+        case ATTACK:
+            performAttack(target);
+            if (hp <= 50) {
+                state = DEFENSE;
+            }
+            break;
+        case DEFENSE:
+            Human* humanTarget = dynamic_cast<Human*>(&target);
+            performDefense(*humanTarget);
+            if (hp > 50) {
+                state = ATTACK;
+            }
+            break;
+        }
+}

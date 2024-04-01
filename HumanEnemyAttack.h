@@ -43,7 +43,7 @@ public:
     // Initialize FSM states for each character type
     FSMState fsmStates[7] = {
         // ... other character states ...
-        [CYBORG] = {&HumanEnemyAttack::cyborgVsWizardAttack, &HumanEnemyAttack::cyborgVsWizardDefense},
+      fsmStates[CYBORG] = {&HumanEnemyAttack::cyborgVsWizardAttack, &HumanEnemyAttack::cyborgVsWizardDefense}
         // ... other character states ...
     };
 
