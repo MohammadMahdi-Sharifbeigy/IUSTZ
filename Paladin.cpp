@@ -70,7 +70,7 @@ void Paladin::performDefense(Character& attacker) {
 }
 
 void Paladin::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+  while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 50);   // Paladins get a big HP boost
     setAttack(getAttack() + 5);  // Moderate attack increase

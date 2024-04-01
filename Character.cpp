@@ -80,10 +80,10 @@ bool Character::isAlive() const {
 }
 void Character::takeDamage(double amount){};
 
-int Character::getCurrentXP() const {
-  return currXP;
-}
+// int Character::getCurrentXP() const {
+//   return currXP;
+// }
 
-int Character::getMaxXP() const {
-  return maxXP;
-}
+// int Character::getMaxXP() const {
+//   return maxXP;
+// }

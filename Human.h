@@ -52,6 +52,7 @@ class Human : public Character {
   void setCurrXP(int currXP);
   int getMaxXP();
   void setMaxXP(int maxXP);
+  int getNextLevelXP(int maxXP, int currXP);
   double getStamina();
   void setStamina(double stamina);
   double getStrength();

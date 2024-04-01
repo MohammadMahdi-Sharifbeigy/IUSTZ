@@ -2,6 +2,7 @@
 #define RecommendCharacter_h
 #include <string.h>
 #include <iostream>
+#include <algorithm>
 #include "Human.h"
 
 using namespace std;

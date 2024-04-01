@@ -68,7 +68,7 @@ void Assassin::performDefense(Character& attacker) {
 }
 
 void Assassin::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+  while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 25);  // Assassins have moderate HP increase
     setAttack(

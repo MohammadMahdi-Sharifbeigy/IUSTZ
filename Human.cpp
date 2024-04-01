@@ -59,6 +59,10 @@ void Human::setMaxXP(int maxXP) {
   this->maxXP = maxXP;
 }
 
+int Human::getNextLevelXP(int maxXP, int CurrXP){
+  return maxXP-CurrXP;
+}
+
 double Human::getStamina() {
   return stamina;
 }

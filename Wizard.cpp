@@ -68,7 +68,7 @@ void Wizard::performDefense(Character& attacker) {
 }
 
 void Wizard::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+  while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);    // Lower HP increase
     setAttack(getAttack() + 10);  // Moderate attack increase

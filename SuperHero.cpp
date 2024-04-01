@@ -68,7 +68,7 @@ void SuperHero::performDefense(Character& attacker) {
 }
 
 void SuperHero::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+  while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 30);     // Moderate HP increase
     setAttack(getAttack() + 15);   // Superheroes have strong attacks

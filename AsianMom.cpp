@@ -1,4 +1,3 @@
-#include "AsianMom.h"
 #include <fstream>
 #include <iostream>
 #include "AttackStrategy.h"
@@ -8,6 +7,7 @@
 #include "FileCheck.h"
 #include "Human.h"
 #include "ItemFactory.h"
+#include "AsianMom.h"
 
 using namespace std;
 
@@ -33,9 +33,8 @@ AsianMom::AsianMom(const string& name,
   mind = 10.0;
   this->coin = coin;
 }
-
 AsianMom::~AsianMom() {
-  delete attackStrategy;
+    delete attackStrategy;
 }
 
 void AsianMom::performAttack(Character& target) {
@@ -71,7 +70,7 @@ void AsianMom::performDefense(Character& attacker) {
 }
 
 void AsianMom::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+  while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);     // Lower HP increase
     setAttack(getAttack() + 5);    // Lower attack increase
@@ -88,6 +87,59 @@ void AsianMom::levelUp() {
 
     cout << "Your level is now " << getLevel() << "!" << endl;
   }
+}
+
+// AsianMomView Member Function Definitions
+void AsianMomView::displayAsianMomStatus(AsianMom& asianMom) {
+    // Display AsianMom's status to the user
+    cout << "Character Status: " << endl;
+    cout << "Name: " << asianMom.getName() << endl;
+    cout << "Age: " << asianMom.getAge() << endl;
+    cout << "HP: " << asianMom.getCurrentHP() << " / " << asianMom.getMaxHP() << endl;
+    cout << "XP: " << asianMom.getCurrXP() << " / " << asianMom.getNextLevelXP(asianMom.getMaxXP(),asianMom.getCurrXP()) << endl;
+    cout << "Attack: " << asianMom.getAttack() << endl;
+    cout << "Defense: " << asianMom.getDefense() << endl;
+    cout << "Stamina: " << asianMom.getStamina() << endl;
+    cout << "Strength: " << asianMom.getStrength() << endl;
+    cout << "Endurance: " << asianMom.getEndurance() << endl;
+    cout << "Accuracy: " << asianMom.getAccuracy() << endl;
+    cout << "Pace: " << asianMom.getPace() << endl;
+    cout << "Mind: " << asianMom.getMind() << endl;
+    cout << "Coins: " << asianMom.getCoin() << endl;
+    cout << "Role: " << asianMom.getRole() << endl;
+    if (asianMom.getArmor()) {
+        cout << "Armor ID: " << asianMom.getArmor()->getID() << endl;
+    } else {
+        cout << "Armor: None" << endl;
+    }
+    if (asianMom.getWeapon()) {
+        cout << "Weapon ID: " << asianMom.getWeapon()->getID() << endl;
+    } else {
+        cout << "Weapon: None" << endl;
+    }
+}
+
+// AsianMomController Member Function Definitions
+AsianMomController::AsianMomController(const AsianMom& model, const AsianMomView& view)
+    : model(model), view(view) {}
+
+void AsianMomController::updateView() {
+    view.displayAsianMomStatus(model);
+}
+
+void AsianMomController::handleAttack(Character& target) {
+    model.performAttack(target);
+    updateView();
+}
+
+void AsianMomController::handleDefense(Character& attacker) {
+    model.performDefense(attacker);
+    updateView();
+}
+
+void AsianMomController::handleLevelUp() {
+    model.levelUp();
+    updateView();
 }
 
 inline characterType stringToCharacterType(const string& str) {
@@ -129,33 +181,33 @@ static bool isCSV(const string& fileName) {
 }
 
 void AsianMom::AsianMomToFile(string username) {
-  if (!isCSV(username)) {
-    username = username + ".csv";
-  }
-  ofstream file(username);
-  file << this->name << '\n'
-       << this->age << '\n'
-       << this->role << '\n'
-       << this->level << '\n'
-       << this->coin << '\n'
-       << this->currHP << '\n'
-       << this->currXP << '\n'
-       << this->maxHP << '\n'
-       << this->maxXP << '\n'
-       << this->attack << '\n'
-       << this->defense << '\n'
-       << this->stamina << '\n'
-       << itemID(this->armor) << '\n'
-       << itemID(this->weapon) << '\n'
-       << this->strength << '\n'
-       << this->endurance << '\n'
-       << this->accuracy << '\n'
-       << this->pace << '\n'
-       << this->mind << '\n'
-       << this->inventorySize() << '\n';
-  if (this->inventorySize() > 0) {
-    for (int i = 0; i < this->inventorySize(); i++) {
-      file << inventory[i]->getID() << '\n' << inventory[i]->getCount() << '\n';
+    if (!isCSV(username)) {
+        username = username + ".csv";
+    }
+    ofstream file(username);
+    file << this->name << '\n'
+         << this->age << '\n'
+         << this->role << '\n'
+         << this->level << '\n'
+         << this->coin << '\n'
+         << this->currHP << '\n'
+         << this->currXP << '\n'
+         << this->maxHP << '\n'
+         << this->maxXP << '\n'
+         << this->attack << '\n'
+         << this->defense << '\n'
+         << this->stamina << '\n'
+         << itemID(this->armor) << '\n'
+         << itemID(this->weapon) << '\n'
+         << this->strength << '\n'
+         << this->endurance << '\n'
+         << this->accuracy << '\n'
+         << this->pace << '\n'
+         << this->mind << '\n'
+         << this->inventorySize() << '\n';
+    if (this->inventorySize() > 0) {
+        for (int i = 0; i < this->inventorySize(); i++) {
+            file << inventory[i]->getID() << '\n' << inventory[i]->getCount() << '\n';
     }
   }
   ifstream users;

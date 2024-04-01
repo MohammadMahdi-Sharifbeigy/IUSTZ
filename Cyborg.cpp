@@ -70,7 +70,7 @@ void Cyborg::performDefense(Character& attacker) {
 }
 
 void Cyborg::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+  while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() +
              40);  // Cyborgs have high HP due to their mechanical nature

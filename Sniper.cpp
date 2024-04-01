@@ -68,7 +68,7 @@ void Sniper::performDefense(Character& attacker) {
 }
 
 void Sniper::levelUp() {
-  while (getCurrentXP() >= getMaxXP()) {
+  while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);  // Moderate HP increase
     setAttack(getAttack() +
