@@ -22,6 +22,8 @@ Cyborg::Cyborg(const string& name,
     : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new CyborgAttack();
   age = 1;
+  maxHP = 100.0;
+  currHP = 100.0;
   maxXP = 100;
   currXP = 0;
   stamina = 100.0;
@@ -72,10 +74,8 @@ void Cyborg::performDefense(Character& attacker) {
 void Cyborg::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() +
-             40);  // Cyborgs have high HP due to their mechanical nature
-    setAttack(getAttack() +
-              15);  // High attack increase due to advanced weaponry
+    setMaxHP(getMaxHP() + 40);  // Cyborgs have high HP due to their mechanical nature
+    setAttack(getAttack() + 15);  // High attack increase due to advanced weaponry
     setDefense(getDefense() + 10);  // High defense increase due to armored body
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);

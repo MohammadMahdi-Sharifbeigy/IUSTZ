@@ -23,8 +23,6 @@ public:
   HumanEnemy(int level, Human& human, Human& humanRef);
 
   ~HumanEnemy();
-
-  // virtual double attackChar(double charDefense) override;
   
   characterType getRandomRole();
 

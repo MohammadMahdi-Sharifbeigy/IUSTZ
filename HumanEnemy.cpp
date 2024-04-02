@@ -9,9 +9,9 @@ HumanEnemy::HumanEnemy(int level, Human& humanRef) : Enemy(level), humanRef(huma
     attackStrategy = new HumanEnemyAttack();
     level = abs(level+ rand() % 4) + 1;
     int ran = (rand() % (5 * level / 4));
-    double(hp) = 2 * level + ran + 100;
-    double(attack) = 4 * level + ran;
-    double(defense) = 2 * level + ran;
+    hp = 2 * level + ran + 100;
+    attack = 4 * level + ran;
+    defense = 2 * level + ran;
     role = getRandomRole();  // Set role randomly
     Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
     int random = getRandomNumber(1,6);
@@ -36,9 +36,9 @@ HumanEnemy::HumanEnemy(int level, Human& human, Human& humanRef) : Enemy(level),
     srand(time(NULL));
     level = abs(level+ rand() % 4) + 1;
     int ran = (rand() % (5 * level / 4));
-    double(hp) = 2 * level + ran + 100;
-    double(attack) = 4 * level + ran;
-    double(defense) = 2 * level + ran;
+    hp = 2 * level + ran + 100;
+    attack = 4 * level + ran;
+    defense = 2 * level + ran;
     giveExp = level * 10 * attack / defense;
     setRoleBasedOnHuman(human);  // Set role based on the Human it is fighting
     Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);

@@ -79,11 +79,3 @@ bool Character::isAlive() const {
   return currHP > 0;
 }
 void Character::takeDamage(double amount){};
-
-// int Character::getCurrentXP() const {
-//   return currXP;
-// }
-
-// int Character::getMaxXP() const {
-//   return maxXP;
-// }

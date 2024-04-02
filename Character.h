@@ -18,8 +18,6 @@ class Character {
   characterType role;
   double attack;
   double defense;
-  // int maxXP;
-  // int currXP;
 
  public:
   Character(){};
@@ -40,8 +38,6 @@ class Character {
   double getCurrentHP() const;
   double getAttack() const;
   double getDefense() const;
-  // int getMaxXP() const;
-  // int getCurrentXP() const;
   int getLevel() const;
   characterType getRole() const;
 
@@ -55,12 +51,6 @@ class Character {
     }
   }
   void setCurrentHPAttack(double additionalHP) { currHP -= additionalHP; }
-  // void setCurrentXP(int XP) {
-  //   currXP = XP;
-  //   if (currXP >= maxXP) {
-  //     this->levelUp();
-  //   }
-  // }
 
   void setName(const string& newName);
   void setMaxHP(double newMaxHP);

@@ -25,14 +25,14 @@ void Human::takeDamage(double amount) {
 
 void Human::levelUp() {
   level++;
-  maxHP += 10;
+  maxHP += 20;
   currHP = maxHP;
-  stamina += 5;
-  strength += 2;
-  endurance += 2;
-  accuracy += 1;
-  pace += 1;
-  mind += 1;
+  stamina += 10;
+  strength += 10;
+  endurance += 10;
+  accuracy += 10;
+  pace += 10;
+  mind += 10;
 }
 
 int Human::getAge() {

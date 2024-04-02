@@ -23,18 +23,18 @@ class Enemy : public Character {
  public:
   Enemy() {}
   Enemy(int characterLevel) {
-    hp = getRandomNumber(characterLevel, characterLevel + 10) + 100;
-    attack = getRandomNumber(characterLevel, characterLevel + 5) + 5;
-    defense = getRandomNumber(characterLevel, characterLevel + 5) + 5;
+    hp = 100;
+    attack = 5;
+    defense = 5;
     level = characterLevel;
     giveExp = level * 10 * attack / defense;
   }
 
  protected:
-  int hp;
-  int attack;
-  int defense;
-  int level;
+  double hp;
+  double attack;
+  double defense;
+  double level;
   int giveExp;
   characterType role;
 
@@ -59,22 +59,10 @@ class Enemy : public Character {
   void set_enemy_hp(int value) { hp -= value; }
   characterType getcharType() const { return role; }
   characterType setRole(characterType newRole) { return newRole; }
-  void levelUp() override {
-    level++;
-    hp += 10;
-    attack += 5;
-    defense += 5;
-    giveExp = level * 10 * attack / defense;
-  }
+  void levelUp() override {}
   string NameMaker() override {
     string name = "Enemy";
     return name;
-  }
-  virtual double attackChar(double charDefense) {
-    return abs((((((2 * level / 5) + 2) * (35 + (level * 9 / 10)) * attack) /
-                 charDefense) /
-                50) +
-               2);
   }
 };
 

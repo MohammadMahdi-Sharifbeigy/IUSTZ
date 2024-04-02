@@ -20,6 +20,8 @@ Sniper::Sniper(const string& name,
     : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new SniperAttack();
   age = 1;
+  maxHP = 100.0;
+  currHP = 100.0;
   maxXP = 100;
   currXP = 0;
   stamina = 100.0;
@@ -71,8 +73,7 @@ void Sniper::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);  // Moderate HP increase
-    setAttack(getAttack() +
-              20);  // Snipers have high attack due to precision strikes
+    setAttack(getAttack() + 20);  // Snipers have high attack due to precision strikes
     setDefense(getDefense() + 5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);

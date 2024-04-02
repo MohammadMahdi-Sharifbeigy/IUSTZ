@@ -34,11 +34,11 @@ class Human : public Character {
     this->age = age;
     this->maxHP = hp;
     this->currHP = hp;
-    this->attack = attack;
-    this->defense = defense;
+    this->attack = 10;
+    this->defense = 5;
     this->role = role;
     this->level = 1;
-    this->currXP = 0;
+    this->currXP = 90;
     this->maxXP = 100;
   };
   virtual void performAttack(Character& target) = 0;

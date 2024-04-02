@@ -22,6 +22,8 @@ Paladin::Paladin(const string& name,
     : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new PaladinAttack();
   age = 1;
+  maxHP = 100.0;
+  currHP = 100.0;
   maxXP = 100;
   currXP = 0;
   stamina = 100.0;
@@ -74,8 +76,7 @@ void Paladin::levelUp() {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 50);   // Paladins get a big HP boost
     setAttack(getAttack() + 5);  // Moderate attack increase
-    setDefense(getDefense() +
-               10);  // Paladins are known for their strong defense
+    setDefense(getDefense() + 10);  // Paladins are known for their strong defense
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);

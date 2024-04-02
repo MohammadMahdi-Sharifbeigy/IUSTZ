@@ -21,8 +21,8 @@ AsianMom::AsianMom(const string& name,
     : Human(name, age, hp, attack, defense, role) {
   attackStrategy = new AsianmomAttack();
   age = 1;
-  maxHP = 1000;
-  currHP = 1000;
+  maxHP = 100.0;
+  currHP = 100.0;
   maxXP = 100;
   currXP = 0;
   stamina = 100.0;
