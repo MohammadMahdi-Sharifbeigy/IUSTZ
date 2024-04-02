@@ -7,12 +7,9 @@
 #include "HumanEnemyAttack.h"
 #include "Human.h"
 #include "ItemFactory.h"
+#include "State.h"
 
-enum State{
-  ATTACK,
-  DEFENSE,
-  IDLE  //for when first player reach to a HumanEnemy
-};
+
 
 class HumanEnemy : public Enemy {
 public:
@@ -31,8 +28,20 @@ public:
   void performAttack(Character& target);
 
   void performDefense(Human& attacker);
-  
-  void Update(Character &target);
+    
+    State getState();
+
+    void setState(State state);
+    
+    void setStateBasedOnHP();
+    
+    bool useHealingPotion();
+    
+    bool useAttackPotion();
+    
+    bool useDefensePotion();
+    
+  void Update(Human &target);
 
   // Items Functions
   void showInventory() { humanRef.showInventory(); }

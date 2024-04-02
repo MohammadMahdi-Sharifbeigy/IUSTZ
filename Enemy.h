@@ -8,6 +8,7 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Human.h"
+#include "State.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ class Enemy : public Character {
  public:
   Enemy() {}
   Enemy(int characterLevel) {
-    hp = 100;
+    maxHP = 100;
     attack = 5;
     defense = 5;
     level = characterLevel;
@@ -31,23 +32,31 @@ class Enemy : public Character {
   }
 
  protected:
-  double hp;
-  double attack;
-  double defense;
-  double level;
+  int maxHP;
+  int currHP;
+  int attack;
+  int defense;
+  int level;
   int giveExp;
+    int giveCoin;
   characterType role;
 
  public:
   virtual void takeDamage(double amount) override {
-    hp -= amount;
-    if (hp < 0) {
-      hp = 0;
+    currHP -= amount;
+    if (currHP < 0) {
+      currHP = 0;
     }
   };
 
-  int get_enemy_hp() { return hp; }
-
+  int getMaxHP() { return maxHP; }
+    
+    int getCurrentHP() { return currHP; }
+    
+    void setMaxHP (int maxHP) {this->maxHP = maxHP ;}
+    
+    void setCurrentHP (int currHP) {this->currHP = currHP ;}
+    
   int get_enemy_atk() { return attack; }
 
   int get_enemy_def() { return defense; }
@@ -55,8 +64,14 @@ class Enemy : public Character {
   int get_enemy_lvl() { return level; }
 
   int get_enemy_exp() { return giveExp; }
-
-  void set_enemy_hp(int value) { hp -= value; }
+    
+    int get_enemy_coin() {return giveCoin;}
+    
+    void set_enemy_atk(int attack) {this->attack = attack;}
+    
+    void set_enemy_def(int defense) {this->defense = defense;}
+    
+  void set_enemy_hp(int value) { currHP -= value; }
   characterType getcharType() const { return role; }
   characterType setRole(characterType newRole) { return newRole; }
   void levelUp() override {}

@@ -106,13 +106,13 @@ void displayXPBar(Human* player) {
   cout << "] " << player->getCurrXP() << "/" << player->getMaxXP() << endl;
 }
 void combat(Human* player, Enemy* enemy) {
-  int enemy_max_hp = enemy->get_enemy_hp();
+  int enemy_max_hp = enemy->getMaxHP();
   cout << "\nA wild " << enemy->getName() << " appears!\n" << endl;
   displayHealthBar(player->getName(), player->getCurrentHP(),
                    player->getMaxHP());
   cout << endl;
-  displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
-  while (player->getCurrentHP() > 0 && enemy->get_enemy_hp() > 0) {
+  displayHealthBar(enemy->getName(), enemy->getCurrentHP(), enemy_max_hp);
+  while (player->getCurrentHP() > 0 && enemy->getCurrentHP() > 0) {
     combatMenu(player);
     int choice;
     cin >> choice;
@@ -120,7 +120,7 @@ void combat(Human* player, Enemy* enemy) {
       case 1:
         enemy->takeDamage(player->getAttack());
         cout << player->getName() << " attacks! " << enemy->getName() << "has "
-             << enemy->get_enemy_hp() << " health left." << endl;
+             << enemy->getCurrentHP() << " health left." << endl;
         break;
       case 2:
         if (containsHealingPotion(player->getInventory())) {
@@ -146,7 +146,7 @@ void combat(Human* player, Enemy* enemy) {
         continue;  // Skip enemy's turn
     }
 
-    if (enemy->get_enemy_hp() <= 0) {
+    if (enemy->getCurrentHP() <= 0) {
       cout << "\nYou defeated the " << enemy->getName() << "!" << endl;
       if (player->getCurrXP() + enemy->get_enemy_exp() >= player->getMaxXP()) {
         cout << "You gained " << enemy->get_enemy_exp() << " experience points."
@@ -175,7 +175,7 @@ void combat(Human* player, Enemy* enemy) {
     displayHealthBar(player->getName(), player->getCurrentHP(),
                      player->getMaxHP());
     cout << endl;
-    displayHealthBar(enemy->getName(), enemy->get_enemy_hp(), enemy_max_hp);
+    displayHealthBar(enemy->getName(), enemy->getCurrentHP(), enemy_max_hp);
   }
 }
 

@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "Item.h"
+#include "State.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ class Human : public Character {
   double pace;
   double mind;
   int coin;
+    State state;
   Item* armor;
   Item* weapon;
   vector<Item*> inventory;
@@ -67,6 +69,10 @@ class Human : public Character {
   void setMind(double mind);
   int getCoin();
   void setCoin(int coin);
+  void setStateBasedOnHP();
+    State getState();
+    void setState(State state);
+    
   vector<Item*> getInventory();
   // Item Functions
 

@@ -3,13 +3,15 @@
 #include <ctime>
 #include <iostream>
 #include "Paladin.h"
+#include "State.h"
 
 HumanEnemy::HumanEnemy(int level, Human& humanRef) : Enemy(level), humanRef(humanRef) {
     srand(time(NULL));
     attackStrategy = new HumanEnemyAttack();
     level = abs(level+ rand() % 4) + 1;
     int ran = (rand() % (5 * level / 4));
-    hp = 2 * level + ran + 100;
+    maxHP = 2 * level + ran + 100;
+    currHP = maxHP;
     attack = 4 * level + ran;
     defense = 2 * level + ran;
     role = getRandomRole();  // Set role randomly
@@ -36,7 +38,8 @@ HumanEnemy::HumanEnemy(int level, Human& human, Human& humanRef) : Enemy(level),
     srand(time(NULL));
     level = abs(level+ rand() % 4) + 1;
     int ran = (rand() % (5 * level / 4));
-    hp = 2 * level + ran + 100;
+    maxHP = 2 * level + ran + 100;
+    currHP = maxHP;
     attack = 4 * level + ran;
     defense = 2 * level + ran;
     giveExp = level * 10 * attack / defense;
@@ -104,21 +107,125 @@ void HumanEnemy::performDefense(Human& attacker) {
     }
 }
 
+State HumanEnemy::getState(){
+    return state;
+}
 
-void HumanEnemy::Update(Character& target) {
-    switch (state) {
-        case ATTACK:
-            performAttack(target);
-            if (hp <= 50) {
-                state = DEFENSE;
+void HumanEnemy::setState(State state){
+    this->state = state;
+}
+
+void HumanEnemy::setStateBasedOnHP(){
+  if(this->currHP < (this->maxHP * 20)/100){
+        setState(NEARDEATH);
+    }else if(this->currHP < (this->maxHP * 50)/100){
+        setState(DEFENSE);
+    }else{
+        setState(ATTACK);
+    }
+        
+        }
+
+
+
+bool HumanEnemy::useHealingPotion(){
+    Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+    Item* healingPotion = ItemFactory::createItem(29,hum,true);
+    int count = countInInventory(healingPotion);
+    int index = indexInInventory(healingPotion);
+    if(count > 0){
+        setCurrentHP(getCurrentHP()+((getMaxHP()*10)/100));
+        cout <<  "Enemy's HP has increased by " << (getMaxHP()*10)/100 << " points."
+             << endl;
+        cout <<  "Enemy's current HP: " << getCurrentHP()+((getMaxHP()*10)/100)
+             << endl;
+        removeInventory(index);
+        return true;
+    }
+    return false;
+}
+
+bool HumanEnemy::useAttackPotion(){
+    Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+    Item* attackPotion = ItemFactory::createItem(30,hum,true);
+    int count = countInInventory(attackPotion);
+    int index = indexInInventory(attackPotion);
+    if(count > 0){
+        set_enemy_atk(get_enemy_atk()+((get_enemy_atk()*20)/100));
+        cout <<  "Enemy's attack has increased by " << (get_enemy_atk()*20)/100 << " points."
+             << endl;
+        removeInventory(index);
+        return true;
+    }
+    return false;
+    
+}
+
+bool HumanEnemy::useDefensePotion(){
+    Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+    Item* defensePotion = ItemFactory::createItem(31,hum,true);
+    int count = countInInventory(defensePotion);
+    int index = indexInInventory(defensePotion);
+    if(count > 0){
+        set_enemy_def(get_enemy_def()+((get_enemy_def()*20)/100));
+        cout <<  "Enemy's defense has increased by " << (get_enemy_def()*20)/100 << " points."
+             << endl;
+        removeInventory(index);
+        return true;
+    }
+    return false;
+}
+
+
+
+
+
+
+
+void HumanEnemy::Update(Human& target) {
+    setStateBasedOnHP();
+    switch (this->state) {
+        case State::ATTACK:{
+            int random = rand() %4;
+            if(random == 0 ){
+                Human* humanTarget = dynamic_cast<Human*>(&target);
+                performDefense(*humanTarget);
+            }else{
+                performAttack(target);
+                setStateBasedOnHP();}
+            break;}
+        case State::DEFENSE:{
+            bool atk = useAttackPotion();
+            bool def = useDefensePotion();
+            if(!atk && !def){
+                int random = rand() %5;
+                if(random == 0 || random == 1){
+                    performAttack(target);
+                    setStateBasedOnHP();
+                }else{
+                    Human* humanTarget = dynamic_cast<Human*>(&target);
+                    performDefense(*humanTarget);}}
+            setStateBasedOnHP();
+            break;}
+            
+        case State::NEARDEATH:{
+            bool healing = useHealingPotion();
+            if(!healing){
+                if(target.getState()== State::NEARDEATH){
+                    performAttack(target);
+                    this->setStateBasedOnHP();
+                }else{
+                    int random = rand() %2;
+                    if(random == 0){
+                        performAttack(target);
+                        this->setStateBasedOnHP();
+                    }else{
+                        Human* humanTarget = dynamic_cast<Human*>(&target);
+                        performDefense(*humanTarget);}
+                }
             }
-            break;
-        case DEFENSE:
-            Human* humanTarget = dynamic_cast<Human*>(&target);
-            performDefense(*humanTarget);
-            if (hp > 50) {
-                state = ATTACK;
-            }
-            break;
+            setStateBasedOnHP();
+            break;}
+        
         }
 }

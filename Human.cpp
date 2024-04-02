@@ -4,6 +4,7 @@
 #include <vector>
 #include "Item.h"
 
+
 using namespace std;
 
 void Human::performAttack(Character& target) {}
@@ -118,6 +119,26 @@ int Human::getCoin() {
 void Human::setCoin(int coin) {
   this->coin = coin;
 }
+
+State Human::getState(){
+    setStateBasedOnHP();
+    return state;
+}
+
+void Human::setState(State state){
+    this->state = state;
+}
+
+void Human::setStateBasedOnHP(){
+   if(this->getCurrentHP() < (this->getMaxHP() * 20)/100){
+        setState(State::NEARDEATH);
+    }else if(this->getCurrentHP() < (this->getMaxHP() * 50)/100){
+        setState(State::DEFENSE);
+    }else{
+        setState(State::ATTACK);
+    }
+        
+        }
 
 vector<Item*> Human::getInventory() {
   return inventory;
