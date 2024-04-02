@@ -129,134 +129,144 @@ static bool isCSV(const string& fileName) {
   return false;
 }
 
-void Paladin::PaladinToFile(string username) {
-  if (!isCSV(username)) {
-    username = username + ".csv";
-  }
-  ofstream file(username);
-  file << this->name << '\n'
-       << this->age << '\n'
-       << this->role << '\n'
-       << this->level << '\n'
-       << this->coin << '\n'
-       << this->currHP << '\n'
-       << this->currXP << '\n'
-       << this->maxHP << '\n'
-       << this->maxXP << '\n'
-       << this->attack << '\n'
-       << this->defense << '\n'
-       << this->stamina << '\n'
-       << itemID(this->armor) << '\n'
-       << itemID(this->weapon) << '\n'
-       << this->strength << '\n'
-       << this->endurance << '\n'
-       << this->accuracy << '\n'
-       << this->pace << '\n'
-       << this->mind << '\n'
-       << this->inventorySize() << '\n';
+void Paladin::PaladinToFile(const string& username) {
+  string filename = isCSV(username) ? username : username + ".csv";
+  ofstream file(filename);
+
+  // Write the header
+  file << "name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,mind,inventorySize" << "\n";
+
+  // Write the character data in one line
+  file << this->name << ','
+       << this->age << ','
+       << this->role << ','
+       << this->level << ','
+       << this->coin << ','
+       << this->currHP << ','
+       << this->currXP << ','
+       << this->maxHP << ','
+       << this->maxXP << ','
+       << this->attack << ','
+       << this->defense << ','
+       << this->stamina << ','
+       << itemID(this->armor) << ','
+       << itemID(this->weapon) << ','
+       << this->strength << ','
+       << this->endurance << ','
+       << this->accuracy << ','
+       << this->pace << ','
+       << this->mind << ','
+       << this->inventorySize();
+
   if (this->inventorySize() > 0) {
     for (int i = 0; i < this->inventorySize(); i++) {
-      file << inventory[i]->getID() << '\n' << inventory[i]->getCount() << '\n';
+      file << ',' << inventory[i]->getID() << ',' << inventory[i]->getCount();
     }
   }
-  ifstream users;
-  users.open("usernames.csv");
-  string name;
-  string role;
-  int check = 0;
-  while (getline(users, name)) {
-    getline(users, role);
-    if (name == username && role == "Paladin") {
-      check++;
+
+  file << '\n';
+
+  ifstream users("usernames.csv");
+  string line;
+  bool exists = false;
+  while (getline(users, line)) {
+    if (line.find(username + ",Paladin") != string::npos) {
+      exists = true;
       break;
     }
   }
-  if (check == 0) {
+  users.close();
+
+  if (!exists) {
     ofstream usersfile("usernames.csv", ios::app);
-    usersfile << username << '\n' << "Paladin" << '\n';
+    usersfile << username << ",Paladin\n";
+    usersfile.close();
   }
+  file.close();
 }
 
-void Paladin::FileToPaladin(string username) {
-  if (!isCSV(username)) {
-    username = username + ".csv";
-  }
-  ifstream file(username);
-  if (file.good() && !std::filesystem::is_empty(username)) {
+void Paladin::FileToPaladin(const string& username) {
+  string filename = isCSV(username) ? username : username + ".csv";
+  ifstream file(filename);
+  
+  if (file.good() && !std::filesystem::is_empty(filename)) {
     string line;
-    getline(file, line);
-    this->name = line;
-    getline(file, line);
-    this->age = stoi(line);
-    getline(file, line);
-    this->role = stringToCharacterType(line);
-    getline(file, line);
-    this->level = stoi(line);
-    getline(file, line);
-    this->coin = stoi(line);
-    getline(file, line);
-    this->currHP = atof(line.c_str());
-    getline(file, line);
-    this->currXP = stoi(line);
-    getline(file, line);
-    this->maxHP = atof(line.c_str());
-    getline(file, line);
-    this->maxXP = stoi(line);
-    getline(file, line);
-    this->attack = atof(line.c_str());
-    getline(file, line);
-    this->defense = atof(line.c_str());
-    getline(file, line);
-    this->stamina = atof(line.c_str());
-    getline(file, line);
+    getline(file, line); // Read the header line
+    getline(file, line); // Read the data line
+    
+    stringstream ss(line);
+    string attribute;
+    
+    getline(ss, this->name, ',');
+    getline(ss, attribute, ',');
+    this->age = stoi(attribute);
+    getline(ss, attribute, ',');
+    this->role = stringToCharacterType(attribute);
+    getline(ss, attribute, ',');
+    this->level = stoi(attribute);
+    getline(ss, attribute, ',');
+    this->coin = stoi(attribute);
+    getline(ss, attribute, ',');
+    this->currHP = stof(attribute);
+    getline(ss, attribute, ',');
+    this->currXP = stoi(attribute);
+    getline(ss, attribute, ',');
+    this->maxHP = stof(attribute);
+    getline(ss, attribute, ',');
+    this->maxXP = stoi(attribute);
+    getline(ss, attribute, ',');
+    this->attack = stof(attribute);
+    getline(ss, attribute, ',');
+    this->defense = stof(attribute);
+    getline(ss, attribute, ',');
+    this->stamina = stof(attribute);
+    getline(ss, attribute, ',');
     Human* human =
-        new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-    if (line == "-1") {
+        new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+    if (attribute == "-1") {
       this->armor = nullptr;
     } else {
-      this->armor = ItemFactory::createItem(stoi(line), human, true);
+      this->armor = ItemFactory::createItem(stoi(attribute), human, true);
       this->armor->setCount(1);
     }
     getline(file, line);
-    if (line == "-1") {
+    if (attribute == "-1") {
       this->weapon = nullptr;
     } else {
-      this->weapon = ItemFactory::createItem(stoi(line), human, true);
+      this->weapon = ItemFactory::createItem(stoi(attribute), human, true);
       this->weapon->setCount(1);
     }
-    getline(file, line);
-    this->strength = atof(line.c_str());
-    getline(file, line);
-    this->endurance = atof(line.c_str());
-    getline(file, line);
-    this->accuracy = atof(line.c_str());
-    getline(file, line);
-    this->pace = atof(line.c_str());
-    getline(file, line);
-    this->mind = atof(line.c_str());
+    getline(ss, attribute);
+    this->strength = atof(attribute.c_str());
+    getline(ss, attribute);
+    this->endurance = atof(attribute.c_str());
+    getline(ss, attribute);
+    this->accuracy = atof(attribute.c_str());
+    getline(ss, attribute);
+    this->pace = atof(attribute.c_str());
+    getline(ss, attribute);
+    this->mind = atof(attribute.c_str());
     string inventorysize;
-    getline(file, inventorysize);
-    int n = stoi(inventorysize);
-    if (n > 0) {
-      for (int i = 0; i < n; i++) {
-        string sID, scount;
-        int count, ID;
-        getline(file, sID);
-        getline(file, scount);
-        count = stoi(scount);
-        ID = stoi(sID);
-        Human* human = new Paladin("name", 1, 100.0, 3.0, 5.0,
-                                   characterType::ASIANMOM, 1000);
-        Item* item = ItemFactory::createItem(ID, human, true);
-        item->setCount(count);
-        this->addInventory(item);
-      }
+    getline(ss, attribute, ',');
+    int n = stoi(attribute);
+    for (int i = 0; i < n; ++i) {
+      getline(ss, attribute, ',');
+      int ID = stoi(attribute);
+      getline(ss, attribute, ',');
+      int count = stoi(attribute);
+      
+      Human* human = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+      Item* item = ItemFactory::createItem(ID, human, true);
+      item->setCount(count);
+      this->addInventory(item);
     }
   } else {
     this->name = "Error404";
     this->age = 0;
   }
+  file.close(); // Close the file after reading
 }
+
 // double convertedPrice = atof(sprice.c_str());
 // if(vip == "true"){
 //     Item* item = Item(name,price,true,count );

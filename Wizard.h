@@ -26,8 +26,8 @@ class Wizard : public Human {
   void performAttack(Character& target) override;
   void performDefense(Character& attacker) override;
   virtual void levelUp() override;
-  void WizardToFile(string username);
-  void FileToWizard(string username);
+  void WizardToFile(const string& username);
+  void FileToWizard(const string& username);
 };
 
 #endif  // WIZARD_H

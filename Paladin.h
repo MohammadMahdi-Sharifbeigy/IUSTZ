@@ -26,8 +26,8 @@ class Paladin : public Human {
   void performAttack(Character& target) override;
   void performDefense(Character& attacker) override;
   virtual void levelUp() override;
-  void PaladinToFile(string username);
-  void FileToPaladin(string username);
+  void PaladinToFile(const string& username);
+  void FileToPaladin(const string& username);
 };
 
 #endif  // PALADIN_H

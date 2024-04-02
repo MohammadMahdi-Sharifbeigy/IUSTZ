@@ -26,8 +26,8 @@ class Cyborg : public Human {
   void performAttack(Character& target) override;
   void performDefense(Character& attacker) override;
   virtual void levelUp() override;
-  void CyborgToFile(string username);
-  void FileToCyborg(string username);
+  void CyborgToFile(const string& username);
+  void FileToCyborg(const string& username);
 };
 
 #endif  // CYBORG_H

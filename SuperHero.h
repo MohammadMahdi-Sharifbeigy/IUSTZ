@@ -26,8 +26,8 @@ class SuperHero : public Human {
   void performAttack(Character& target) override;
   void performDefense(Character& attacker) override;
   virtual void levelUp() override;
-  void SuperHeroToFile(string username);
-  void FileToSuperHero(string username);
+  void SuperHeroToFile(const string& username);
+  void FileToSuperHero(const string& username);
 };
 
 #endif  // SUPERHERO_H

@@ -26,8 +26,8 @@ class Sniper : public Human {
   void performAttack(Character& target) override;
   void performDefense(Character& attacker) override;
   virtual void levelUp() override;
-  void SniperToFile(string username);
-  void FileToSniper(string username);
+  void SniperToFile(const string& username);
+  void FileToSniper(const string& username);
 };
 
 #endif  // SNIPER_H
