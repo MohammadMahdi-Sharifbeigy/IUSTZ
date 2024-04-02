@@ -20,3 +20,13 @@ double Consumable::getPotency() {
 void Consumable::setPotency(double newPotency) {
   potency = newPotency;
 }
+
+Consumable* Consumable::createConsumable(string name,
+                                         double price,
+                                         bool vIP,
+                                         int count,
+                                         Character* character) {
+  double potency = character->getMaxHP() * 0.1;
+  Consumable* consumable = new Consumable(name, price, vIP, potency, count);
+  return consumable;
+}
