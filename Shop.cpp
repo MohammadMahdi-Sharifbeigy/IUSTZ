@@ -125,6 +125,7 @@ void Shop::buyItem(Human* human) {
 
   while (choice != 0) {
     shop.showShop();
+      cout<<"Coins : " << human->getCoin() << endl;
     cout << "Enter the number of the Item you want to buy or enter 0 to exit:"
          << endl;
     string schoice;
