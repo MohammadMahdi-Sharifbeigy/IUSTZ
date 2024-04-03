@@ -41,6 +41,10 @@ public:
     
     bool useDefensePotion();
     
+    double useAtkItem (bool dontUse);
+    
+    double useDefItem(bool dontUse);
+    
   void Update(Human &target);
 
   // Items Functions
@@ -68,6 +72,7 @@ private:
   State state;
     bool haveUsedAtkP;
     bool haveUsedDefP;
+    vector<Item*> inventory;
 };
 
 #endif /* HUMANENEMY_H */

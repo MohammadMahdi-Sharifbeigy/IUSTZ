@@ -16,7 +16,7 @@ class Throwable : public Item {
             double synergydamage,
             int count);
   virtual ~Throwable();
-  double getSynengyDmg();
+  double getSynergyDmg();
 };
 
 #endif
