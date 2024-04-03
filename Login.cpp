@@ -289,7 +289,7 @@ menu:
             return player;
         }else if (choice == 2){
             Assassin* player =  new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN , 1000);
-            player->AssasinToFile(username);
+            player->AssassinToFile(username);
             return player;
         }else if (choice == 3){
             SuperHero* player =  new SuperHero(name, age, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
@@ -337,7 +337,7 @@ menu:
                     return player;
                 }else if (role == "Assasin"){
                     Assassin* player =  new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
-                    player->FileToAssasin(username);
+                    player->FileToAssassin(username);
                     if(player->getName() == "Error404"&&  player->getAge() == 0){
                         cout<<"Sorry it seems like you don't have an account" <<endl;
                         goto menu;
