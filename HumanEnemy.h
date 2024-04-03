@@ -66,6 +66,8 @@ private:
   Human& humanRef;
   AttackStrategy* attackStrategy;
   State state;
+    bool haveUsedAtkP;
+    bool haveUsedDefP;
 };
 
 #endif /* HUMANENEMY_H */

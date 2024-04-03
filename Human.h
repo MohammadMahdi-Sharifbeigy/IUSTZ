@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Item.h"
 #include "State.h"
+#include <sstream>
 
 using namespace std;
 
