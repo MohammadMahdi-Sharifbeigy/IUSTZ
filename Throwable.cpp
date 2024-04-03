@@ -12,6 +12,6 @@ Throwable::Throwable(string name,
 }
 Throwable::~Throwable(){};
 
-double Throwable::getSynengyDmg() {
+double Throwable::getSynergyDmg() {
   return Synergydamage;
 }
