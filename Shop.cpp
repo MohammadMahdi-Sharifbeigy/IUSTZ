@@ -148,12 +148,15 @@ void Shop::buyItem(Human* human) {
     }
 
     choice = stoi(schoice);
-
-    if (choice >= 1 && choice <= 37) {
-      buy(choice, human);
-    } else {
-      cout << "Invalid choice. Please try again." << endl;
-    }
+      if (choice == 0){
+          break;
+      }else if (choice >= 1 && choice <= 21){
+          buy(choice, human);
+      }else{
+          Item* item = ItemFactory::createItem(choice,human,true);
+          buyItemWithCountLimit(choice,human,item,5);
+          
+      }
   }
 }
 
@@ -292,7 +295,7 @@ void Shop::sell(Human* human) {
   }
 }
 
-void Shop::welcom(Human* human) {
+void Shop::welcomShop(Human* human) {
   cout << "**********WELCOME TO THE SHOP**********" << endl << endl;
   int choice = 1;
   string schoice;
@@ -317,7 +320,7 @@ void Shop::welcom(Human* human) {
   choice = stoi(schoice);
   Shop shop = Shop();
   if (choice == 1) {
-    shop.buy(choice, human);
+    shop.buyItem(human);
   } else if (choice == 2) {
     shop.sell(human);
   }

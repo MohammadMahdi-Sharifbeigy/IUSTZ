@@ -61,7 +61,7 @@ public:
     
     void sell(Human* human);
     
-    void welcom(Human* human);
+    void welcomShop(Human* human);
     
 };
 
