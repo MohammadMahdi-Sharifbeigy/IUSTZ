@@ -266,6 +266,22 @@ double HumanEnemy::useDefItem(bool dontUse){
 }
 
 
+void HumanEnemy::atkInUpdate(Human& target , bool dont){
+    double synergy = useAtkItem(dont);
+    this->attack+=(int)synergy;
+    performAttack(target);
+    this->attack-=(int)synergy;
+    
+}
+
+void HumanEnemy::defInUpdate(Human& target , bool dont){
+    double synergy = useDefItem(true);
+    this->defense+=(int)synergy;
+    Human* humanTarget = dynamic_cast<Human*>(&target);
+    performDefense(*humanTarget);
+    this->defense-=(int)synergy;
+    
+}
 
 
 
@@ -275,20 +291,12 @@ void HumanEnemy::Update(Human& target) {
             
             
         case State::ATTACK:{
-            double synergy;
             int random = rand() %4;
             if(random == 0 ){
-                synergy = useDefItem(true);
-                this->defense+=(int)synergy;
-                Human* humanTarget = dynamic_cast<Human*>(&target);
-                performDefense(*humanTarget);
-                this->defense-=(int)synergy;
+                defInUpdate(target,true);
                 
             }else{
-                synergy = useAtkItem(true);
-                this->attack+=(int)synergy;
-                performAttack(target);
-                this->attack-=(int)synergy;
+                atkInUpdate(target,true);
                 
                }
             setStateBasedOnHP();
@@ -296,57 +304,35 @@ void HumanEnemy::Update(Human& target) {
             
             
         case State::DEFENSE:{
-            double synergy;
             bool atk = useAttackPotion();
             bool def = useDefensePotion();
             if(!atk && !def){
                 int random = rand() %5;
                 if(this->haveUsedAtkP){
-                    if(random == 0 || random == 1 || random == 2){
-                        synergy = useAtkItem(true);
-                        this->attack+=(int)synergy;
-                        performAttack(target);
-                        this->attack-=(int)synergy;
+                    if(random == 0 || random == 1 ){
+                        defInUpdate(target,false);
                         
                     }else{
-                        synergy = useDefItem(false);
-                        this->defense+=(int)synergy;
-                        Human* humanTarget = dynamic_cast<Human*>(&target);
-                        performDefense(*humanTarget);
-                        this->defense-=(int)synergy;
+                        atkInUpdate(target,true);
                         
                     }
                     
                 }else if(this->haveUsedDefP){
                     if(random == 0 || random == 1){
-                        synergy = useAtkItem(false);
-                        this->attack+=(int)synergy;
-                        performAttack(target);
-                        this->attack-=(int)synergy;
+                        atkInUpdate(target,false);
                         
                         
                     }else{
-                        synergy = useDefItem(true);
-                        this->defense+=(int)synergy;
-                        Human* humanTarget = dynamic_cast<Human*>(&target);
-                        performDefense(*humanTarget);
-                        this->defense-=(int)synergy;
+                        defInUpdate(target,true);
                         
                     }
                     
                 }else{
                     if(random == 0 || random == 1){
-                        synergy = useAtkItem(false);
-                        this->attack+=(int)synergy;
-                        performAttack(target);
-                        this->attack-=(int)synergy;
+                        atkInUpdate(target,false);
                         
                     }else{
-                        synergy = useDefItem(false);
-                        this->defense+=(int)synergy;
-                        Human* humanTarget = dynamic_cast<Human*>(&target);
-                        performDefense(*humanTarget);
-                        this->defense-=(int)synergy; 
+                        defInUpdate(target,false);
                     }
                 }
                }
@@ -356,27 +342,16 @@ void HumanEnemy::Update(Human& target) {
             
             
         case State::NEARDEATH:{
-            double synergy;
             bool healing = useHealingPotion();
             if(!healing){
                 if(target.getState()== State::NEARDEATH){
-                    synergy = useAtkItem(false);
-                    this->attack+=(int)synergy;
-                    performAttack(target);
-                    this->attack-=(int)synergy;
+                    atkInUpdate(target,false);
                 }else{
                     int random = rand() %2;
                     if(random == 0){
-                        synergy = useAtkItem(false);
-                        this->attack+=(int)synergy;
-                        performAttack(target);
-                        this->attack-=(int)synergy;
+                        atkInUpdate(target,false);
                     }else{
-                        synergy = useDefItem(false);
-                        this->defense+=(int)synergy;
-                        Human* humanTarget = dynamic_cast<Human*>(&target);
-                        performDefense(*humanTarget);
-                        this->defense-=(int)synergy;
+                        defInUpdate(target,false);
                     }
                 }
             }
