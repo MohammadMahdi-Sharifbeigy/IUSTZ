@@ -45,6 +45,10 @@ public:
     
     double useDefItem(bool dontUse);
     
+    void atkInUpdate(Human &target , bool dont);
+    
+    void defInUpdate(Human &target , bool dont);
+    
   void Update(Human &target);
 
   // Items Functions
