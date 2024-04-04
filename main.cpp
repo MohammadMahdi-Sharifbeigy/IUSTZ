@@ -36,19 +36,18 @@ void clearScreen() {
 #endif
 }
 
-void waitForEnter() {
-  cout << "Press Enter to continue...";
-  cin.ignore(numeric_limits<streamsize>::max(), '\n');
-  string input;
-  getline(cin, input);
-}
-
 void sleepMilliseconds(int milliseconds) {
 #ifdef _WIN32
   Sleep(milliseconds);
 #else
   usleep(milliseconds * 1000);
 #endif
+}
+void waitForEnter() {
+  cout << "Press Enter to continue...";
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  string input;
+  getline(cin, input);
 }
 
 void attackZombie(Human* player, Enemy* zombie) {
@@ -247,7 +246,6 @@ void displayPlayerStats(Human* player) {
 
 void handleShopInteraction(GameState& gameState) {
   Shop& shop = gameState.getGameShop();
-  cout << "\n--- Shop ---\n";
   shop.welcomShop(gameState.getPlayerCharacter());
 }
 

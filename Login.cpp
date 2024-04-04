@@ -64,7 +64,7 @@
 #include "Wizard.h"
 #include "Cyborg.h"
 #include "AsianMom.h"
-
+#include <sstream>
 
 
 
@@ -323,8 +323,13 @@ menu:
         int check=0;
         string checkusername;
         string role;
-        while (getline(file , checkusername)){
-            getline(file,role);
+
+        string line;
+        getline(file, line); // Read the data line
+        stringstream ss(line);
+        while (getline(ss, checkusername, ',')){
+            checkusername += ".csv";
+            getline(ss, role, ',');
             if(username == checkusername){
                 check++;
                 if(role=="Paladin"){
