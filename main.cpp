@@ -17,10 +17,10 @@
 #include "font.h"
 
 #ifdef _WIN32
-#include <windows.h>
 #include <conio.h>
-#include <direct.h>
 #include <curses.h>
+#include <direct.h>
+#include <windows.h>
 #else
 #include <ncurses.h>
 #include <unistd.h>
@@ -43,6 +43,13 @@ void clearScreen() {
 #endif
 }
 
+void sleepMilliseconds(int milliseconds) {
+#ifdef _WIN32
+  Sleep(milliseconds);
+#else
+  usleep(milliseconds * 1000);
+#endif
+}
 void waitForEnter() {
   cout << "Press Enter to continue...";
   cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -233,10 +240,10 @@ void displayPlayerStats(Human* player, WINDOW* stats_win) {
   werase(stats_win);
   draw_borders(stats_win);
   mvwprintw(stats_win, 1, 1, "Player Stats:");
-  mvwprintw(stats_win, 2, 1, "HP: %d/%d", player->getCurrentHP(),
+  mvwprintw(stats_win, 2, 1, "HP: %.1f/%.1f", player->getCurrentHP(),
             player->getMaxHP());
-  mvwprintw(stats_win, 3, 1, "Attack: %d", player->getAttack());
-  mvwprintw(stats_win, 4, 1, "Defense: %d", player->getDefense());
+  mvwprintw(stats_win, 3, 1, "Attack: %.1f", player->getAttack());
+  mvwprintw(stats_win, 4, 1, "Defense: %.1f", player->getDefense());
   mvwprintw(stats_win, 5, 1, "Gold: %d", player->getCoin());
   mvwprintw(stats_win, 6, 1, "Level: %d", player->getLevel());
   mvwprintw(stats_win, 7, 1, "XP: %d/%d", player->getCurrXP(),
@@ -252,7 +259,6 @@ void displayPlayerStats(Human* player, WINDOW* stats_win) {
 
 void handleShopInteraction(GameState& gameState) {
   Shop& shop = gameState.getGameShop();
-  cout << "\n--- Shop ---\n";
   shop.welcomShop(gameState.getPlayerCharacter());
 }
 
