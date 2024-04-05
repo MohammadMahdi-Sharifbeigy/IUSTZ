@@ -142,27 +142,45 @@ void AsianMomController::handleLevelUp() {
     updateView();
 }
 
-inline characterType stringToCharacterType(const string& str) {
-  if (str == "PALADIN")
+inline characterType StringToCharacterType(const string& str) {
+  if (str == "Paladin")
     return PALADIN;
-  else if (str == "SUPERHERO")
+  else if (str == "SuperHero")
     return SUPERHERO;
-  else if (str == "ASSASSIN")
+  else if (str == "Assassin")
     return ASSASSIN;
-  else if (str == "ASIANMOM")
+  else if (str == "AsianMom")
     return ASIANMOM;
-  else if (str == "CYBORG")
+  else if (str == "Cyborg")
     return CYBORG;
-  else if (str == "SNIPER")
+  else if (str == "sniper")
     return SNIPER;
-  else if (str == "WIZARD")
+  else if (str == "Wizard"){
     return WIZARD;
-  else if (str == "WEAKZOMBIE")
-    return WEAKZOMBIE;
+  }
   else
     return STRONGZOMBIE;
-  // else if (str == "STRONGZOMBIE")
-  //   return STRONGZOMBIE;
+}
+
+inline string CharacterTypeToString(const characterType& type) {
+  switch (type) {
+    case PALADIN:
+      return "Paladin";
+    case SUPERHERO:
+      return "SupeHero";
+    case ASSASSIN:
+      return "Assassin";
+    case ASIANMOM:
+      return "AsianMom";
+    case CYBORG:
+      return "Cyborg";
+    case SNIPER:
+      return "Sniper";
+    case WIZARD:
+      return "Wizard";
+    default:
+      return "UNKNOWN";
+  }
 }
 
 static int itemID(Item* item) {
@@ -190,7 +208,7 @@ void AsianMom::AsianMomToFile(const string& username) {
   // Write the character data in one line
   file << this->name << ','
        << this->age << ','
-       << this->role << ','
+       << CharacterTypeToString(this->role) << ','
        << this->level << ','
        << this->coin << ','
        << this->currHP << ','
@@ -247,12 +265,11 @@ void AsianMom::FileToAsianMom(const string& username) {
     
     stringstream ss(line);
     string attribute;
-    
     getline(ss, this->name, ',');
     getline(ss, attribute, ',');
     this->age = stoi(attribute);
     getline(ss, attribute, ',');
-    this->role = stringToCharacterType(attribute);
+    this->role = StringToCharacterType(attribute);
     getline(ss, attribute, ',');
     this->level = stoi(attribute);
     getline(ss, attribute, ',');
