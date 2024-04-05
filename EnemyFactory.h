@@ -13,14 +13,7 @@ class EnemyFactory
 public:
     static Enemy *createEnemy(characterType type, int level, Human *humanRef = nullptr);
         
-    static Enemy *createEnemy(characterType type, int level,Human* human, Human *humanRef = nullptr);
-        
-        
+    static Enemy *createEnemy(characterType type, int level,Human* human, Human *humanRef);
 };
-            
-            
-            
-            
-
 
 #endif  // HUMAN_FACTORY_H

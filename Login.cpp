@@ -1,11 +1,3 @@
-//
-//  RecommendCharacter.cpp
-//  
-//
-//  Created by Lilia Rouhi on 1/10/1403 AP.
-//
-
-
 #include "Login.h"
 #include "CheckNumber.h"
 #include <iostream>
@@ -66,12 +58,7 @@
 #include "AsianMom.h"
 #include <sstream>
 
-
-
 using namespace std;
-
-
-
 
 static Human* Login(){
     cout<<"***Welcome to our game***"<<endl;
