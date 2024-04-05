@@ -1,8 +1,8 @@
 #include <iostream>
-#include "ASCIIArt.h"
+#include <string>
 
 using namespace std;
-int main(){
+
     const string Wellcome1= R"(
                                                                                                     ______________                        
                                                                                               ,===:'.,            `-._                           
@@ -374,6 +374,4 @@ R"(
   _jgs_..-'    /__) \__)__..-'    /__) \__)
  
 
-)";
-
-}
+)"; 

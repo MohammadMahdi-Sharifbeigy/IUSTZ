@@ -85,8 +85,10 @@ void HumanEnemy::performAttack(Character& target) {
     if (attackStrategy) {
         // Get the character type of 'this' HumanEnemy
         characterType currHumanRole = this->getRole();
+        // Determine the AttackType based on the target's role
+        AttackType attackType = static_cast<HumanEnemyAttack*>(attackStrategy)->getAttackTypeForRole(target.getRole());
         // Apply the FSM to get modified attack and defense values
-        std::pair<double, double> modifiedValues = static_cast<HumanEnemyAttack*>(attackStrategy)->applyFSM(currHumanRole, &target, this);
+        std::pair<double, double> modifiedValues = static_cast<HumanEnemyAttack*>(attackStrategy)->applyFSM(currHumanRole, &target, this, attackType);
         double modifiedAttack = modifiedValues.first;
         // Use the modified attack value to deal damage
         target.takeDamage(modifiedAttack);
@@ -100,8 +102,10 @@ void HumanEnemy::performDefense(Human& attacker) {
     if (attackStrategy) {
         // Get the character type of 'this' HumanEnemy
         characterType currHumanRole = this->getRole();
+        // Determine the AttackType based on the attacker's role
+        AttackType attackType = static_cast<HumanEnemyAttack*>(attackStrategy)->getAttackTypeForRole(attacker.getRole());
         // Apply the FSM to get modified attack and defense values
-        std::pair<double, double> modifiedValues = static_cast<HumanEnemyAttack*>(attackStrategy)->applyFSM(currHumanRole, &attacker, this);
+        std::pair<double, double> modifiedValues = static_cast<HumanEnemyAttack*>(attackStrategy)->applyFSM(currHumanRole, &attacker, this, attackType);
         double modifiedDefense = modifiedValues.second;
         // Use the modified defense value to reduce damage taken
         takeDamage(modifiedDefense);
@@ -126,12 +130,8 @@ void HumanEnemy::setStateBasedOnHP(){
         setState(DEFENSE);
     }else{
         setState(ATTACK);
-    }
-        
-        }
-
-
-
+    }        
+}
 bool HumanEnemy::useHealingPotion(){
     Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
     Item* healingPotion = ItemFactory::createItem(29,hum,true);
@@ -282,8 +282,6 @@ void HumanEnemy::defInUpdate(Human& target , bool dont){
     this->defense-=(int)synergy;
     
 }
-
-
 
 void HumanEnemy::Update(Human& target) {
     setStateBasedOnHP();
