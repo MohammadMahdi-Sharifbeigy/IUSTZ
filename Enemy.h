@@ -51,11 +51,11 @@ class Enemy : public Character {
 
   int getMaxHP() { return maxHP; }
     
-    int getCurrentHP() { return currHP; }
+  int getCurrentHP() { return currHP; }
     
-    void setMaxHP (int maxHP) {this->maxHP = maxHP ;}
+  void setMaxHP (int maxHP) {this->maxHP = maxHP ;}
     
-    void setCurrentHP (int currHP) {this->currHP = currHP ;}
+  void setCurrentHP (int currHP) {this->currHP = currHP ;}
     
   int get_enemy_atk() { return attack; }
 
@@ -65,16 +65,20 @@ class Enemy : public Character {
 
   int get_enemy_exp() { return giveExp; }
     
-    int get_enemy_coin() {return giveCoin;}
+  int get_enemy_coin() {return giveCoin;}
     
-    void set_enemy_atk(int attack) {this->attack = attack;}
+  void set_enemy_atk(int attack) {this->attack = attack;}
     
-    void set_enemy_def(int defense) {this->defense = defense;}
+  void set_enemy_def(int defense) {this->defense = defense;}
     
   void set_enemy_hp(int value) { currHP -= value; }
+  
   characterType getcharType() const { return role; }
+
   characterType setRole(characterType newRole) { return newRole; }
+
   void levelUp() override {}
+  
   string NameMaker() override {
     string name = "Enemy";
     return name;

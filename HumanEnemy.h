@@ -8,8 +8,7 @@
 #include "Human.h"
 #include "ItemFactory.h"
 #include "State.h"
-
-
+#include "EnemyFactory.h"
 
 class HumanEnemy : public Enemy {
 public:
