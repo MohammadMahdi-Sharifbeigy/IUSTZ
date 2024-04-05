@@ -1,11 +1,3 @@
-//
-//  RecommendCharacter.cpp
-//  
-//
-//  Created by Lilia Rouhi on 1/10/1403 AP.
-//
-
-
 #include "Login.h"
 #include "CheckNumber.h"
 #include <iostream>
@@ -66,15 +58,10 @@
 #include "AsianMom.h"
 #include <sstream>
 
-
-
 using namespace std;
 
-
-
-
 static Human* Login(){
-    cout<<"***Welcom to our game***"<<endl;
+    cout<<"***Welcome to our game***"<<endl;
 menu:
     cout<<"1.Sign in"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
     int choice;
@@ -92,7 +79,7 @@ menu:
     }
     choice = stoi(schoice);
     if(choice == 1){
-        cout<<"Enter your nam: "<<endl;
+        cout<<"Enter your name: "<<endl;
         string username;
         cin>>username;
         cout<<"Now , let's answer some questions !"<<endl<<endl;
@@ -318,89 +305,82 @@ menu:
         cout<<"Enter your name:"<<endl;
         string username;
         cin>>username;
-        username=username+".csv";
+        string usernameWithExtension = username + ".csv";
         ifstream file("usernames.csv");
         int check=0;
         string checkusername;
         string role;
-
         string line;
-        getline(file, line); // Read the data line
+        while (getline(file, line)) { // Read the data line
         stringstream ss(line);
-        while (getline(ss, checkusername, ',')){
-            checkusername += ".csv";
-            getline(ss, role, ',');
-            if(username == checkusername){
-                check++;
-                if(role=="Paladin"){
-                    Paladin* player = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
-                    player->FileToPaladin(username);
-                    if(player->getName() == "Error404" &&  player->getAge() == 0){
-                        cout<<"Sorry it seems like you don't have an account" <<endl;
-                        goto menu;
-                    }
-                    return player;
-                }else if (role == "Assasin"){
-                    Assassin* player =  new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
-                    player->FileToAssassin(username);
-                    if(player->getName() == "Error404"&&  player->getAge() == 0){
-                        cout<<"Sorry it seems like you don't have an account" <<endl;
-                        goto menu;
-                    }
-                    return player;
-                }else if (role == "SuperHero"){
-                    SuperHero* player =  new SuperHero("name", 1, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
-                    player->FileToSuperHero(username);
-                    if(player->getName() == "Error404" &&  player->getAge() == 0){
-                        cout<<"Sorry it seems like you don't have an account" <<endl;
-                        goto menu;
-                    }
-                    return player;
-                }else if (role == "Sniper"){
-                    Sniper* player =  new Sniper("name", 1, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
-                    player->FileToSniper(username);
-                    if(player->getName() == "Error404" &&  player->getAge() == 0){
-                        cout<<"Sorry it seems like you don't have an account" <<endl;
-                        goto menu;
-                    }
-                    return player;
-                }else if (role == "Wizard"){
-                    Wizard* player =  new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
-                    player->FileToWizard(username);
-                    if(player->getName() == "Error404" &&  player->getAge() == 0){
-                        cout<<"Sorry it seems like you don't have an account" <<endl;
-                        goto menu;
-                    }
-                    return player;
-                }else if (role == "Cyborg"){
-                    Cyborg* player =  new Cyborg("name", 1, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
-                    player ->FileToCyborg(username);
-                    if(player->getName() == "Error404" &&  player->getAge() == 0){
-                        cout<<"Sorry it seems like you don't have an account" <<endl;
-                        goto menu;
-                    }
-                    return player;
-                }else{
-                    AsianMom* player =  new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-                    player->FileToAsianMom(username);
-                    if(player->getName() == "Error404" &&  player->getAge() == 0){
-                        cout<<"Sorry it seems like you don't have an account" <<endl;
-                        goto menu;
-                    }
-                    return player;
-                    
+        getline(ss, checkusername, ',');
+        getline(ss, role, ',');
+        if(username == checkusername){
+            check++;
+            if(role=="Paladin"){
+                Paladin* player = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+                player->FileToPaladin(username);
+                if(player->getName() == "Error404" &&  player->getAge() == 0){
+                    cout<<"Sorry it seems like you don't have an account" <<endl;
+                    goto menu;
                 }
-                break;
+                return player;
+            }else if (role == "Assasin"){
+                Assassin* player =  new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
+                player->FileToAssassin(username);
+                if(player->getName() == "Error404"&&  player->getAge() == 0){
+                    cout<<"Sorry it seems like you don't have an account" <<endl;
+                    goto menu;
+                }
+                return player;
+            }else if (role == "SuperHero"){
+                SuperHero* player =  new SuperHero("name", 1, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
+                player->FileToSuperHero(username);
+                if(player->getName() == "Error404" &&  player->getAge() == 0){
+                    cout<<"Sorry it seems like you don't have an account" <<endl;
+                    goto menu;
+                }
+                return player;
+            }else if (role == "Sniper"){
+                Sniper* player =  new Sniper("name", 1, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
+                player->FileToSniper(username);
+                if(player->getName() == "Error404" &&  player->getAge() == 0){
+                    cout<<"Sorry it seems like you don't have an account" <<endl;
+                    goto menu;
+                }
+                return player;
+            }else if (role == "Wizard"){
+                Wizard* player =  new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
+                player->FileToWizard(username);
+                if(player->getName() == "Error404" &&  player->getAge() == 0){
+                    cout<<"Sorry it seems like you don't have an account" <<endl;
+                    goto menu;
+                }
+                return player;
+            }else if (role == "Cyborg"){
+                Cyborg* player =  new Cyborg("name", 1, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
+                player ->FileToCyborg(username);
+                if(player->getName() == "Error404" &&  player->getAge() == 0){
+                    cout<<"Sorry it seems like you don't have an account" <<endl;
+                    goto menu;
+                }
+                return player;
+            }else{
+                AsianMom* player =  new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+                player->FileToAsianMom(username);
+                if(player->getName() == "Error404" &&  player->getAge() == 0){
+                    cout<<"Sorry it seems like you don't have an account" <<endl;
+                    goto menu;
+                }
+                return player;            
             }
+            break;
         }
         if(check == 0){
-            cout<<"Sorry it seems like you don't have an account" <<endl;
-            goto menu;
-        }
-        
+        cout<<"Sorry it seems like you don't have an account" <<endl;
+        goto menu;
+        } 
     }
     return new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
-    
+    }
 }
-
-
