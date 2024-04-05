@@ -74,7 +74,7 @@ using namespace std;
 
 
 static Human* Login(){
-    cout<<"***Welcom to our game***"<<endl;
+    cout<<"***Welcome to our game***"<<endl;
 menu:
     cout<<"1.Sign in"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
     int choice;
@@ -92,7 +92,7 @@ menu:
     }
     choice = stoi(schoice);
     if(choice == 1){
-        cout<<"Enter your nam: "<<endl;
+        cout<<"Enter your name: "<<endl;
         string username;
         cin>>username;
         cout<<"Now , let's answer some questions !"<<endl<<endl;
