@@ -3,12 +3,14 @@
 #include <ctime>
 #include <iostream>
 #include "Paladin.h"
+#include "ASCIIArt/ASCIIArts.h"
 #include "State.h"
 
-HumanEnemy::HumanEnemy(int level, Human& humanRef) : Enemy(level), humanRef(humanRef) {
-    Character::name = "Human Enemy";
+// Model
+HumanEnemyModel::HumanEnemyModel(int level, Human& humanRef) : Enemy(level), humanRef(humanRef) {
     srand(time(NULL));
     attackStrategy = new HumanEnemyAttack();
+    Character::name = "Human Enemy";
     level = abs(level+ rand() % 4) + 1;
     int ran = (rand() % (5 * level / 4));
     maxHP = 2 * level + ran + 100;
@@ -37,9 +39,10 @@ HumanEnemy::HumanEnemy(int level, Human& humanRef) : Enemy(level), humanRef(huma
     
 }
 
-HumanEnemy::HumanEnemy(int level, Human& human, Human& humanRef) : Enemy(level), humanRef(humanRef) {
+HumanEnemyModel::HumanEnemyModel(int level, Human& human, Human& humanRef) : Enemy(level), humanRef(humanRef) {
     attackStrategy = new HumanEnemyAttack();
     srand(time(NULL));
+    Character::name = "Human Enemy";
     level = abs(level+ rand() % 4) + 1;
     int ran = (rand() % (5 * level / 4));
     maxHP = 2 * level + ran + 100;
@@ -66,11 +69,11 @@ HumanEnemy::HumanEnemy(int level, Human& human, Human& humanRef) : Enemy(level),
     this->addInventory(healingPotion,random);
 }
 
-HumanEnemy::~HumanEnemy() {
+HumanEnemyModel::~HumanEnemyModel() {
     delete attackStrategy;
 }
 
-characterType HumanEnemy::getRandomRole() {
+characterType HumanEnemyModel::getRandomRole() {
     int role = rand() % 10;
     if (role == 7 || role == 8 || role == 9) {
         role = rand() % 9;
@@ -78,11 +81,11 @@ characterType HumanEnemy::getRandomRole() {
     return static_cast<characterType>(role);
 }
 
-void HumanEnemy::setRoleBasedOnHuman(Human& human) {
+void HumanEnemyModel::setRoleBasedOnHuman(Human& human) {
     this->role = human.getRole();
 }
 
-void HumanEnemy::performAttack(Character& target) {
+void HumanEnemyModel::performAttack(Character& target) {
     if (attackStrategy) {
         // Get the character type of 'this' HumanEnemy
         characterType currHumanRole = this->getRole();
@@ -99,7 +102,7 @@ void HumanEnemy::performAttack(Character& target) {
     }
 }
 
-void HumanEnemy::performDefense(Human& attacker) {
+void HumanEnemyModel::performDefense(Human& attacker) {
     if (attackStrategy) {
         // Get the character type of 'this' HumanEnemy
         characterType currHumanRole = this->getRole();
@@ -116,15 +119,15 @@ void HumanEnemy::performDefense(Human& attacker) {
     }
 }
 
-State HumanEnemy::getState(){
+State HumanEnemyModel::getState(){
     return state;
 }
 
-void HumanEnemy::setState(State state){
+void HumanEnemyModel::setState(State state){
     this->state = state;
 }
 
-void HumanEnemy::setStateBasedOnHP(){
+void HumanEnemyModel::setStateBasedOnHP(){
   if(this->currHP < (this->maxHP * 20)/100){
         setState(NEARDEATH);
     }else if(this->currHP < (this->maxHP * 50)/100){
@@ -133,7 +136,7 @@ void HumanEnemy::setStateBasedOnHP(){
         setState(ATTACK);
     }        
 }
-bool HumanEnemy::useHealingPotion(){
+bool HumanEnemyModel::useHealingPotion(){
     Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
     Item* healingPotion = ItemFactory::createItem(29,hum,true);
     int count = countInInventory(healingPotion);
@@ -150,7 +153,7 @@ bool HumanEnemy::useHealingPotion(){
     return false;
 }
 
-bool HumanEnemy::useAttackPotion(){
+bool HumanEnemyModel::useAttackPotion(){
     Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
     Item* attackPotion = ItemFactory::createItem(30,hum,true);
     int count = countInInventory(attackPotion);
@@ -167,7 +170,7 @@ bool HumanEnemy::useAttackPotion(){
     
 }
 
-bool HumanEnemy::useDefensePotion(){
+bool HumanEnemyModel::useDefensePotion(){
     Human* hum = new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
     Item* defensePotion = ItemFactory::createItem(31,hum,true);
     int count = countInInventory(defensePotion);
@@ -183,7 +186,7 @@ bool HumanEnemy::useDefensePotion(){
     return false;
 }
 
-double HumanEnemy::useAtkItem (bool dontUse){
+double HumanEnemyModel::useAtkItem (bool dontUse){
     double synergy = 0;
     if (dontUse){
         int random = rand() % 4;
@@ -210,8 +213,6 @@ double HumanEnemy::useAtkItem (bool dontUse){
         }else{
             synergy = 0;
         }
-        
-        
     }else{
         int random = rand()%2;
         if(random == 0){
@@ -228,13 +229,12 @@ double HumanEnemy::useAtkItem (bool dontUse){
                     synergy = dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
                     cout<<"Enemy used "<<inventory[1]->getName()<<" to attack you."<<endl;
                 }
-                
             }else{
                 synergy =dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
                 cout<<"Enemy used "<<inventory[1]->getName()<<" to attack you."<<endl;
             }
-            
-        }}
+        }
+    }
     synergy = (synergy*60)/100;
     if(synergy > 6){
         synergy = 6;
@@ -242,9 +242,7 @@ double HumanEnemy::useAtkItem (bool dontUse){
     return synergy;
 }
 
-
-
-double HumanEnemy::useDefItem(bool dontUse){
+double HumanEnemyModel::useDefItem(bool dontUse){
     double synergy = 0;
     if(dontUse){
         int random = rand() % 2;
@@ -258,7 +256,6 @@ double HumanEnemy::useDefItem(bool dontUse){
         synergy = dynamic_cast<Passive*>(inventory[0])->getSynergyDamage();
         cout<<"Enemy used "<<inventory[0]->getName()<<" to defense."<<endl;
     }
-    
     synergy = (synergy*60)/100;
     if(synergy > 6){
         synergy = 6;
@@ -266,8 +263,7 @@ double HumanEnemy::useDefItem(bool dontUse){
     return synergy;
 }
 
-
-void HumanEnemy::atkInUpdate(Human& target , bool dont){
+void HumanEnemyModel::atkInUpdate(Human& target , bool dont){
     double synergy = useAtkItem(dont);
     this->attack+=(int)synergy;
     performAttack(target);
@@ -275,7 +271,7 @@ void HumanEnemy::atkInUpdate(Human& target , bool dont){
     
 }
 
-void HumanEnemy::defInUpdate(Human& target , bool dont){
+void HumanEnemyModel::defInUpdate(Human& target , bool dont){
     double synergy = useDefItem(true);
     this->defense+=(int)synergy;
     Human* humanTarget = dynamic_cast<Human*>(&target);
@@ -284,11 +280,9 @@ void HumanEnemy::defInUpdate(Human& target , bool dont){
     
 }
 
-void HumanEnemy::Update(Human& target) {
+void HumanEnemyModel::Update(Human& target) {
     setStateBasedOnHP();
     switch (this->state) {
-            
-            
         case State::ATTACK:{
             int random = rand() %4;
             if(random == 0 ){
@@ -299,9 +293,7 @@ void HumanEnemy::Update(Human& target) {
                 
                }
             setStateBasedOnHP();
-            break;}
-            
-            
+        break;}            
         case State::DEFENSE:{
             bool atk = useAttackPotion();
             bool def = useDefensePotion();
@@ -337,9 +329,6 @@ void HumanEnemy::Update(Human& target) {
                }
             setStateBasedOnHP();
             break;}
-            
-            
-            
         case State::NEARDEATH:{
             bool healing = useHealingPotion();
             if(!healing){
@@ -358,4 +347,51 @@ void HumanEnemy::Update(Human& target) {
             break;}
         
         }
+}
+
+// View
+
+// Constructor definition
+HumanEnemyView::HumanEnemyView() {
+    // Constructor implementation (if any)
+}
+
+// Method to display human enemy details
+void HumanEnemyView::displayHumanEnemy(HumanEnemyModel* humanEnemy) {
+    std::cout << "Human Enemy created with Type: " << humanEnemy->getRole() << std::endl;
+    characterType Role = humanEnemy->getRole();
+    if (Role == PALADIN){
+        cout << Paladin1 << endl;
+    }
+    else if(Role == SUPERHERO){
+        cout << Superhero2 << endl;
+    }
+    else if(Role == ASSASSIN){
+        cout << Assassin << endl;
+    }
+    else if(Role == CYBORG){
+        cout << Cyborg << endl;
+    }
+    else if(Role == SNIPER){
+        cout << Sniper << endl;
+    }
+    else if(Role == ASIANMOM){
+        cout << AsianMom << endl;
+    }
+    else if(Role == WIZARD){
+        cout << Wizard << endl;
+    }
+    
+}
+
+// Controller
+HumanEnemyController::HumanEnemyController(HumanEnemyModel& model, HumanEnemyView& view)
+    : model(model), view(view) {}
+
+void HumanEnemyController::PerformAttack(Character& target) {
+    model.performAttack(target);
+}
+
+void HumanEnemyController::PerformDefense(Human& attacker) {
+    model.performDefense(attacker);
 }
