@@ -169,17 +169,17 @@ void Human::showInventory() {
 void Human::addInventory(Item* item) {
   int check = 0;
   if (this->inventorySize() > 0) {
-    for (int i = 0; i < this->inventorySize(); i++) {
-      if (item->getName() == inventory[i]->getName()) {
-        inventory[i]->setCount(inventory[i]->getCount() + 1);
-        check++;
-        break;
-      }
+      for (int i = 0; i < this->inventorySize(); i++) {
+          if (item->getName() == inventory[i]->getName()) {
+              inventory[i]->setCount(inventory[i]->getCount() + 1);
+              check++;
+              break;
+          }}
       if (check == 0) {
         inventory.push_back(item);
         //  inventory[inventory.size()-1]->setCount(1);
       }
-    }
+    
   } else {
     inventory.push_back(item);
     // inventory[inventory.size()-1]->setCount(1);
@@ -189,7 +189,7 @@ void Human::addInventory(Item* item) {
 void Human::removeInventory(int index) {
   if (index - 1 < this->inventorySize()) {
     if (inventory[index - 1]->getCount() == 1) {
-      inventory.erase(inventory.begin() + index);
+      inventory.erase(inventory.begin() + index-1);
     } else {
       inventory[index - 1]->setCount(inventory[index - 1]->getCount() - 1);
     }
@@ -199,17 +199,17 @@ void Human::removeInventory(int index) {
 void Human::addInventory(Item* item, int count) {
   int check = 0;
   if (this->inventorySize() > 0) {
-    for (int i = 0; i < this->inventorySize(); i++) {
-      if (item->getName() == inventory[i]->getName()) {
-        inventory[i]->setCount(inventory[i]->getCount() + count);
-        check++;
-        break;
-      }
+      for (int i = 0; i < this->inventorySize(); i++) {
+          if (item->getName() == inventory[i]->getName()) {
+              inventory[i]->setCount(inventory[i]->getCount() + count);
+              check++;
+              break;
+          }}
       if (check == 0) {
         inventory.push_back(item);
         inventory[inventory.size() - 1]->setCount(count);
       }
-    }
+    
   } else {
     inventory.push_back(item);
     inventory[inventory.size() - 1]->setCount(count);
@@ -219,7 +219,7 @@ void Human::addInventory(Item* item, int count) {
 void Human::removeInventory(int index, int count) {
   if (index - 1 < this->inventorySize()) {
     if (inventory[index - 1]->getCount() == count) {
-      inventory.erase(inventory.begin() + index);
+      inventory.erase(inventory.begin() + index-1);
     } else if (inventory[index - 1]->getCount() > count) {
       inventory[index - 1]->setCount(inventory[index - 1]->getCount() - count);
     } else {

@@ -272,7 +272,7 @@ void Shop::buyItemWithCountLimit(int choice,
   string scount;
   int nowcount = human->countInInventory(item);
 
-  if (nowcount == maxCount) {
+  if (nowcount >= maxCount) {
     cout << "Sorry, you already have the maximum limit of " << maxCount
          << " of this item. You can't buy more!" << endl;
     return;
@@ -337,7 +337,7 @@ void Shop::buy(int choice, Human* human) {
 }
 
 void Shop::sell(Human* human) {
-  human->showInventory();
+//  human->showInventory();
   if (human->inventorySize() == 0) {
     cout << "You don't have any items to sell! Enter 0 to exit." << endl;
     int index;
@@ -359,6 +359,7 @@ void Shop::sell(Human* human) {
   int index = 1;
   string sindex;
   while (index != 0) {
+      human->showInventory();
     cout << "Enter the number of the item that you want to sell or enter 0 to "
             "exit:"
          << endl;
@@ -407,12 +408,19 @@ void Shop::sell(Human* human) {
       }
       count = stoi(scount);
       double price = human->priceItemsAt(index);
+        Item* item = human->itemsAt(index);
+        cout << "You sold "<<count<<" "<<item->getName()<<endl;
       human->removeInventory(index, count);
       human->setCoin(human->getCoin() + price * count);
+        cout << "Coins : "<< human->getCoin()<<endl;
     } else {
+        count = 1;
       double price = human->priceItemsAt(index);
-      human->removeInventory(index);
-      human->setCoin(human->getCoin() + price);
+        Item* item = human->itemsAt(index);
+        cout << "You sold "<<count<<" "<<item->getName()<<endl;
+      human->removeInventory(index, count);
+      human->setCoin(human->getCoin() + price * count);
+        cout << "Coins : "<< human->getCoin()<<endl;
     }
   }
 }
