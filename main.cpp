@@ -363,6 +363,11 @@ void combat(Human* player, Enemy* enemy) {
         }
         if (defenseItems.size() == 0) {
           cout << "No defense items available." << endl;
+          displayHealthBar(player->getName(), player->getCurrentHP(),
+                           player->getMaxHP());
+          cout << endl;
+          displayHealthBar(enemy->getName(), enemy->getCurrentHP(),
+                           enemy_max_hp);
           continue;
         }
         cout << "Choose a defense item to use:" << endl;
@@ -379,6 +384,10 @@ void combat(Human* player, Enemy* enemy) {
         cout << player->getName() << " uses "
              << defenseItems[defenseChoice - 1]->getName() << " for defense."
              << endl;
+        displayHealthBar(player->getName(), player->getCurrentHP(),
+                         player->getMaxHP());
+        cout << endl;
+        displayHealthBar(enemy->getName(), enemy->getCurrentHP(), enemy_max_hp);
         break;
       case 3:
         clearScreen();
