@@ -309,8 +309,9 @@ void handleShopInteraction(GameState& gameState) {
 void combatMenu(Human* player) {
   cout << "\nCombat Options:" << endl;
   cout << "1. Attack" << endl;
-  cout << "2. Use Potion" << endl;
-  cout << "3. View Inventory" << endl;
+  cout << "2. Defend" << endl;
+  cout << "3. Use Potion" << endl;
+  cout << "4. View Inventory" << endl;
   cout << "Choose an action: ";
 }
 
@@ -342,6 +343,8 @@ void combat(Human* player, Enemy* enemy) {
   cout << endl;
   displayHealthBar(enemy->getName(), enemy->getCurrentHP(), enemy_max_hp);
   while (player->getCurrentHP() > 0 && enemy->getCurrentHP() > 0) {
+    vector<Item*> items = player->getInventory();
+    vector<Item*> defenseItems;
     combatMenu(player);
     int choice;
     cin >> choice;
@@ -352,6 +355,32 @@ void combat(Human* player, Enemy* enemy) {
         attackZombie(player, enemy);
         break;
       case 2:
+        clearScreen();
+        for (size_t i = 0; i < items.size(); ++i) {
+          if (items[i]->getID() >= 1 && items[i]->getID() <= 7) {
+            defenseItems.push_back(items[i]);
+          }
+        }
+        if (defenseItems.size() == 0) {
+          cout << "No defense items available." << endl;
+          continue;
+        }
+        cout << "Choose a defense item to use:" << endl;
+        for (size_t i = 0; i < defenseItems.size(); ++i) {
+          cout << i + 1 << ". " << defenseItems[i]->getName() << endl;
+        }
+        int defenseChoice;
+        cin >> defenseChoice;
+        while (defenseChoice < 1 || defenseChoice > defenseItems.size()) {
+          cout << "Invalid choice." << endl;
+          cin >> defenseChoice;
+        }
+        enemy->setAttack(enemy->getAttack() * 0.7);
+        cout << player->getName() << " uses "
+             << defenseItems[defenseChoice - 1]->getName() << " for defense."
+             << endl;
+        break;
+      case 3:
         clearScreen();
         if (containsHealingPotion(player->getInventory())) {
           vector<Item*> items = player->getInventory();
@@ -372,7 +401,7 @@ void combat(Human* player, Enemy* enemy) {
           noPotionAvailable(player);
         }
         break;
-      case 3:
+      case 4:
         clearScreen();
         checkInventory(player);
         player->showInventory();
@@ -391,6 +420,9 @@ void combat(Human* player, Enemy* enemy) {
     // Enemy's turn to attack
     player->takeDamage(enemy->get_enemy_atk());
     zombieAttack(enemy, player);
+    if (choice == 2) {
+      enemy->setAttack(enemy->getAttack() / 0.7);
+    }
     if (player->getCurrentHP() <= 0) {
       defeatedByZombie(player);
       cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
