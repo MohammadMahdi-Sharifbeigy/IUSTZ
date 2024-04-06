@@ -6,7 +6,7 @@ Enemy* EnemyFactory::createEnemy(characterType type, int level, Human *humanRef)
     switch (type){
         case HUMANENEMY:
             if (humanRef){                    
-                return new HumanEnemy(level, *humanRef);
+                return new HumanEnemyModel(level, *humanRef);
             }
         break;
         case WEAKZOMBIE:
@@ -22,7 +22,7 @@ Enemy* EnemyFactory::createEnemy(characterType type, int level,Human* human, Hum
     switch (type){
         case HUMANENEMY:
             if (humanRef){                
-               return new HumanEnemy(level,*human, *humanRef);
+               return new HumanEnemyModel(level,*human, *humanRef);
             }
         break;
         case WEAKZOMBIE:
