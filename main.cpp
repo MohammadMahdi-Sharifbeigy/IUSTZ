@@ -421,6 +421,20 @@ void combat(Human* player, Enemy* enemy) {
       victoryOverZombie(enemy);
       gainXP(player, enemy, enemy->get_enemy_exp());
       cout << endl << "\033[38;2;45;220;45m" << well2 << "\033[0m";
+      double avgGold = 150;
+      if (enemy->getRole() == characterType::WEAKZOMBIE) {
+        player->setCoin(player->getCoin() + 0.4 * avgGold);
+        cout << "You gained " << 0.4 * avgGold << " gold." << endl;
+      } else if (enemy->getRole() == characterType::STRONGZOMBIE) {
+        player->setCoin(player->getCoin() + 0.7 * avgGold);
+        cout << "You gained " << 0.7 * avgGold << " gold." << endl;
+      } else if (enemy->getRole() == characterType::HUMANENEMY) {
+        player->setCoin(player->getCoin() + 1.2 * avgGold);
+        cout << "You gained " << 1.2 * avgGold << " gold." << endl;
+      } else {
+        player->setCoin(player->getCoin() + 0.2 * avgGold);
+        cout << "You gained " << 0.2 * avgGold << " gold." << endl;
+      }
       waitForEnter();
       clearScreen();
       break;
