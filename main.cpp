@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <filesystem>
 #include <iostream>
 #include <limits>
 #include <vector>
@@ -48,6 +49,62 @@ void waitForEnter() {
   cin.ignore(numeric_limits<streamsize>::max(), '\n');
   string input;
   getline(cin, input);
+}
+
+void playerDied(Human* player) {
+  if (player->getCoin() >= 100) {
+    cout << "You have " << player->getCoin() << " gold." << endl;
+    cout << "Would you like to play again? (y/n)" << endl;
+    cout << "It will cost you 50 gold, but your stats will be unchanged."
+         << endl;
+    cout << "If you choose not to play again, the game will exit, and your "
+            "account will be deleted."
+         << endl;
+    char choice;
+    cin >> choice;
+    if (choice == 'y') {
+      player->setCurrentHP(player->getMaxHP());
+      player->setCoin(player->getCoin() - 100);
+      clearScreen();
+      return;
+    } else {
+      filesystem::remove(player->getName() + ".csv");
+      // remove player name from usernames.csv
+      ifstream file("usernames.csv");
+      ofstream temp("temp.csv");
+      string line;
+      while (getline(file, line)) {
+        // search in each line for player name
+        if (line.find(player->getName()) == string::npos) {
+          temp << line << endl;
+        }
+      }
+      file.close();
+      temp.close();
+      filesystem::remove("usernames.csv");
+      filesystem::rename("temp.csv", "usernames.csv");
+      exit(0);
+    }
+  } else {
+    cout << "You have no gold." << endl;
+    cout << "Would you like to play again? (y/n)" << endl;
+    cout << "Your stats will be set to default." << endl;
+    cout << "If you choose not to play again, the game will exit, and your "
+            "account will be deleted."
+         << endl;
+    char choice;
+    cin >> choice;
+    if (choice == 'y') {
+      player->setCurrentHP(player->getMaxHP());
+      player->setCoin(0);
+      player->setCurrXP(0);
+      player->setLevel(1);
+      clearScreen();
+      return;
+    } else {
+      exit(0);
+    }
+  }
 }
 
 void attackZombie(Human* player, Enemy* zombie) {
@@ -339,7 +396,7 @@ void combat(Human* player, Enemy* enemy) {
       cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
       waitForEnter();
       clearScreen();
-      exit(0);
+      playerDied(player);
     }
     displayHealthBar(player->getName(), player->getCurrentHP(),
                      player->getMaxHP());
@@ -369,6 +426,12 @@ void explore(GameState& gameState) {
       sleepMilliseconds(3000);
       cout << "You encountered a trap! You lose 10 HP." << endl;
       player->takeDamage(10);
+      if (player->getCurrentHP() <= 0) {
+        cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
+        waitForEnter();
+        clearScreen();
+        playerDied(player);
+      }
       break;
     case 2:
       cout << exploreEnvironment() << endl;
