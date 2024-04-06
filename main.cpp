@@ -8,6 +8,7 @@
 #include "Character.h"
 #include "CharacterType.h"
 #include "Enemy.h"
+#include "EnemyFactory.h"
 #include "GameState.h"
 #include "HealingPotion.h"
 #include "Login.cpp"
@@ -452,6 +453,7 @@ void combat(Human* player, Enemy* enemy) {
       waitForEnter();
       clearScreen();
       playerDied(player);
+      return;
     }
     displayHealthBar(player->getName(), player->getCurrentHP(),
                      player->getMaxHP());
@@ -465,9 +467,11 @@ void explore(GameState& gameState) {
   int event = rand() % 4;  // Random event: 0, 1, or 2
 
   Human* player = gameState.getPlayerCharacter();
-  Enemy zombie(player->getLevel());
-  zombie.setName("Zombie");
-  zombie.setCurrentHP(zombie.getMaxHP());
+  characterType types[3] = {characterType::WEAKZOMBIE,
+                            characterType::STRONGZOMBIE,
+                            characterType::HUMANENEMY};
+  characterType type = types[rand() % 3];
+  Enemy* enemy = EnemyFactory::createEnemy(type, player->getLevel(), player);
   Item* potion = new HealingPotion("Healing Potion", 50.0, false, 50.0, 1);
   switch (event) {
     case 0:
@@ -481,6 +485,8 @@ void explore(GameState& gameState) {
       sleepMilliseconds(3000);
       cout << "You encountered a trap! You lose 10 HP." << endl;
       player->takeDamage(10);
+      displayHealthBar(player->getName(), player->getCurrentHP(),
+                       player->getMaxHP());
       if (player->getCurrentHP() <= 0) {
         cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
         waitForEnter();
@@ -497,7 +503,7 @@ void explore(GameState& gameState) {
     case 3:
       cout << exploreEnvironment() << endl;
       sleepMilliseconds(3000);
-      cout << "You encountered a Zombie!" << endl;
+      cout << "You encountered a " << enemy->getName() << "!" << endl;
       sleepMilliseconds(1000);
       cout << "One! ";
       sleepMilliseconds(1000);
@@ -506,7 +512,7 @@ void explore(GameState& gameState) {
       cout << "...And Three!";
       sleepMilliseconds(1500);
       clearScreen();
-      combat(gameState.getPlayerCharacter(), &zombie);
+      combat(gameState.getPlayerCharacter(), enemy);
       clearScreen();
       break;
     default:

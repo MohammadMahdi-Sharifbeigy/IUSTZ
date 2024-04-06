@@ -6,6 +6,7 @@ using namespace std;
 StrongZombie::StrongZombie() {}
 
 StrongZombie::StrongZombie(int level) : Enemy(level) {
+  Character::name = "Strong Zombie";
   role = STRONGZOMBIE;
   srand(time(NULL));
   maxHP = 3 * level + rand() % (5 * level / 2) + 100 ; // Stronger health

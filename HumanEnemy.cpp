@@ -6,6 +6,7 @@
 #include "State.h"
 
 HumanEnemy::HumanEnemy(int level, Human& humanRef) : Enemy(level), humanRef(humanRef) {
+    Character::name = "Human Enemy";
     srand(time(NULL));
     attackStrategy = new HumanEnemyAttack();
     level = abs(level+ rand() % 4) + 1;

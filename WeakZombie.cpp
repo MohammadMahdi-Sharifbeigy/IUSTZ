@@ -6,6 +6,7 @@ using namespace std;
 WeakZombie::WeakZombie() {}
 
 WeakZombie::WeakZombie(int level) : Enemy(level) {
+  Character::name = "Weak Zombie";
   role = WEAKZOMBIE;
   srand(time(NULL));
   maxHP = level + rand() % (3 * level / 4); // Weaker health
