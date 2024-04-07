@@ -136,8 +136,8 @@ ncurses.h, unistd.h (for Unix-like platform specific functionality)
 
 We value your feedback! If you encounter any bugs, have suggestions for improvements, or simply want to share your gaming experience, please don't hesitate to reach out to us. <3
 
-- [Liliarouhi](https://www.github.com/octokatherine)
-- [Mahsesol](https://www.github.com/octokatherine)
+- [Liliarouhi]([https://www.github.com/octokatherine](https://github.com/liliarouhi))
+- [Mahsesol]([https://www.github.com/octokatherine](https://github.com/Mahsesol))
 - [Yousof Shahrabi](https://github.com/yousofs)
 - [MohammadMahdi-Sharifbeigy](https://github.com/MohammadMahdi-Sharifbeigy)
 
