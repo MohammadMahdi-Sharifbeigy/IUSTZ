@@ -51,23 +51,23 @@ public:
     void Update(Human &target);
 
     // Items Functions
-    void showInventory() { humanRef.showInventory(); }
-    void addInventory(Item* item) { humanRef.addInventory(item); }
-    void addInventory(Item* item, int count){humanRef.addInventory(item, count); }
-    void removeInventory(int index, int count) {humanRef.removeInventory(index, count); }
-    void removeInventory(int index) { humanRef.removeInventory(index); }
-    int inventorySize() { return humanRef.inventorySize(); }
-    bool existInInventory(Item* item){return humanRef.existInInventory(item); }
-    int countInInventory(Item* item){return humanRef.countInInventory(item); }
-    int indexInInventory(Item* item){return humanRef.indexInInventory(item); }
-    double priceItemsAt(int index){return humanRef.priceItemsAt(index); }
-    int countItemsAt(int index){return humanRef.countItemsAt(index); }
-    Item* itemsAt(int index) { return humanRef.itemsAt(index); }
-    Item* getArmor() { return humanRef.getArmor(); }
-    Item* getWeapon() { return humanRef.getWeapon(); }
-    void setArmor(Item* armor){return humanRef.setArmor(armor); }
-    void setWeapon(Item* weapon){return humanRef.setWeapon(weapon); }
-    Item* stringToItem(const string& line){return humanRef.stringToItem(line); }
+    void showInventory();
+    void addInventory(Item* item) ;
+    void addInventory(Item* item, int count);
+    void removeInventory(int index, int count) ;
+    void removeInventory(int index);
+    int inventorySize() ;
+    bool existInInventory(Item* item);
+    int countInInventory(Item* item);
+    int indexInInventory(Item* item);
+    double priceItemsAt(int index);
+    int countItemsAt(int index);
+    Item* itemsAt(int index) ;
+   // Item* getArmor() ;
+    //Item* getWeapon() ;
+   // void setArmor(Item* armor);
+   // void setWeapon(Item* weapon);
+   // Item* stringToItem(const string& line);
 
 private:
     Human& humanRef;

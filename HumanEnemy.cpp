@@ -73,6 +73,132 @@ HumanEnemyModel::~HumanEnemyModel() {
     delete attackStrategy;
 }
 
+
+int HumanEnemyModel::inventorySize() {
+  return inventory.size();
+}
+
+Item* HumanEnemyModel::itemsAt(int index) {
+  if (this->inventorySize()) {
+    return inventory.at(index - 1);
+  }
+  return nullptr;
+}
+
+void HumanEnemyModel::showInventory() {
+  if (this->inventorySize() > 0) {
+    for (int i = 0; i < inventory.size(); i++) {
+      cout << i + 1 << ". " << inventory[i]->getName()
+           << " - count:" << inventory[i]->getCount() << endl;
+    }
+  } else {
+    cout << "Your inventory is empty!" << endl;
+  }
+}
+
+void HumanEnemyModel::addInventory(Item* item) {
+  int check = 0;
+  if (this->inventorySize() > 0) {
+      for (int i = 0; i < this->inventorySize(); i++) {
+          if (item->getName() == inventory[i]->getName()) {
+              inventory[i]->setCount(inventory[i]->getCount() + 1);
+              check++;
+              break;
+          }}
+      if (check == 0) {
+        inventory.push_back(item);
+        //  inventory[inventory.size()-1]->setCount(1);
+      }
+    
+  } else {
+    inventory.push_back(item);
+    // inventory[inventory.size()-1]->setCount(1);
+  }
+}
+
+void HumanEnemyModel::removeInventory(int index) {
+  if (index - 1 < this->inventorySize()) {
+    if (inventory[index - 1]->getCount() == 1) {
+      inventory.erase(inventory.begin() + index-1);
+    } else {
+      inventory[index - 1]->setCount(inventory[index - 1]->getCount() - 1);
+    }
+  }
+}
+
+void HumanEnemyModel::addInventory(Item* item, int count) {
+  int check = 0;
+  if (this->inventorySize() > 0) {
+      for (int i = 0; i < this->inventorySize(); i++) {
+          if (item->getName() == inventory[i]->getName()) {
+              inventory[i]->setCount(inventory[i]->getCount() + count);
+              check++;
+              break;
+          }}
+      if (check == 0) {
+        inventory.push_back(item);
+        inventory[inventory.size() - 1]->setCount(count);
+      }
+    
+  } else {
+    inventory.push_back(item);
+    inventory[inventory.size() - 1]->setCount(count);
+  }
+}
+
+void HumanEnemyModel::removeInventory(int index, int count) {
+  if (index - 1 < this->inventorySize()) {
+    if (inventory[index - 1]->getCount() == count) {
+      inventory.erase(inventory.begin() + index-1);
+    } else if (inventory[index - 1]->getCount() > count) {
+      inventory[index - 1]->setCount(inventory[index - 1]->getCount() - count);
+    } else {
+      cout << "You hav only " << inventory[index - 1]->getCount() << " "
+           << inventory[index - 1]->getName() << "s you can't remove " << count
+           << endl;
+    }
+  }
+}
+
+bool HumanEnemyModel::existInInventory(Item* item) {
+  for (int i = 0; i < this->inventory.size(); i++) {
+    if (this->inventory[i]->getName() == item->getName()) {
+      return true;
+    }
+  }
+  return false;
+}
+
+int HumanEnemyModel::countInInventory(Item* item) {
+  for (int i = 0; i < this->inventory.size(); i++) {
+    if (this->inventory[i]->getName() == item->getName()) {
+      return inventory[i]->getCount();
+    }
+  }
+  return 0;
+}
+
+int HumanEnemyModel::indexInInventory(Item* item) {
+  for (int i = 0; i < this->inventory.size(); i++) {
+    if (this->inventory[i]->getName() == item->getName()) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+double HumanEnemyModel::priceItemsAt(int index) {
+  return inventory[index - 1]->getPrice();
+}
+
+int HumanEnemyModel::countItemsAt(int index) {
+  return inventory[index - 1]->getCount();
+}
+
+
+
+
+
 characterType HumanEnemyModel::getRandomRole() {
     int role = rand() % 10;
     if (role == 7 || role == 8 || role == 9) {
