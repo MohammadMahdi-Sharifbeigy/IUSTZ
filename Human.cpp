@@ -36,6 +36,17 @@ void Human::levelUp() {
   mind += 10;
 }
 
+
+string Human::getUserName(){
+    return username;
+}
+
+
+void Human::setUserName(string username){
+    this->username = username;
+}
+
+
 int Human::getAge() {
   return age;
 }

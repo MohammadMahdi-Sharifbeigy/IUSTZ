@@ -5,11 +5,13 @@
 #include "Item.h"
 #include "State.h"
 #include <sstream>
+#include <string.h>
 
 using namespace std;
 
 class Human : public Character {
  protected:
+string username;
   int age;
   int maxXP;
   int currXP;
@@ -49,6 +51,8 @@ class Human : public Character {
   virtual string NameMaker() override;
   virtual void levelUp() override;
   virtual void takeDamage(double amount) override;
+    string getUserName();
+    void setUserName(string username);
   int getAge();
   void setName(int age);
   int getCurrXP();

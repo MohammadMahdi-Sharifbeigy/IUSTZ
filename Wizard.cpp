@@ -151,10 +151,11 @@ void Wizard::WizardToFile(const string& username) {
   ofstream file(filename);
 
   // Write the header
-  file << "name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,mind,inventorySize" << "\n";
+  file << "username,name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,mind,inventorySize" << "\n";
 
   // Write the character data in one line
-  file << this->name << ','
+  file << this->username << ','
+       << this->name << ','
        << this->age << ','
        << CharacterTypeToString(this->role) << ','
        << this->level << ','
@@ -214,6 +215,7 @@ void Wizard::FileToWizard(const string& username) {
     stringstream ss(line);
     string attribute;
     
+      getline(ss, this->username,',');
     getline(ss, this->name, ',');
     getline(ss, attribute, ',');
     this->age = stoi(attribute);

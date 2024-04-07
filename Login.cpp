@@ -60,6 +60,49 @@
 
 using namespace std;
 
+
+
+static void saveCharacter (Human* human){
+    string username = human->getUserName();
+    if (human->getRole() == characterType::PALADIN){
+        Paladin* player = dynamic_cast<Paladin*>(human);
+       // static_cast<Paladin*>(player)->PaladinToFile(username);
+        player->PaladinToFile(username);
+       
+    }else if (human->getRole() == characterType::ASSASSIN){
+        Assassin* player =  dynamic_cast<Assassin*>(human);
+        player->AssassinToFile(username);
+        
+    }else if (human->getRole() == characterType::SUPERHERO){
+        SuperHero* player = dynamic_cast<SuperHero*>(human);
+        player->SuperHeroToFile(username);
+    
+    }else if (human->getRole() == characterType::SNIPER){
+        Sniper* player =  dynamic_cast<Sniper*>(human);
+        player->SniperToFile(username);
+     
+    }else if (human->getRole() == characterType::WIZARD){
+        Wizard* player = dynamic_cast<Wizard*>(human);
+        player->WizardToFile(username);
+        
+    }else if (human->getRole() == characterType::CYBORG){
+        Cyborg* player =  dynamic_cast<Cyborg*>(human);
+       player->CyborgToFile(username);
+     
+    }else{
+        AsianMom* player = dynamic_cast<AsianMom*>(human);
+        player->AsianMomToFile(username);
+
+    }
+    
+}
+
+
+
+
+
+
+
 static Human* Login(){
     cout<<"***Welcome to our game***"<<endl;
 menu:
@@ -271,31 +314,38 @@ menu:
         age = stoi(sage);
         if (choice == 1){
             Paladin* player =  new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+            player->setUserName(username);
            // static_cast<Paladin*>(player)->PaladinToFile(username);
             player->PaladinToFile(username);
             return player;
         }else if (choice == 2){
             Assassin* player =  new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN , 1000);
+            player->setUserName(username);
             player->AssassinToFile(username);
             return player;
         }else if (choice == 3){
             SuperHero* player =  new SuperHero(name, age, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
+            player->setUserName(username);
             player->SuperHeroToFile(username);
             return player;
         }else if (choice == 4){
             Sniper* player =  new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
+            player->setUserName(username);
             player->SniperToFile(username);
             return player;
         }else if (choice == 5){
             Wizard* player =  new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
+            player->setUserName(username);
             player->WizardToFile(username);
             return player;
         }else if (choice == 6){
             Cyborg* player =  new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
+            player->setUserName(username);
            player->CyborgToFile(username);
             return player;
         }else{
             AsianMom* player =  new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
+            player->setUserName(username);
             player->AsianMomToFile(username);
             return player;
         }

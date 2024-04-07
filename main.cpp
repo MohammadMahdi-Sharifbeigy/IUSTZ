@@ -17,6 +17,7 @@
 #include "Sword.h"
 #include "Zombie.h"
 #include "font.h"
+//#include "Save.h"
 
 #ifdef _WIN32
 #include <conio.h>
@@ -479,6 +480,7 @@ void explore(GameState& gameState) {
       sleepMilliseconds(3000);
       cout << "You found a healing potion on the ground." << endl;
       player->addInventory(potion);
+          saveCharacter(player);
       break;
     case 1:
       cout << exploreEnvironment() << endl;
@@ -493,12 +495,14 @@ void explore(GameState& gameState) {
         clearScreen();
         playerDied(player);
       }
+          saveCharacter(player);
       break;
     case 2:
       cout << exploreEnvironment() << endl;
       sleepMilliseconds(3000);
       cout << "You found a hidden treasure chest containing 50 gold!" << endl;
       player->setCoin(player->getCoin() + 50);
+          saveCharacter(player);
       break;
     case 3:
       cout << exploreEnvironment() << endl;
@@ -514,6 +518,7 @@ void explore(GameState& gameState) {
       clearScreen();
       combat(gameState.getPlayerCharacter(), enemy);
       clearScreen();
+          saveCharacter(player);
       break;
     default:
       cout << "It's a peaceful walk. Nothing happens." << endl;
