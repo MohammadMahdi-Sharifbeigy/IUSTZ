@@ -188,7 +188,7 @@ void Sniper::SniperToFile(const string& username) {
 
   if (!exists) {
     ofstream usersfile("usernames.csv", ios::app);
-    usersfile << username << ",Sniiper\n";
+    usersfile << username << ",Sniper\n";
     usersfile.close();
   }
   file.close();
