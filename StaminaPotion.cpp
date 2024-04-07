@@ -10,6 +10,10 @@ StaminaPotion::StaminaPotion(string name,
                              int count)
     : Consumable(name, price, vIP, potency, count){this->ID=32;}
 
-void StaminaPotion::increaseStamina(Character& target) {
-  cout << "Stamina Increased!";
+void StaminaPotion::increaseStamina(Human& target) {
+    target.setStamina(target.getStamina() + potency);
+    cout << target.getName() << "'s stamina has increased by " << potency
+    << " points." << endl;
+    
+ // cout << "Stamina Increased!";
 }

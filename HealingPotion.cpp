@@ -16,8 +16,8 @@ void HealingPotion::increaseHP(Human& target) {
        << endl;
   cout << target.getName() << "'s current HP: " << target.getCurrentHP()
        << endl;
-  count--;
-  if (count == 0) {
-    cout << "You have run out of " << name << "." << endl;
-  }
+ // count--;
+//  if (count == 0) {
+ //   cout << "You have run out of " << name << "." << endl;
+  //}
 }

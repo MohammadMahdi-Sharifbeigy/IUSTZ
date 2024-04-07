@@ -13,8 +13,8 @@ DamagePotion::DamagePotion(string name,
 void DamagePotion::increaseDamage(Character& target) {
   target.setAttack(target.getAttack() + potency);
   cout << "Damage increased by " << potency << "!" << endl;
-  count--;
-  if (count == 0) {
-    cout << "You have no more " << name << "s left!" << endl;
-  }
+//  count--;
+//  if (count == 0) {
+//    cout << "You have no more " << name << "s left!" << endl;
+//  }
 }

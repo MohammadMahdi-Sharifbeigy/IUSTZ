@@ -10,8 +10,8 @@ void Food::increaseStats(Character& target) {
   target.setCurrentHP(target.getCurrentHP() + potency);
   cout << target.getName() << "'s health has increased by " << potency
        << " points." << endl;
-  count--;
-  if (count == 0) {
-    cout << "You have run out of " << name << "." << endl;
-  }
+ // count--;
+//  if (count == 0) {
+//    cout << "You have run out of " << name << "." << endl;
+//  }
 }

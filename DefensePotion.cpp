@@ -14,8 +14,8 @@ void DefensePotion::increaseDefense(Character& target) {
   target.setDefense(target.getDefense() + potency);
   cout << target.getName() << "'s defense has increased by " << potency
        << " points." << endl;
-  count--;
-  if (count == 0) {
-    cout << "You have run out of " << name << "." << endl;
-  }
+//  count--;
+//if (count == 0) {
+//    cout << "You have run out of " << name << "." << endl;
+ // }
 }
