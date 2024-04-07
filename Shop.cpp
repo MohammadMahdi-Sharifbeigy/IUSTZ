@@ -452,7 +452,9 @@ void Shop::welcomShop(Human* human) {
   Shop shop = Shop();
   if (choice == 1) {
     shop.buyItem(human);
+      saveCharacter(human);
   } else if (choice == 2) {
     shop.sell(human);
+      saveCharacter(human);
   }
 }

@@ -348,13 +348,16 @@ void combat(Human* player, Enemy* enemy) {
   while (player->getCurrentHP() > 0 && enemy->getCurrentHP() > 0) {
     vector<Item*> items = player->getInventory();
     vector<Item*> defenseItems;
+      double synergy;
+      Item* playerPotion;
     combatMenu(player);
     int choice;
     cin >> choice;
     switch (choice) {
       case 1:
         clearScreen();
-        enemy->takeDamage(player->getAttack());
+        synergy = player->chooseAtkItem();
+        enemy->takeDamage(player->getAttack()+(int)synergy);
         attackZombie(player, enemy);
         break;
       case 2:
@@ -394,7 +397,54 @@ void combat(Human* player, Enemy* enemy) {
         break;
       case 3:
         clearScreen();
-        if (containsHealingPotion(player->getInventory())) {
+            playerPotion=player->choosePotion();
+            if(playerPotion == nullptr){
+                continue;
+            }else{
+                if(playerPotion->getID() == 29){
+                    dynamic_cast<HealingPotion*>(playerPotion)->increaseHP(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }else if (playerPotion->getID()==30){
+                    dynamic_cast<DamagePotion*>(playerPotion)->increaseDamage(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }else if (playerPotion->getID()==31){
+                    dynamic_cast<DefensePotion*>(playerPotion)->increaseDefense(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }else if (playerPotion->getID()==32){
+                    dynamic_cast<StaminaPotion*>(playerPotion)->increaseStamina(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }else if (playerPotion->getID()==33){
+                    dynamic_cast<Food*>(playerPotion)->increaseStats(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }else if (playerPotion->getID()==34){
+                    dynamic_cast<SweetTea*>(playerPotion)->increaseHP(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }else if (playerPotion->getID()==35){
+                    dynamic_cast<Saffron*>(playerPotion)->increaseDamage(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                    
+                }else if (playerPotion->getID()==36){
+                    dynamic_cast<AraghNana*>(playerPotion)->increaseDefense(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }else if (playerPotion->getID()==37){
+                    dynamic_cast<Nuts*>(playerPotion)->increaseStamina(*player);
+                    player->removeInventory(player->indexInInventory(playerPotion)+1);
+                    
+                }
+                
+                
+                
+                break;
+            }
+       /* if (containsHealingPotion(player->getInventory())) {
           vector<Item*> items = player->getInventory();
           for (size_t i = 0; i < items.size(); ++i) {
             HealingPotion* potion = dynamic_cast<HealingPotion*>(items[i]);
@@ -412,7 +462,7 @@ void combat(Human* player, Enemy* enemy) {
         } else {
           noPotionAvailable(player);
         }
-        break;
+        break;*/
       case 4:
         clearScreen();
         checkInventory(player);
@@ -474,14 +524,14 @@ void explore(GameState& gameState) {
                             characterType::HUMANENEMY};
   characterType type = types[rand() % 3];
   Enemy* enemy = EnemyFactory::createEnemy(type, player->getLevel(), player);
-  Item* potion = new HealingPotion("Healing Potion", 50.0, false, 50.0, 1);
+  Item* potion = new HealingPotion("Elixir of Healing", 50.0, false, 50.0, 1);
   switch (event) {
     case 0:
       cout << exploreEnvironment() << endl;
       sleepMilliseconds(3000);
       cout << "You found a healing potion on the ground." << endl;
       player->addInventory(potion);
-      // saveCharacter(player);
+      saveCharacter(player);
       break;
     case 1:
       cout << exploreEnvironment() << endl;
@@ -496,14 +546,14 @@ void explore(GameState& gameState) {
         clearScreen();
         playerDied(player);
       }
-      // saveCharacter(player);
+       saveCharacter(player);
       break;
     case 2:
       cout << exploreEnvironment() << endl;
       sleepMilliseconds(3000);
       cout << "You found a hidden treasure chest containing 50 gold!" << endl;
       player->setCoin(player->getCoin() + 50);
-      // saveCharacter(player);
+       saveCharacter(player);
       break;
     case 3:
       cout << exploreEnvironment() << endl;
@@ -519,7 +569,7 @@ void explore(GameState& gameState) {
       clearScreen();
       combat(gameState.getPlayerCharacter(), enemy);
       clearScreen();
-      // saveCharacter(player);
+       saveCharacter(player);
       break;
     default:
       cout << "It's a peaceful walk. Nothing happens." << endl;

@@ -6,6 +6,7 @@
 #include "State.h"
 #include <sstream>
 #include <string.h>
+#include "CheckNumber.h"
 
 using namespace std;
 
@@ -77,10 +78,12 @@ string username;
   void setStateBasedOnHP();
     State getState();
     void setState(State state);
-    
   vector<Item*> getInventory();
   // Item Functions
 
+    double chooseDefItems();
+    double chooseAtkItem();
+    Item* choosePotion();
   Item* itemsAt(int index);
   void showInventory();
   void addInventory(Item* item);

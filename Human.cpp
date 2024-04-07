@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Item.h"
+#include "ItemFactory.h"
 
 
 using namespace std;
@@ -150,6 +151,145 @@ void Human::setStateBasedOnHP(){
     }
         
         }
+
+double Human::chooseDefItems(){
+    int num = 1;
+    int check = 0;
+    vector <Item*> items;
+    if (this->inventorySize() > 0) {
+      for (int i = 0; i < inventory.size(); i++) {
+          if(inventory[i]->getID()<8){
+              cout << num << ". " << inventory[i]->getName()<< endl;
+              num++;
+              check++;
+              items.push_back(inventory[i]);
+          }
+      }
+    }
+    double synergy = 0;
+    if(check == 0){
+        cout << "You have no defense item!" << endl;
+        return synergy;
+    }else{
+        cout << "Enter the number of the item you want to use :"<<endl;
+        int choice;
+        string schoice;
+        try{
+            cin>>schoice;
+            if(check_number(schoice)==0 || stoi(schoice)<1 ||stoi(schoice)>items.size()){
+                throw schoice;
+            }
+        }catch(...){
+            while( check_number(schoice)==0 || stoi(schoice)<1 ||stoi(schoice)>items.size()){
+                cout<<"Invalid choice.Try again: "<<endl;
+                cin>>schoice;
+            }
+        }
+        choice = stoi(schoice);
+        synergy =  dynamic_cast<Passive*>(items[choice-1])->getSynergyDamage();
+        cout<<items[choice-1]->getName()<<" increased your defense by "<<synergy<<" point"<<endl;
+        return synergy;
+    }
+    
+}
+
+
+
+double Human::chooseAtkItem(){
+    int num = 1;
+    int check = 0;
+    vector <Item*> items;
+    if (this->inventorySize() > 0) {
+      for (int i = 0; i < inventory.size(); i++) {
+          if(inventory[i]->getID() > 7 && inventory[i]->getID() < 22){
+              cout << num << ". " << inventory[i]->getName()<< endl;
+              num++;
+              check++;
+              items.push_back(inventory[i]);
+          }else if(inventory[i]->getID() > 21 && inventory[i]->getID() < 29){
+              cout << num << ". " << inventory[i]->getName()<< " - count:" << inventory[i]->getCount() << endl;
+              num++;
+              check++;
+              items.push_back(inventory[i]);
+          }
+      }
+    }
+    double synergy = 0;
+    if(check == 0){
+        cout << "You have no attack item!" << endl;
+        return synergy;
+    }else{
+        cout << "Enter the number of the item you want to use :"<<endl;
+        int choice;
+        string schoice;
+        try{
+            cin>>schoice;
+            if(check_number(schoice)==0 || stoi(schoice)<1 ||stoi(schoice)>items.size()){
+                throw schoice;
+            }
+        }catch(...){
+            while( check_number(schoice)==0 || stoi(schoice)<1 ||stoi(schoice)>items.size()){
+                cout<<"Invalid choice.Try again: "<<endl;
+                cin>>schoice;
+            }
+        }
+        choice = stoi(schoice);
+        if(items[choice-1]->getID() < 22){
+            synergy =  dynamic_cast<Passive*>(items[choice-1])->getSynergyDamage();
+            cout<<items[choice-1]->getName()<<" increased your attack by "<<synergy<<" point"<<endl;
+        }else{
+            synergy =  dynamic_cast<Throwable*>(items[choice-1])->getSynergyDmg();
+            cout<<items[choice-1]->getName()<<" increased your attack by "<<synergy<<" point"<<endl;
+            removeInventory(indexInInventory(items[choice-1])+1);
+            
+            
+        }
+        return synergy;
+    }
+}
+
+
+
+Item* Human::choosePotion(){
+    int num = 1;
+    int check = 0;
+    vector <Item*> items;
+    if (this->inventorySize() > 0) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if(inventory[i]->getID()>28){
+                cout << num << ". " << inventory[i]->getName()<< " - count:" << inventory[i]->getCount() << endl;
+                num++;
+                check++;
+                items.push_back(inventory[i]);
+            }
+        }
+    }
+    if(check == 0){
+        cout << "You have no potion!" << endl;
+        return nullptr;
+    }else{
+        cout << "Enter the number of the potion you want to use :"<<endl;
+        int choice;
+        string schoice;
+        try{
+            cin>>schoice;
+            if(check_number(schoice)==0 || stoi(schoice)<1 ||stoi(schoice)>items.size()){
+                throw schoice;
+            }
+        }catch(...){
+            while( check_number(schoice)==0 || stoi(schoice)<1 ||stoi(schoice)>items.size()){
+                cout<<"Invalid choice.Try again: "<<endl;
+                cin>>schoice;
+            }
+        }
+        choice = stoi(schoice);
+        return items[choice-1];
+        
+    }
+}
+
+
+
 
 vector<Item*> Human::getInventory() {
   return inventory;
