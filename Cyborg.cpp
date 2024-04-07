@@ -260,7 +260,7 @@ void Cyborg::FileToCyborg(const string& username) {
     this->accuracy = stof(attribute);
     getline(ss, attribute, ',');
     this->pace = stof(attribute);
-    getline(ss, attribute);
+    getline(ss, attribute, ',');
     this->mind = stof(attribute);
 
     // Handling inventory

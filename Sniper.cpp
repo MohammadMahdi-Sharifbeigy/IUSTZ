@@ -73,7 +73,8 @@ void Sniper::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);  // Moderate HP increase
-    setAttack(getAttack() + 20);  // Snipers have high attack due to precision strikes
+    setAttack(getAttack() +
+              20);  // Snipers have high attack due to precision strikes
     setDefense(getDefense() + 5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
@@ -103,10 +104,9 @@ inline characterType StringToCharacterType(const string& str) {
     return CYBORG;
   else if (str == "sniper")
     return SNIPER;
-  else if (str == "Wizard"){
+  else if (str == "Wizard") {
     return WIZARD;
-  }
-  else
+  } else
     return STRONGZOMBIE;
 }
 
@@ -152,30 +152,20 @@ void Sniper::SniperToFile(const string& username) {
   ofstream file(filename);
 
   // Write the header
-  file << "username,name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,mind,inventorySize" << "\n";
+  file << "username,name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,"
+          "defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,"
+          "mind,inventorySize"
+       << "\n";
 
   // Write the character data in one line
-  file << this->username << ','
-       << this->name << ','
-       << this->age << ','
-       << CharacterTypeToString(this->role) << ','
-       << this->level << ','
-       << this->coin << ','
-       << this->currHP << ','
-       << this->currXP << ','
-       << this->maxHP << ','
-       << this->maxXP << ','
-       << this->attack << ','
-       << this->defense << ','
-       << this->stamina << ','
-       << itemID(this->armor) << ','
-       << itemID(this->weapon) << ','
-       << this->strength << ','
-       << this->endurance << ','
-       << this->accuracy << ','
-       << this->pace << ','
-       << this->mind << ','
-       << this->inventorySize();
+  file << this->username << ',' << this->name << ',' << this->age << ','
+       << CharacterTypeToString(this->role) << ',' << this->level << ','
+       << this->coin << ',' << this->currHP << ',' << this->currXP << ','
+       << this->maxHP << ',' << this->maxXP << ',' << this->attack << ','
+       << this->defense << ',' << this->stamina << ',' << itemID(this->armor)
+       << ',' << itemID(this->weapon) << ',' << this->strength << ','
+       << this->endurance << ',' << this->accuracy << ',' << this->pace << ','
+       << this->mind << ',' << this->inventorySize();
 
   if (this->inventorySize() > 0) {
     for (int i = 0; i < this->inventorySize(); i++) {
@@ -207,16 +197,17 @@ void Sniper::SniperToFile(const string& username) {
 void Sniper::FileToSniper(const string& username) {
   string filename = isCSV(username) ? username : username + ".csv";
   ifstream file(filename);
-  
+
   if (file.good() && !std::filesystem::is_empty(filename)) {
     string line;
-    getline(file, line); // Read the header line
-    getline(file, line); // Read the data line
-    
+    getline(file, line);  // Skip the header line
+    getline(file, line);  // Read the data line
+
     stringstream ss(line);
     string attribute;
-    
-      getline(ss, this->username,',');
+
+    // Parsing basic attributes
+    getline(ss, this->username, ',');
     getline(ss, this->name, ',');
     getline(ss, attribute, ',');
     this->age = stoi(attribute);
@@ -240,43 +231,48 @@ void Sniper::FileToSniper(const string& username) {
     this->defense = stof(attribute);
     getline(ss, attribute, ',');
     this->stamina = stof(attribute);
+
+    // Correct handling for armor
     getline(ss, attribute, ',');
-    Human* human =
-        new Sniper("name", 1, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
     if (attribute == "-1") {
       this->armor = nullptr;
     } else {
-      this->armor = ItemFactory::createItem(stoi(attribute), human, true);
+      this->armor = ItemFactory::createItem(stoi(attribute), this, true);
       this->armor->setCount(1);
     }
-    getline(file, line);
+
+    // Correct handling for weapon
+    getline(ss, attribute, ',');
     if (attribute == "-1") {
       this->weapon = nullptr;
     } else {
-      this->weapon = ItemFactory::createItem(stoi(attribute), human, true);
+      this->weapon = ItemFactory::createItem(stoi(attribute), this, false);
       this->weapon->setCount(1);
     }
-    getline(ss, attribute);
-    this->strength = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->endurance = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->accuracy = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->pace = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->mind = atof(attribute.c_str());
-    string inventorysize;
+
+    // Parsing additional attributes
     getline(ss, attribute, ',');
-    int n = stoi(attribute);
+    this->strength = stof(attribute);
+    getline(ss, attribute, ',');
+    this->endurance = stof(attribute);
+    getline(ss, attribute, ',');
+    this->accuracy = stof(attribute);
+    getline(ss, attribute, ',');
+    this->pace = stof(attribute);
+    getline(ss, attribute, ',');
+    this->mind = stof(attribute);
+
+    // Handling inventory efficiently
+    int n;
+    getline(ss, attribute, ',');  // Inventory size
+    n = stoi(attribute);
     for (int i = 0; i < n; ++i) {
       getline(ss, attribute, ',');
       int ID = stoi(attribute);
       getline(ss, attribute, ',');
       int count = stoi(attribute);
-      
-      Human* human = new Sniper("name", 1, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
-      Item* item = ItemFactory::createItem(ID, human, true);
+
+      Item* item = ItemFactory::createItem(ID, this, true);
       item->setCount(count);
       this->addInventory(item);
     }
@@ -284,7 +280,7 @@ void Sniper::FileToSniper(const string& username) {
     this->name = "Error404";
     this->age = 0;
   }
-  file.close(); // Close the file after reading
+  file.close();
 }
 
 // double convertedPrice = atof(sprice.c_str());
