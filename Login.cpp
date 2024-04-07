@@ -108,7 +108,7 @@ static void saveCharacter (Human* human){
 static Human* Login(){
     cout<<"***Welcome to our game***"<<endl;
 menu:
-    cout<<"1.Sign in"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
+    cout<<"1.Sign up"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
     int choice;
     string schoice;
     try{
@@ -124,9 +124,25 @@ menu:
     }
     choice = stoi(schoice);
     if(choice == 1){
+        signup:
+        cout<<"***Sign up***"<<endl;
         cout<<"Enter your name: "<<endl;
         string username;
         cin>>username;
+        // username must be unique
+        ifstream file("usernames.csv");
+        string checkusername;
+        string role;
+        string line;
+        while (getline(file, line)) { // Read the data line
+            stringstream ss(line);
+            getline(ss, checkusername, ',');
+            getline(ss, role, ',');
+            if(username == checkusername){
+                cout<<"This username is already taken. Please choose another one."<<endl;
+                goto signup;
+            }
+        }
         cout<<"Now , let's answer some questions !"<<endl<<endl;
         vector<question> ques;
         question ques1 , ques2, ques3 , ques4 , ques5 , ques6 , ques7 , ques8 , ques9 , ques10;
