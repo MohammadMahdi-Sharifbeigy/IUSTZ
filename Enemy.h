@@ -34,11 +34,11 @@ class Enemy : public Character {
  protected:
   int maxHP;
   int currHP;
-  int attack;
-  int defense;
+  double attack;
+  double defense;
   int level;
   int giveExp;
-    int giveCoin;
+  int giveCoin;
   characterType role;
 
  public:
@@ -57,9 +57,9 @@ class Enemy : public Character {
     
   void setCurrentHP (int currHP) {this->currHP = currHP ;}
     
-  int get_enemy_atk() { return attack; }
+  double get_enemy_atk() { return attack; }
 
-  int get_enemy_def() { return defense; }
+  double get_enemy_def() { return defense; }
 
   int get_enemy_lvl() { return level; }
 

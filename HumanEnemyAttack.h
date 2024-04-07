@@ -25,14 +25,14 @@ public:
 
   double attackEnemy(Character* currCharacter, Enemy* currEnemy) override {
     // Assuming this character has a high attack but low defense like an Assassin
-    return (1.25 * (currCharacter->getAttack() / currCharacter->getLevel()) * 
+    return (1.25 * (currCharacter->getAttack() / double(currCharacter->getLevel())) * 
            (currCharacter->getMaxHP() / currCharacter->getCurrentHP())*
            (currCharacter->getAttack() / currEnemy->get_enemy_def()));
   }
 
   double defenseEnemy(Character* currCharacter, Enemy* currEnemy) override {
     // Assuming this character has low defense
-    return (0.5* (currCharacter->getDefense() / currCharacter->getLevel()) * 
+    return (0.5* (currCharacter->getDefense() / double(currCharacter->getLevel())) * 
            (currCharacter->getMaxHP() / currCharacter->getCurrentHP()) * 
            (currCharacter->getDefense() / currEnemy->get_enemy_atk()));
   }
