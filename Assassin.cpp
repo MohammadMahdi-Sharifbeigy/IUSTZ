@@ -106,10 +106,9 @@ inline characterType StringToCharacterType(const string& str) {
     return CYBORG;
   else if (str == "sniper")
     return SNIPER;
-  else if (str == "Wizard"){
+  else if (str == "Wizard") {
     return WIZARD;
-  }
-  else
+  } else
     return STRONGZOMBIE;
 }
 
@@ -149,43 +148,39 @@ static bool isCSV(const string& fileName) {
   return false;
 }
 
-void Assassin::AssassinToFile(const string& username) {
+void Assassin::AssassinToFile(Human* player) {
+  string username = player->getUserName();
   string filename = isCSV(username) ? username : username + ".csv";
   ofstream file(filename);
 
   // Write the header
-  file << "username,name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,mind,inventorySize" << "\n";
+  file << "username,name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,"
+          "defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,"
+          "mind,inventorySize"
+       << "\n";
 
   // Write the character data in one line
-  file << this->username << ','
-       << this->name << ','
-       << this->age << ','
-       << CharacterTypeToString(this->role) << ','
-       << this->level << ','
-       << this->coin << ','
-       << this->currHP << ','
-       << this->currXP << ','
-       << this->maxHP << ','
-       << this->maxXP << ','
-       << this->attack << ','
-       << this->defense << ','
-       << this->stamina << ','
-       << itemID(this->armor) << ','
-       << itemID(this->weapon) << ','
-       << this->strength << ','
-       << this->endurance << ','
-       << this->accuracy << ','
-       << this->pace << ','
-       << this->mind << ','
-       << this->inventorySize();
+  file << player->getUserName() << ',' << player->getName() << ','
+       << player->getAge() << ',' << CharacterTypeToString(player->getRole())
+       << ',' << player->getLevel() << ',' << player->getCoin() << ','
+       << player->getCurrentHP() << ',' << player->getCurrXP() << ','
+       << player->getMaxHP() << ',' << player->getMaxXP() << ','
+       << player->getAttack() << ',' << player->getDefense() << ','
+       << player->getStamina() << ',' << itemID(player->getArmor()) << ','
+       << itemID(player->getWeapon()) << ',' << player->getStrength() << ','
+       << player->getEndurance() << ',' << player->getAccuracy() << ','
+       << player->getPace() << ',' << player->getMind() << ','
+       << player->inventorySize();
 
-  if (this->inventorySize() > 0) {
-    for (int i = 0; i < this->inventorySize(); i++) {
+  if (player->inventorySize() > 0) {
+    vector<Item*> inventory = player->getInventory();
+    for (int i = 0; i < player->inventorySize(); i++) {
       file << ',' << inventory[i]->getID() << ',' << inventory[i]->getCount();
     }
   }
 
   file << '\n';
+  file.close();
 
   ifstream users("usernames.csv");
   string line;
@@ -203,7 +198,6 @@ void Assassin::AssassinToFile(const string& username) {
     usersfile << username << ",Assassin\n";
     usersfile.close();
   }
-  file.close();
 }
 
 void Assassin::FileToAssassin(const string& username) {
@@ -212,13 +206,14 @@ void Assassin::FileToAssassin(const string& username) {
   
   if (file.good() && !std::filesystem::is_empty(filename)) {
     string line;
-    getline(file, line); // Read the header line
+    getline(file, line); // Skip the header line
     getline(file, line); // Read the data line
     
     stringstream ss(line);
     string attribute;
     
-      getline(ss, this->username,',');
+    // Parsing basic attributes
+    getline(ss, this->username, ',');
     getline(ss, this->name, ',');
     getline(ss, attribute, ',');
     this->age = stoi(attribute);
@@ -242,43 +237,48 @@ void Assassin::FileToAssassin(const string& username) {
     this->defense = stof(attribute);
     getline(ss, attribute, ',');
     this->stamina = stof(attribute);
+
+    // Correctly handling armor ID
     getline(ss, attribute, ',');
-    Human* human =
-        new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
     if (attribute == "-1") {
       this->armor = nullptr;
     } else {
-      this->armor = ItemFactory::createItem(stoi(attribute), human, true);
+      this->armor = ItemFactory::createItem(stoi(attribute), this, true);
       this->armor->setCount(1);
     }
-    getline(file, line);
+
+    // Correctly handling weapon ID
+    getline(ss, attribute, ',');
     if (attribute == "-1") {
       this->weapon = nullptr;
     } else {
-      this->weapon = ItemFactory::createItem(stoi(attribute), human, true);
+      this->weapon = ItemFactory::createItem(stoi(attribute), this, false);
       this->weapon->setCount(1);
     }
-    getline(ss, attribute);
-    this->strength = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->endurance = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->accuracy = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->pace = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->mind = atof(attribute.c_str());
-    string inventorysize;
+
+    // Parsing additional attributes
     getline(ss, attribute, ',');
+    this->strength = stof(attribute);
+    getline(ss, attribute, ',');
+    this->endurance = stof(attribute);
+    getline(ss, attribute, ',');
+    this->accuracy = stof(attribute);
+    getline(ss, attribute, ',');
+    this->pace = stof(attribute);
+    getline(ss, attribute, ',');
+    this->mind = stof(attribute);
+
+    // Handling inventory
+    getline(ss, attribute, ','); // Get inventory size
     int n = stoi(attribute);
     for (int i = 0; i < n; ++i) {
+      int ID, count;
       getline(ss, attribute, ',');
-      int ID = stoi(attribute);
+      ID = stoi(attribute);
       getline(ss, attribute, ',');
-      int count = stoi(attribute);
+      count = stoi(attribute);
       
-      Human* human = new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
-      Item* item = ItemFactory::createItem(ID, human, true);
+      Item* item = ItemFactory::createItem(ID, this, true);
       item->setCount(count);
       this->addInventory(item);
     }

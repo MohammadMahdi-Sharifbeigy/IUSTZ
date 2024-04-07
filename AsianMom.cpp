@@ -1,3 +1,4 @@
+#include "AsianMom.h"
 #include <fstream>
 #include <iostream>
 #include "AttackStrategy.h"
@@ -7,7 +8,6 @@
 #include "FileCheck.h"
 #include "Human.h"
 #include "ItemFactory.h"
-#include "AsianMom.h"
 
 using namespace std;
 
@@ -34,7 +34,7 @@ AsianMom::AsianMom(const string& name,
   this->coin = coin;
 }
 AsianMom::~AsianMom() {
-    delete attackStrategy;
+  delete attackStrategy;
 }
 
 void AsianMom::performAttack(Character& target) {
@@ -91,55 +91,59 @@ void AsianMom::levelUp() {
 
 // AsianMomView Member Function Definitions
 void AsianMomView::displayAsianMomStatus(AsianMom& asianMom) {
-    // Display AsianMom's status to the user
-    cout << "Character Status: " << endl;
-    cout << "Name: " << asianMom.getName() << endl;
-    cout << "Age: " << asianMom.getAge() << endl;
-    cout << "HP: " << asianMom.getCurrentHP() << " / " << asianMom.getMaxHP() << endl;
-    cout << "XP: " << asianMom.getCurrXP() << " / " << asianMom.getNextLevelXP(asianMom.getMaxXP(),asianMom.getCurrXP()) << endl;
-    cout << "Attack: " << asianMom.getAttack() << endl;
-    cout << "Defense: " << asianMom.getDefense() << endl;
-    cout << "Stamina: " << asianMom.getStamina() << endl;
-    cout << "Strength: " << asianMom.getStrength() << endl;
-    cout << "Endurance: " << asianMom.getEndurance() << endl;
-    cout << "Accuracy: " << asianMom.getAccuracy() << endl;
-    cout << "Pace: " << asianMom.getPace() << endl;
-    cout << "Mind: " << asianMom.getMind() << endl;
-    cout << "Coins: " << asianMom.getCoin() << endl;
-    cout << "Role: " << asianMom.getRole() << endl;
-    if (asianMom.getArmor()) {
-        cout << "Armor ID: " << asianMom.getArmor()->getID() << endl;
-    } else {
-        cout << "Armor: None" << endl;
-    }
-    if (asianMom.getWeapon()) {
-        cout << "Weapon ID: " << asianMom.getWeapon()->getID() << endl;
-    } else {
-        cout << "Weapon: None" << endl;
-    }
+  // Display AsianMom's status to the user
+  cout << "Character Status: " << endl;
+  cout << "Name: " << asianMom.getName() << endl;
+  cout << "Age: " << asianMom.getAge() << endl;
+  cout << "HP: " << asianMom.getCurrentHP() << " / " << asianMom.getMaxHP()
+       << endl;
+  cout << "XP: " << asianMom.getCurrXP() << " / "
+       << asianMom.getNextLevelXP(asianMom.getMaxXP(), asianMom.getCurrXP())
+       << endl;
+  cout << "Attack: " << asianMom.getAttack() << endl;
+  cout << "Defense: " << asianMom.getDefense() << endl;
+  cout << "Stamina: " << asianMom.getStamina() << endl;
+  cout << "Strength: " << asianMom.getStrength() << endl;
+  cout << "Endurance: " << asianMom.getEndurance() << endl;
+  cout << "Accuracy: " << asianMom.getAccuracy() << endl;
+  cout << "Pace: " << asianMom.getPace() << endl;
+  cout << "Mind: " << asianMom.getMind() << endl;
+  cout << "Coins: " << asianMom.getCoin() << endl;
+  cout << "Role: " << asianMom.getRole() << endl;
+  if (asianMom.getArmor()) {
+    cout << "Armor ID: " << asianMom.getArmor()->getID() << endl;
+  } else {
+    cout << "Armor: None" << endl;
+  }
+  if (asianMom.getWeapon()) {
+    cout << "Weapon ID: " << asianMom.getWeapon()->getID() << endl;
+  } else {
+    cout << "Weapon: None" << endl;
+  }
 }
 
 // AsianMomController Member Function Definitions
-AsianMomController::AsianMomController(const AsianMom& model, const AsianMomView& view)
+AsianMomController::AsianMomController(const AsianMom& model,
+                                       const AsianMomView& view)
     : model(model), view(view) {}
 
 void AsianMomController::updateView() {
-    view.displayAsianMomStatus(model);
+  view.displayAsianMomStatus(model);
 }
 
 void AsianMomController::handleAttack(Character& target) {
-    model.performAttack(target);
-    updateView();
+  model.performAttack(target);
+  updateView();
 }
 
 void AsianMomController::handleDefense(Character& attacker) {
-    model.performDefense(attacker);
-    updateView();
+  model.performDefense(attacker);
+  updateView();
 }
 
 void AsianMomController::handleLevelUp() {
-    model.levelUp();
-    updateView();
+  model.levelUp();
+  updateView();
 }
 
 inline characterType StringToCharacterType(const string& str) {
@@ -155,10 +159,9 @@ inline characterType StringToCharacterType(const string& str) {
     return CYBORG;
   else if (str == "sniper")
     return SNIPER;
-  else if (str == "Wizard"){
+  else if (str == "Wizard") {
     return WIZARD;
-  }
-  else
+  } else
     return STRONGZOMBIE;
 }
 
@@ -203,30 +206,20 @@ void AsianMom::AsianMomToFile(const string& username) {
   ofstream file(filename);
 
   // Write the header
-  file << "username,name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,mind,inventorySize" << "\n";
+  file << "username,name,age,role,level,coin,currHP,currXP,maxHP,maxXP,attack,"
+          "defense,stamina,armorID,weaponID,strength,endurance,accuracy,pace,"
+          "mind,inventorySize"
+       << "\n";
 
   // Write the character data in one line
-  file << this->username << ','
-       << this->name << ','
-       << this->age << ','
-       << CharacterTypeToString(this->role) << ','
-       << this->level << ','
-       << this->coin << ','
-       << this->currHP << ','
-       << this->currXP << ','
-       << this->maxHP << ','
-       << this->maxXP << ','
-       << this->attack << ','
-       << this->defense << ','
-       << this->stamina << ','
-       << itemID(this->armor) << ','
-       << itemID(this->weapon) << ','
-       << this->strength << ','
-       << this->endurance << ','
-       << this->accuracy << ','
-       << this->pace << ','
-       << this->mind << ','
-       << this->inventorySize();
+  file << this->username << ',' << this->name << ',' << this->age << ','
+       << CharacterTypeToString(this->role) << ',' << this->level << ','
+       << this->coin << ',' << this->currHP << ',' << this->currXP << ','
+       << this->maxHP << ',' << this->maxXP << ',' << this->attack << ','
+       << this->defense << ',' << this->stamina << ',' << itemID(this->armor)
+       << ',' << itemID(this->weapon) << ',' << this->strength << ','
+       << this->endurance << ',' << this->accuracy << ',' << this->pace << ','
+       << this->mind << ',' << this->inventorySize();
 
   if (this->inventorySize() > 0) {
     for (int i = 0; i < this->inventorySize(); i++) {
@@ -258,16 +251,17 @@ void AsianMom::AsianMomToFile(const string& username) {
 void AsianMom::FileToAsianMom(const string& username) {
   string filename = isCSV(username) ? username : username + ".csv";
   ifstream file(filename);
-  
+
   if (file.good() && !std::filesystem::is_empty(filename)) {
     string line;
-    getline(file, line); // Read the header line
-    getline(file, line); // Read the data line
-    
+    getline(file, line);  // Skip the header line
+    getline(file, line);  // Read the data line
+
     stringstream ss(line);
     string attribute;
-    int attr;
-      getline(ss, this->username,',');
+
+    // Basic attributes
+    getline(ss, this->username, ',');
     getline(ss, this->name, ',');
     getline(ss, attribute, ',');
     this->age = stoi(attribute);
@@ -291,43 +285,47 @@ void AsianMom::FileToAsianMom(const string& username) {
     this->defense = stof(attribute);
     getline(ss, attribute, ',');
     this->stamina = stof(attribute);
+
+    // Correct handling for armor and weapon
     getline(ss, attribute, ',');
-    Human* human =
-        new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
     if (attribute == "-1") {
       this->armor = nullptr;
     } else {
-      this->armor = ItemFactory::createItem(stoi(attribute), human, true);
+      this->armor = ItemFactory::createItem(stoi(attribute), this, true);
       this->armor->setCount(1);
     }
-    getline(file, line);
+
+    getline(ss, attribute, ',');
     if (attribute == "-1") {
       this->weapon = nullptr;
     } else {
-      this->weapon = ItemFactory::createItem(stoi(attribute), human, true);
+      this->weapon = ItemFactory::createItem(stoi(attribute), this, false);
       this->weapon->setCount(1);
     }
-    getline(ss, attribute);
-    this->strength = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->endurance = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->accuracy = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->pace = atof(attribute.c_str());
-    getline(ss, attribute);
-    this->mind = atof(attribute.c_str());
-    string inventorysize;
+
+    // Additional attributes
     getline(ss, attribute, ',');
-    int n = stoi(attribute);
+    this->strength = stof(attribute);
+    getline(ss, attribute, ',');
+    this->endurance = stof(attribute);
+    getline(ss, attribute, ',');
+    this->accuracy = stof(attribute);
+    getline(ss, attribute, ',');
+    this->pace = stof(attribute);
+    getline(ss, attribute);
+    this->mind = stof(attribute);
+
+    // Handling inventory
+    int n;
+    getline(ss, attribute, ',');  // Inventory size
+    n = stoi(attribute);
     for (int i = 0; i < n; ++i) {
       getline(ss, attribute, ',');
       int ID = stoi(attribute);
       getline(ss, attribute, ',');
       int count = stoi(attribute);
-      
-      Human* human = new AsianMom("name", 1, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-      Item* item = ItemFactory::createItem(ID, human, true);
+
+      Item* item = ItemFactory::createItem(ID, this, true);
       item->setCount(count);
       this->addInventory(item);
     }
@@ -335,7 +333,7 @@ void AsianMom::FileToAsianMom(const string& username) {
     this->name = "Error404";
     this->age = 0;
   }
-  file.close(); // Close the file after reading
+  file.close();
 }
 // double convertedPrice = atof(sprice.c_str());
 //   if (vip == "true")

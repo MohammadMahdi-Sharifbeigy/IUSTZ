@@ -26,7 +26,7 @@ class Assassin : public Human {
   void performAttack(Character& target) override;
   void performDefense(Character& attacker) override;
   virtual void levelUp() override;
-  void AssassinToFile(const string& username);
+  void AssassinToFile(Human* player);
   void FileToAssassin(const string& username);
 };
 

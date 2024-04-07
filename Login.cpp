@@ -66,12 +66,14 @@ static void saveCharacter (Human* human){
     string username = human->getUserName();
     if (human->getRole() == characterType::PALADIN){
         Paladin* player = dynamic_cast<Paladin*>(human);
-       // static_cast<Paladin*>(player)->PaladinToFile(username);
         player->PaladinToFile(username);
        
     }else if (human->getRole() == characterType::ASSASSIN){
+        cout << "here" << endl;
         Assassin* player =  dynamic_cast<Assassin*>(human);
-        player->AssassinToFile(username);
+        cout << "no, here" << endl;
+        player->AssassinToFile(player);
+        cout << "no no no" << endl;
         
     }else if (human->getRole() == characterType::SUPERHERO){
         SuperHero* player = dynamic_cast<SuperHero*>(human);
@@ -321,7 +323,7 @@ menu:
         }else if (choice == 2){
             Assassin* player =  new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN , 1000);
             player->setUserName(username);
-            player->AssassinToFile(username);
+            player->AssassinToFile(player);
             return player;
         }else if (choice == 3){
             SuperHero* player =  new SuperHero(name, age, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
@@ -375,7 +377,7 @@ menu:
                     goto menu;
                 }
                 return player;
-            }else if (role == "Assasin"){
+            }else if (role == "Assassin"){
                 Assassin* player =  new Assassin("name", 1, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
                 player->FileToAssassin(username);
                 if(player->getName() == "Error404"&&  player->getAge() == 0){
@@ -426,11 +428,11 @@ menu:
             }
             break;
         }
-        if(check == 0){
+    }
+    if(check == 0){
         cout<<"Sorry it seems like you don't have an account" <<endl;
         goto menu;
-        } 
-    }
+    } 
     return new Wizard("name", 1, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
     }
 }
