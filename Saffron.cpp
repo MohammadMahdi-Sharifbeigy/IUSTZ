@@ -10,8 +10,8 @@ void Saffron::increaseDamage(Character& target) {
   target.setAttack(target.getAttack() + potency);
   cout << target.getName() << "'s damage has increased by " << potency
        << " points." << endl;
-  count--;
-  if (count == 0) {
-    cout << "You have run out of " << name << "." << endl;
-  }
+ // count--;
+//  if (count == 0) {
+//    cout << "You have run out of " << name << "." << endl;
+ // }
 }
