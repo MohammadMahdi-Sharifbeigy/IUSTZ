@@ -360,6 +360,7 @@ void combat(Human* player, Enemy* enemy) {
         synergy = player->chooseAtkItem();
         //enemy->takeDamage(player->getAttack() + (int)synergy);
         target = dynamic_cast<Enemy*>(enemy);
+        player->setAttack(player->getAttack() + (int)synergy);
         player->performAttack(*target);
         attackZombie(player, enemy);
         break;
