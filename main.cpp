@@ -339,7 +339,7 @@ void displayHealthBar(string name, double currentHP, double maxHP) {
 
 void combat(Human* player, Enemy* enemy) {
   srand(static_cast<unsigned int>(time(0)));
-
+  Character* target = nullptr;
   int enemy_max_hp = enemy->getMaxHP();
   cout << "\nA wild " << enemy->getName() << " appears!" << endl;
   displayHealthBar(player->getName(), player->getCurrentHP(),
@@ -358,7 +358,9 @@ void combat(Human* player, Enemy* enemy) {
       case 1:
         clearScreen();
         synergy = player->chooseAtkItem();
-        enemy->takeDamage(player->getAttack() + (int)synergy);
+        //enemy->takeDamage(player->getAttack() + (int)synergy);
+        target = dynamic_cast<Enemy*>(enemy);
+        player->performAttack(*target);
         attackZombie(player, enemy);
         break;
       case 2:
