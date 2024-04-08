@@ -29,8 +29,7 @@ all: $(TARGET)
 
 # Link the target with all objects
 $(TARGET): $(OBJECTS) $(NCURSES_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ -lncurses
-
+	$(CXX) $(CXXFLAGS) -o $@ $^ -lncurses -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 # Compile each cpp file to an object file
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $<
