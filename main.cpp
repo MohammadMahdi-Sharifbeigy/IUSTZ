@@ -11,6 +11,7 @@
 #include "EnemyFactory.h"
 #include "GameState.h"
 #include "HealingPotion.h"
+#include "HumanEnemy.h"
 #include "Login.cpp"
 #include "Paladin.h"
 #include "Shop.h"
@@ -29,7 +30,7 @@
 
 using namespace std;
 
-void displayHealthBar(string name, int currentHP, int maxHP);
+void displayHealthBar(string name, double currentHP, double maxHP);
 
 void clearScreen() {
 #ifdef _WIN32
@@ -253,7 +254,7 @@ void gainXP(Human* player, Enemy* enemy, int xpGained) {
   }
 }
 
-void zombieAttack(Enemy* zombie, Human* player) {
+void enemyAttack(Enemy* enemy, Human* player) {
   static const char* attackMessages[] = {
       " lunges with a ferocious snarl, claws bared!",
       " strikes with a sudden, ghastly ferocity!",
@@ -263,13 +264,13 @@ void zombieAttack(Enemy* zombie, Human* player) {
       " unleashes a barrage of bites and scratches, relentless in its "
       "pursuit!"};
   int msgIndex = rand() % (sizeof(attackMessages) / sizeof(attackMessages[0]));
-  int damage =
-      zombie->getAttack();  // Assuming getAttack() returns the damage value
+  double damage =
+      enemy->getAttack();  // Assuming getAttack() returns the damage value
   player->takeDamage(
       damage);  // Simulate the player taking damage from the zombie
 
-  cout << "The Zombie" << attackMessages[msgIndex] << " " << player->getName()
-       << " suffers " << damage << " damage!" << endl
+  cout << "The " << enemy->getName() << attackMessages[msgIndex] << " "
+       << player->getName() << " suffers " << damage << " damage!" << endl
        << endl;
 }
 
@@ -318,10 +319,10 @@ void combatMenu(Human* player) {
   cout << "Choose an action: ";
 }
 
-void displayHealthBar(string name, int currentHP, int maxHP) {
+void displayHealthBar(string name, double currentHP, double maxHP) {
   int barLength = 50;
-  double healthRatio = static_cast<double>(currentHP) / maxHP;
-  int healthUnits = static_cast<int>(barLength * healthRatio);
+  double healthRatio = currentHP / maxHP;
+  int healthUnits = int(barLength * healthRatio);
   const string bar = R"(█)";
   cout << name << " HP: ";
   cout << "[";
@@ -333,7 +334,7 @@ void displayHealthBar(string name, int currentHP, int maxHP) {
     cout << "-";
   }
 
-  cout << "] " << currentHP << "/" << maxHP << endl;
+  cout << "] " << int(currentHP) << "/" << maxHP << endl;
 }
 
 void combat(Human* player, Enemy* enemy) {
@@ -348,8 +349,8 @@ void combat(Human* player, Enemy* enemy) {
   while (player->getCurrentHP() > 0 && enemy->getCurrentHP() > 0) {
     vector<Item*> items = player->getInventory();
     vector<Item*> defenseItems;
-      double synergy;
-      Item* playerPotion;
+    double synergy;
+    Item* playerPotion;
     combatMenu(player);
     int choice;
     cin >> choice;
@@ -357,7 +358,7 @@ void combat(Human* player, Enemy* enemy) {
       case 1:
         clearScreen();
         synergy = player->chooseAtkItem();
-        enemy->takeDamage(player->getAttack()+(int)synergy);
+        enemy->takeDamage(player->getAttack() + (int)synergy);
         attackZombie(player, enemy);
         break;
       case 2:
@@ -397,72 +398,51 @@ void combat(Human* player, Enemy* enemy) {
         break;
       case 3:
         clearScreen();
-            playerPotion=player->choosePotion();
-            if(playerPotion == nullptr){
-                continue;
-            }else{
-                if(playerPotion->getID() == 29){
-                    dynamic_cast<HealingPotion*>(playerPotion)->increaseHP(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }else if (playerPotion->getID()==30){
-                    dynamic_cast<DamagePotion*>(playerPotion)->increaseDamage(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }else if (playerPotion->getID()==31){
-                    dynamic_cast<DefensePotion*>(playerPotion)->increaseDefense(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }else if (playerPotion->getID()==32){
-                    dynamic_cast<StaminaPotion*>(playerPotion)->increaseStamina(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }else if (playerPotion->getID()==33){
-                    dynamic_cast<Food*>(playerPotion)->increaseStats(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }else if (playerPotion->getID()==34){
-                    dynamic_cast<SweetTea*>(playerPotion)->increaseHP(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }else if (playerPotion->getID()==35){
-                    dynamic_cast<Saffron*>(playerPotion)->increaseDamage(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                    
-                }else if (playerPotion->getID()==36){
-                    dynamic_cast<AraghNana*>(playerPotion)->increaseDefense(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }else if (playerPotion->getID()==37){
-                    dynamic_cast<Nuts*>(playerPotion)->increaseStamina(*player);
-                    player->removeInventory(player->indexInInventory(playerPotion)+1);
-                    
-                }
-                
-                
-                
-                break;
-            }
-       /* if (containsHealingPotion(player->getInventory())) {
-          vector<Item*> items = player->getInventory();
-          for (size_t i = 0; i < items.size(); ++i) {
-            HealingPotion* potion = dynamic_cast<HealingPotion*>(items[i]);
-            if (potion != nullptr) {
-              potion->increaseHP(*player);
-              if (items[i]->getCount() - 1 == 0) {
-                items.erase(items.begin() + i);
-              } else {
-                items[i]->setCount(items[i]->getCount() - 1);
-              }
-              break;
-            }
-          }
-          useHealingPotion(player);
+        playerPotion = player->choosePotion();
+        if (playerPotion == nullptr) {
+          continue;
         } else {
-          noPotionAvailable(player);
+          if (playerPotion->getID() == 29) {
+            dynamic_cast<HealingPotion*>(playerPotion)->increaseHP(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 30) {
+            dynamic_cast<DamagePotion*>(playerPotion)->increaseDamage(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 31) {
+            dynamic_cast<DefensePotion*>(playerPotion)
+                ->increaseDefense(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 32) {
+            dynamic_cast<StaminaPotion*>(playerPotion)
+                ->increaseStamina(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 33) {
+            dynamic_cast<Food*>(playerPotion)->increaseStats(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 34) {
+            dynamic_cast<SweetTea*>(playerPotion)->increaseHP(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 35) {
+            dynamic_cast<Saffron*>(playerPotion)->increaseDamage(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 36) {
+            dynamic_cast<AraghNana*>(playerPotion)->increaseDefense(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+
+          } else if (playerPotion->getID() == 37) {
+            dynamic_cast<Nuts*>(playerPotion)->increaseStamina(*player);
+            player->removeInventory(player->indexInInventory(playerPotion) + 1);
+          }
+
+          break;
         }
-        break;*/
       case 4:
         clearScreen();
         checkInventory(player);
@@ -494,8 +474,14 @@ void combat(Human* player, Enemy* enemy) {
     }
 
     // Enemy's turn to attack
-    player->takeDamage(enemy->get_enemy_atk());
-    zombieAttack(enemy, player);
+    if (enemy->getRole() != characterType::WEAKZOMBIE ||
+        enemy->getRole() != characterType::STRONGZOMBIE) {
+      dynamic_cast<HumanEnemyModel*>(enemy)->Update(*player);
+    } else {
+      player->takeDamage(enemy->get_enemy_atk());
+      enemyAttack(enemy, player);
+    }
+
     if (choice == 2) {
       enemy->setAttack(enemy->getAttack() / 0.7);
     }
@@ -516,7 +502,7 @@ void combat(Human* player, Enemy* enemy) {
 
 void explore(GameState& gameState) {
   srand(time(nullptr));    // Seed for random number generation
-  int event = rand() % 4;  // Random event: 0, 1, or 2
+  int event = rand() % 4;  // Random event: 0, 1, 2 or 3
 
   Human* player = gameState.getPlayerCharacter();
   characterType types[3] = {characterType::WEAKZOMBIE,
@@ -546,14 +532,14 @@ void explore(GameState& gameState) {
         clearScreen();
         playerDied(player);
       }
-       saveCharacter(player);
+      saveCharacter(player);
       break;
     case 2:
       cout << exploreEnvironment() << endl;
       sleepMilliseconds(3000);
       cout << "You found a hidden treasure chest containing 50 gold!" << endl;
       player->setCoin(player->getCoin() + 50);
-       saveCharacter(player);
+      saveCharacter(player);
       break;
     case 3:
       cout << exploreEnvironment() << endl;
@@ -569,7 +555,7 @@ void explore(GameState& gameState) {
       clearScreen();
       combat(gameState.getPlayerCharacter(), enemy);
       clearScreen();
-       saveCharacter(player);
+      saveCharacter(player);
       break;
     default:
       cout << "It's a peaceful walk. Nothing happens." << endl;

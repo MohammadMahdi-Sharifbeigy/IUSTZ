@@ -6,6 +6,25 @@
 #include "ASCIIArt/ASCIIArts.h"
 #include "State.h"
 
+
+static void enemyAttack(Enemy* enemy, Human* player, int damage) {
+  static const char* attackMessages[] = {
+      " lunges with a ferocious snarl, claws bared!",
+      " strikes with a sudden, ghastly ferocity!",
+      " shambles forward, launching into a gruesome attack!",
+      " emits a horrifying groan, intensifying its assault!",
+      " moves with eerie speed, attacking with undead fury!",
+      " unleashes a barrage of bites and scratches, relentless in its "
+      "pursuit!"};
+  int msgIndex = rand() % (sizeof(attackMessages) / sizeof(attackMessages[0]));
+  player->takeDamage(
+      damage);  // Simulate the player taking damage from the zombie
+
+  cout << "The " << enemy->getName() << attackMessages[msgIndex] << " "
+       << player->getName() << " suffers " << damage << " damage!" << endl
+       << endl;
+}
+
 // Model
 HumanEnemyModel::HumanEnemyModel(int level, Human& humanRef) : Enemy(level), humanRef(humanRef) {
     srand(time(NULL));
@@ -220,6 +239,7 @@ void HumanEnemyModel::performAttack(Character& target) {
         // Apply the FSM to get modified attack and defense values
         std::pair<double, double> modifiedValues = static_cast<HumanEnemyAttack*>(attackStrategy)->applyFSM(currHumanRole, &target, this, attackType);
         double modifiedAttack = modifiedValues.first;
+        enemyAttack(this, dynamic_cast<Human*>(&target), modifiedAttack);
         // Use the modified attack value to deal damage
         target.takeDamage(modifiedAttack);
     } else {
