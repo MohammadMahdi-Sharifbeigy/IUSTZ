@@ -147,15 +147,7 @@ Explore the features and functionalities of the application.
 ### ? 
 
 
- 
-## ◾️ Dependencies
 
-This project requires the following dependencies:
-
-ncurses: A library for creating text-based user interfaces.
-Windows.h, conio.h, direct.h (for Windows platform specific functionality)
-ncurses.h, unistd.h (for Unix-like platform specific functionality)
- 
 
 ## 🔗 Feedback
 
