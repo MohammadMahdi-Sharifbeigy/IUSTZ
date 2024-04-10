@@ -1,5 +1,5 @@
 #include "WeakZombie.h"
-#include "ASCIIArt/ASCIIArts.h"
+// #include "ASCIIArt/ASCIIArts.h"
 #include "font.h"
 
 using namespace std;
