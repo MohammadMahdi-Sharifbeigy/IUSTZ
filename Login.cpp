@@ -334,36 +334,78 @@ menu:
             Paladin* player =  new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
             player->setUserName(username);
            // static_cast<Paladin*>(player)->PaladinToFile(username);
+          //  Item* weapon = ItemFactory::createItem(8,static_cast<Human*>(player),true);
+            Item* armor = ItemFactory::createItem(1,static_cast<Human*>(player),true);
+            Item* potion = ItemFactory::createItem(29,static_cast<Human*>(player),true);
+          //  player->addInventory(weapon);
+            player->addInventory(armor);
+            player->addInventory(potion);
             player->PaladinToFile(username);
             return player;
         }else if (choice == 2){
             Assassin* player =  new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN , 1000);
             player->setUserName(username);
+        //    Item* weapon = ItemFactory::createItem(10,static_cast<Human*>(player),true);
+            Item* armor = ItemFactory::createItem(2,static_cast<Human*>(player),true);
+            Item* potion = ItemFactory::createItem(29,static_cast<Human*>(player),true);
+          //  player->addInventory(weapon);
+            player->addInventory(armor);
+            player->addInventory(potion);
             player->AssassinToFile(player);
             return player;
         }else if (choice == 3){
             SuperHero* player =  new SuperHero(name, age, 100.0, 3.0, 5.0, characterType::SUPERHERO, 1000);
             player->setUserName(username);
+          //  Item* weapon = ItemFactory::createItem(20,static_cast<Human*>(player),true);
+            Item* armor = ItemFactory::createItem(6,static_cast<Human*>(player),true);
+            Item* potion = ItemFactory::createItem(18,static_cast<Human*>(player),true);
+         //   player->addInventory(weapon);
+            player->addInventory(armor);
+            player->addInventory(potion);
             player->SuperHeroToFile(username);
             return player;
         }else if (choice == 4){
             Sniper* player =  new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
             player->setUserName(username);
+           // Item* weapon = ItemFactory::createItem(17,static_cast<Human*>(player),true);
+            Item* armor = ItemFactory::createItem(2,static_cast<Human*>(player),true);
+            Item* potion = ItemFactory::createItem(29,static_cast<Human*>(player),true);
+          //  player->addInventory(weapon);
+            player->addInventory(armor);
+            player->addInventory(potion);
             player->SniperToFile(username);
             return player;
         }else if (choice == 5){
             Wizard* player =  new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
             player->setUserName(username);
+           // Item* weapon = ItemFactory::createItem(12,static_cast<Human*>(player),true);
+            Item* armor = ItemFactory::createItem(3,static_cast<Human*>(player),true);
+            Item* potion = ItemFactory::createItem(29,static_cast<Human*>(player),true);
+           // player->addInventory(weapon);
+            player->addInventory(armor);
+            player->addInventory(potion);
             player->WizardToFile(username);
             return player;
         }else if (choice == 6){
             Cyborg* player =  new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
             player->setUserName(username);
+           // Item* weapon = ItemFactory::createItem(14,static_cast<Human*>(player),true);
+            Item* armor = ItemFactory::createItem(4,static_cast<Human*>(player),true);
+            Item* potion = ItemFactory::createItem(29,static_cast<Human*>(player),true);
+            //player->addInventory(weapon);
+            player->addInventory(armor);
+            player->addInventory(potion);
            player->CyborgToFile(username);
             return player;
         }else{
             AsianMom* player =  new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
             player->setUserName(username);
+          //  Item* weapon = ItemFactory::createItem(20,static_cast<Human*>(player),true);
+            Item* armor = ItemFactory::createItem(1,static_cast<Human*>(player),true);
+            Item* potion = ItemFactory::createItem(29,static_cast<Human*>(player),true);
+           // player->addInventory(weapon);
+            player->addInventory(armor);
+            player->addInventory(potion);
             player->AsianMomToFile(username);
             return player;
         }
