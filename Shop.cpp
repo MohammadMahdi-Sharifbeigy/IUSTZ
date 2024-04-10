@@ -278,6 +278,12 @@ void Shop::buyItemWithCountLimit(int choice,
          << " of this item. You can't buy more!" << endl;
     return;
   }
+    if(item->isVIP()){
+        if(human->getLevel()<5){
+            cout<<"Sorry you can't buy VIP items untill you reach level 5"<<endl;
+            return;
+        }
+    }
 
   cout << "How many do you want? ";
 
@@ -326,6 +332,12 @@ void Shop::buyItemWithCountLimit(int choice,
 
 void Shop::buy(int choice, Human* human) {
   Item* item = ItemFactory::createItem(choice, human, false);
+    if(item->isVIP()){
+        if(human->getLevel()<5){
+            cout<<"Sorry you can't buy VIP items untill you reach level 5"<<endl;
+            return;
+        }
+    }
   if (human->getCoin() < item->getPrice()) {
     cout << "Sorry, you don't have enough coins to buy the item." << endl;
   } else if (human->existInInventory(item)) {

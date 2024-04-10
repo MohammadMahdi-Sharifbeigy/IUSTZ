@@ -35,7 +35,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
     case 5:
       name = "Guardian Bulletproof Jacket";
       price = 180.0;
-      item = new BulletproofJacket(name, price, VIP, perk, type, synergyDamage,
+      item = new BulletproofJacket(name, price, true, perk, type, synergyDamage,
                                    count);
       break;
     case 6:
@@ -46,7 +46,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
     case 7:
       name = "Persian Royal Dad";
       price = 300.0;
-      item = new PersianDad(name, price, VIP, perk, type, synergyDamage, count);
+      item = new PersianDad(name, price, true, perk, type, synergyDamage, count);
       break;
     case 8:
       name = "Blade of Valor";
@@ -56,7 +56,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
     case 9:
       name = "Spear of Destiny";
       price = 115.0;
-      item = new Spear(name, price, VIP, perk, type, synergyDamage, count);
+      item = new Spear(name, price, true, perk, type, synergyDamage, count);
       break;
     case 10:
       name = "Windwalker Katana";
@@ -67,7 +67,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
       name = "Venomous Poison Dagger";
       price = 130.0;
       item =
-          new PoisonDagger(name, price, VIP, perk, type, synergyDamage, count);
+          new PoisonDagger(name, price, true, perk, type, synergyDamage, count);
       break;
     case 12:
       name = "Arcane Wand";
@@ -77,7 +77,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
     case 13:
       name = "Book of Secrets";
       price = 90.0;
-      item = new Book(name, price, VIP, perk, type, synergyDamage, count);
+      item = new Book(name, price, true, perk, type, synergyDamage, count);
       break;
     case 14:
       name = "Photon Laser Gun";
@@ -88,7 +88,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
       name = "Miniature Combat Robots";
       price = 310.0;
       item =
-          new LittleRobots(name, price, VIP, perk, type, synergyDamage, count);
+          new LittleRobots(name, price, true, perk, type, synergyDamage, count);
       break;
     case 16:
       name = "Silent Snipe";
@@ -109,7 +109,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
       name = "Truth's Whip";
       price = 150.0;
       item =
-          new WhipOfTruth(name, price, VIP, perk, type, synergyDamage, count);
+          new WhipOfTruth(name, price, true, perk, type, synergyDamage, count);
       break;
     case 20:
       name = "Giant Swatter";
@@ -119,7 +119,7 @@ Item* ItemFactory::createItem(int choice, Human* human, bool login) {
     case 21:
       name = "Fiery Pepper Spray";
       price = 40.0;
-      item = new Pepper(name, price, VIP, perk, type, synergyDamage, count);
+      item = new Pepper(name, price, true, perk, type, synergyDamage, count);
       break;
     case 22:
       name = "Ancient Bow";
