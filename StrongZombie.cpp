@@ -20,7 +20,7 @@ StrongZombie::StrongZombie(int level) : Enemy(level) {
 StrongZombieModel::StrongZombieModel() {}
 
 StrongZombie* StrongZombieModel::createStrongZombie(int level, Human* human) {
-  return dynamic_cast<StrongZombie*>(EnemyFactory::createEnemy(STRONGZOMBIE, level, human, nullptr));
+  return dynamic_cast<StrongZombie*>(EnemyFactory::createEnemy(STRONGZOMBIE, level, human));
 }
 
 StrongZombieView::StrongZombieView() {}

@@ -20,7 +20,7 @@ WeakZombie::WeakZombie(int level) : Enemy(level) {
 WeakZombieModel::WeakZombieModel() {}
 
 WeakZombie* WeakZombieModel::createWeakZombie(int level, Human* human) {
-  return dynamic_cast<WeakZombie*>(EnemyFactory::createEnemy(WEAKZOMBIE, level, human, nullptr));
+  return dynamic_cast<WeakZombie*>(EnemyFactory::createEnemy(WEAKZOMBIE, level, human));
 }
 
 WeakZombieView::WeakZombieView() {}

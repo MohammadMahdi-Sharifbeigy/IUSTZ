@@ -2,28 +2,11 @@
 
 using namespace std;
 
-Enemy* EnemyFactory::createEnemy(characterType type, int level, Human *humanRef){
+Enemy* EnemyFactory::createEnemy(characterType type, int level,Human* human){
     switch (type){
         case HUMANENEMY:
-            if (humanRef){                    
-                return new HumanEnemyModel(level, *humanRef);
-            }
-        break;
-        case WEAKZOMBIE:
-            return new WeakZombie(level);
-        case STRONGZOMBIE:
-            return new StrongZombie(level);
-        default:
-            return nullptr;
-    }     
-    return nullptr;   
-}
-
-Enemy* EnemyFactory::createEnemy(characterType type, int level,Human* human, Human *humanRef = nullptr){
-    switch (type){
-        case HUMANENEMY:
-            if (humanRef){                
-               return new HumanEnemyModel(level,*human, *humanRef);
+            if (human){                
+               return new HumanEnemyModel(level,*human);
             }
         break;
         case WEAKZOMBIE:

@@ -12,17 +12,12 @@
 
 // Model
 class HumanEnemyModel : public Enemy {
-
 public:
-    HumanEnemyModel(int level, Human& humanRef);
-
-    HumanEnemyModel(int level, Human& human, Human& humanRef);
+    explicit HumanEnemyModel(int level, Human& human);
 
     ~HumanEnemyModel();
-  
-    characterType getRandomRole();
 
-    void setRoleBasedOnHuman(Human& humanref);
+    characterType getRandomRole();
 
     void performAttack(Character& target);
 
@@ -31,46 +26,41 @@ public:
     State getState();
 
     void setState(State state);
-    
+
     void setStateBasedOnHP();
-    
+
     bool useHealingPotion();
-    
+
     bool useAttackPotion();
-    
+
     bool useDefensePotion();
-    
+
     double useAtkItem (bool dontUse);
-    
+
     double useDefItem(bool dontUse);
-    
+
     void atkInUpdate(Human &target , bool dont);
-    
+
     void defInUpdate(Human &target , bool dont);
-    
+
     void Update(Human &target);
 
     // Items Functions
     void showInventory();
-    void addInventory(Item* item) ;
+    void addInventory(Item* item);
     void addInventory(Item* item, int count);
-    void removeInventory(int index, int count) ;
+    void removeInventory(int index, int count);
     void removeInventory(int index);
-    int inventorySize() ;
+    int inventorySize();
     bool existInInventory(Item* item);
     int countInInventory(Item* item);
     int indexInInventory(Item* item);
     double priceItemsAt(int index);
     int countItemsAt(int index);
-    Item* itemsAt(int index) ;
-   // Item* getArmor() ;
-    //Item* getWeapon() ;
-   // void setArmor(Item* armor);
-   // void setWeapon(Item* weapon);
-   // Item* stringToItem(const string& line);
+    Item* itemsAt(int index);
 
 private:
-    Human& humanRef;
+    Human& human;
     AttackStrategy* attackStrategy;
     State state;
     bool haveUsedAtkP;
@@ -78,7 +68,7 @@ private:
     vector<Item*> inventory;
 };
 
-//view
+// View
 class HumanEnemyView {
 public:
     HumanEnemyView();
