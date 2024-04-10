@@ -4,4 +4,6 @@
 *.o
 game
 game.exe
+geme_debug
+game_debug.exe
 *.csv
