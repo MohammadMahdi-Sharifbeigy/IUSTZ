@@ -1,5 +1,5 @@
 #include "StrongZombie.h"
-#include "ASCIIArt/ASCIIArts.h"
+#include "font.h"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ StrongZombieView::StrongZombieView() {}
 
 void StrongZombieView::displayStrongZombie(StrongZombie* strongZombie) {
   std::cout << "Strong Zombie created with level: " << strongZombie->get_enemy_lvl() << std::endl;
-  std::cout << DeathAngel << std::endl;
+  std::cout << DeathAngel1 << std::endl;
 }
 
 StrongZombieController::StrongZombieController(StrongZombieModel* model, StrongZombieView* view)

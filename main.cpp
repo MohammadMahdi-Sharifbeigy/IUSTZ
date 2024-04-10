@@ -4,6 +4,7 @@
 #include <iostream>
 #include <limits>
 #include <vector>
+#include <SFML/Audio.hpp>
 #include "Character.h"
 #include "CharacterType.h"
 #include "Enemy.h"
@@ -14,7 +15,8 @@
 #include "Shop.h"
 #include "Sword.h"
 #include "Zombie.h"
-#include "font.h"
+//#include "font.h"
+// #include "ASCIIArt/ASCIIArts.h"
 
 #ifdef _WIN32
 #include <conio.h>
@@ -365,12 +367,24 @@ void explore(GameState& gameState, WINDOW* combat_win) {
   srand(time(nullptr));    // Seed for random number generation
   int event = rand() % 4;  // Random event: 0, 1, or 2
 
-  Human* player = gameState.getPlayerCharacter();
-  Enemy zombie(player->getLevel());
-  zombie.setName("Zombie");
-  zombie.setCurrentHP(zombie.getMaxHP());
-  Item* potion = new HealingPotion("Healing Potion", 50.0, false, 50.0, 1);
-  exploreEnvironment();
+   // Load an audio file
+    sf::SoundBuffer ExploreBuffer;
+    if (!ExploreBuffer.loadFromFile("secret-world.wav")) {
+        std::cerr << "Could not load the Explore audio file!" << std::endl;
+    }
+    // Create a sound object and play it
+    sf::Sound ExploreSound;
+    ExploreSound.setBuffer(ExploreBuffer);
+    ExploreSound.play();
+    Human* player = gameState.getPlayerCharacter();
+    Enemy zombie(player->getLevel());
+    zombie.setName("Zombie");
+    zombie.setCurrentHP(zombie.getMaxHP());
+    Item* potion = new HealingPotion("Healing Potion", 50.0, false, 50.0, 1);
+    exploreEnvironment();
+
+       // sf::sleep(sf::milliseconds(100));
+     
   switch (event) {
     case 0:
       update_combat(combat_win, exploreEnvironment());
@@ -413,6 +427,10 @@ void explore(GameState& gameState, WINDOW* combat_win) {
     default:
       update_combat(combat_win, "It's a peaceful walk. Nothing happens.");
   }
+
+  
+
+
 }
 
 void gameLoop(GameState& gameState) {

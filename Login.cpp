@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string.h>
+#include <SFML/Audio.hpp>
 #include "Character.h"
 #include "Human.h"
 #include "Item.h"
@@ -56,14 +57,35 @@
 #include "Wizard.h"
 #include "Cyborg.h"
 #include "AsianMom.h"
+//#include "ASCIIArt/ASCIIArts.h"
+#include "font.h"
 #include <sstream>
 
 using namespace std;
 
 static Human* Login(){
-    cout<<"***Welcome to our game***"<<endl;
-menu:
-    cout<<"1.Sign in"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
+     // Load an audio file
+    sf::SoundBuffer WelcomeBuffer;
+    if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
+        std::cerr << "Could not load the Welcome audio file!" << std::endl;
+    }
+
+    // Create a sound object and play it
+    sf::Sound WelcomeSound;
+    WelcomeSound.setBuffer(WelcomeBuffer);
+    WelcomeSound.play();
+
+    // Wait until the sound is finished
+    while (WelcomeSound.getStatus() == sf::Sound::Playing) {
+        // Keep the program running until the sound has finished playing
+        //
+        cout  << Wellcome1 << endl;
+        sf::sleep(sf::milliseconds(5000));
+    }
+
+     cout<<"***Welcome to our game***"<<endl;
+ menu:
+     cout<<"1.Sign in"<<endl<<"2.Already have an account? Login"<<endl<<"Enter your choice:"<<endl;
     int choice;
     string schoice;
     try{
@@ -77,6 +99,7 @@ menu:
             cin>>schoice;
         }
     }
+     cout << "\033[2J\033[1;1H";
     choice = stoi(schoice);
     if(choice == 1){
         cout<<"Enter your name: "<<endl;
@@ -212,7 +235,24 @@ menu:
         }
         int random = rand() % maxin.size();
         maxindex = maxin[random];
-        
+            // Load an audio file
+        sf::SoundBuffer MagicBuffer;
+        if (!MagicBuffer.loadFromFile("Magic2.wav")) {
+            std::cerr << "Could not load the Magic audio file!" << std::endl;
+        }
+
+        // Create a sound object and play it
+        sf::Sound MagicSound;
+        MagicSound.setBuffer(MagicBuffer);
+        MagicSound.play();
+
+        // Wait until the sound is finished
+        while (MagicSound.getStatus() == sf::Sound::Playing) {
+        // Keep the program running until the sound has finished playing
+        sf::sleep(sf::milliseconds(100));
+
+    }
+
         if(maxindex == 0){
             cout<<"We recommend you to choose <Paladin> as your character based on your personality!"<<endl;
             cout<<"But you are free to choose any character you want!"<<endl;

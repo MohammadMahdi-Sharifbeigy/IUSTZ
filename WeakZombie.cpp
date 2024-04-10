@@ -1,5 +1,6 @@
 #include "WeakZombie.h"
 #include "ASCIIArt/ASCIIArts.h"
+#include "font.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ WeakZombieView::WeakZombieView() {}
 
 void WeakZombieView::displayWeakZombie(WeakZombie* weakZombie) {
     std::cout << "Weak Zombie created with level: " << weakZombie->get_enemy_lvl() << std::endl;
-  std::cout << Zambia1 << std::endl;
+  std::cout << Zombie1 << std::endl;
 }
 WeakZombieController::WeakZombieController(WeakZombieModel* model, WeakZombieView* view)
     : model(model), view(view) {}
