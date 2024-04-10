@@ -27,6 +27,18 @@ class SniperAttack : public AttackStrategy {
     }
     return 0;  // or some default value
   }
+
+  double attackOpponent(Human* currCharacter, Human* opponent) {
+    // Snipers have very high attack due to precision strikes
+    return (3 * (currCharacter->getLevel() * currCharacter->getAccuracy() * currCharacter->getAttack()) * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+              * ( currCharacter->getAttack() / opponent->getDefense()) + 1);
+  }
+
+  double defenseOpponent(Human* currCharacter, Human* opponent) {
+    // Snipers have low defense
+    return (0.5 * (currCharacter->getLevel() * currCharacter->getDefense()) * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+              * ( currCharacter->getDefense() / opponent->getAttack()));
+  }
 };
 
 #endif  // SNIPERATTACK_H

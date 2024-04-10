@@ -23,19 +23,23 @@ class HumanEnemyAttack : public AttackStrategy {
 public:
     HumanEnemyAttack() : AttackStrategy() {};
 
-  double attackEnemy(Character* currCharacter, Enemy* currEnemy) override {
+  double attackEnemy(Character* currCharacter, Enemy* currEnemy) {
     // Assuming this character has a high attack but low defense like an Assassin
     return (1.25 * (currCharacter->getAttack() / double(currCharacter->getLevel())) * 
            (currCharacter->getMaxHP() / currCharacter->getCurrentHP())*
            (currCharacter->getAttack() / currEnemy->get_enemy_def()));
   }
 
-  double defenseEnemy(Character* currCharacter, Enemy* currEnemy) override {
+  double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
     // Assuming this character has low defense
     return (0.5* (currCharacter->getDefense() / double(currCharacter->getLevel())) * 
            (currCharacter->getMaxHP() / currCharacter->getCurrentHP()) * 
            (currCharacter->getDefense() / currEnemy->get_enemy_atk()));
   }
+
+  double attackOpponent(Human* currCharacter, Human* opponent) {}
+
+  double defenseOpponent(Human* currCharacter, Human* opponent) {}
 
   // Define a structure to hold attack and defense modifiers
   struct Modifiers {

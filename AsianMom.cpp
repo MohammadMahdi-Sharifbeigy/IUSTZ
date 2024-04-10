@@ -46,7 +46,7 @@ void AsianMom::performAttack(Character& target) {
       enemy->takeDamage(damage);
     }
   } else {
-    cout << getName() << " attacks " << target.getcharType()
+    cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
@@ -56,18 +56,58 @@ void AsianMom::performAttack(Character& target) {
   }
 }
 
-void AsianMom::performDefense(Character& attacker) {
+void AsianMom::performAttack(Human& target) {
   if (attackStrategy) {
-    if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      AsianMom::currHP -= damage;
+   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      double damage = attackStrategy->attackOpponent(this, &target);
+      // enemy->set_enemy_hp(damage);
+      target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
-    AsianMom::currHP -= AsianMom::getDefense();
+    cout << getName() << " attacks " << target.getName()
+         << " with a basic attack." << endl;
+    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      //enemy->set_enemy_hp(AsianMom::getAttack());
+      // enemy->takeDamage(AsianMom::getAttack());
+      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+    }
+  }
+}
+
+
+
+
+void AsianMom::performDefense(Character& attacker) {
+  Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
+  if (attackStrategy) {
+    if (enemy) {
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      AsianMom::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    AsianMom::currHP -= (enemy->get_enemy_atk() -  AsianMom::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
 }
+
+
+
+void AsianMom::performDefense(Human& attacker) {
+  if (attackStrategy) {
+    if (&attacker) {
+      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      AsianMom::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    AsianMom::currHP -= attacker.getAttack()-AsianMom::getDefense();
+    cout << getName() << " defends against " << attacker.getName()
+         << " with a basic defense." << endl;
+  }
+}
+
 
 void AsianMom::levelUp() {
   while (getCurrXP() >= getMaxXP()) {

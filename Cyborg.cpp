@@ -58,15 +58,53 @@ void Cyborg::performAttack(Character& target) {
   }
 }
 
-void Cyborg::performDefense(Character& attacker) {
+
+void Cyborg::performAttack(Human& target) {
   if (attackStrategy) {
-    if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      Cyborg::currHP -= damage;
+   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      double damage = attackStrategy->attackOpponent(this, &target);
+      // enemy->set_enemy_hp(damage);
+      target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
-    Cyborg::currHP -= Cyborg::getDefense();
+    cout << getName() << " attacks " << target.getName()
+         << " with a basic attack." << endl;
+    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      //enemy->set_enemy_hp(AsianMom::getAttack());
+      // enemy->takeDamage(AsianMom::getAttack());
+      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+    }
+  }
+}
+
+
+
+void Cyborg::performDefense(Character& attacker) {
+  Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
+  if (attackStrategy) {
+    if (enemy) {
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      Cyborg::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    Cyborg::currHP -= (enemy->get_enemy_atk() -  Cyborg::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
+         << " with a basic defense." << endl;
+  }
+}
+
+
+void Cyborg::performDefense(Human& attacker) {
+  if (attackStrategy) {
+    if (&attacker) {
+      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      Cyborg::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    Cyborg::currHP -= attacker.getAttack()-Cyborg::getDefense();
+    cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
 }

@@ -49,6 +49,8 @@ string username;
   };
   virtual void performAttack(Character& target) = 0;
   virtual void performDefense(Character& attacker) = 0;
+  virtual void performAttack(Human& target) = 0;
+  virtual void performDefense(Human& attacker) = 0;
   virtual string NameMaker() override;
   virtual void levelUp() override;
   virtual void takeDamage(double amount) override;

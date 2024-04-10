@@ -11,6 +11,10 @@ void Human::performAttack(Character& target) {}
 
 void Human::performDefense(Character& attacker) {}
 
+void Human::performAttack(Human& target) {};
+
+void Human::performDefense(Human& attacker) {};
+
 string Human::NameMaker() {
   return "";
 }

@@ -9,16 +9,26 @@
 class AssassinAttack : public AttackStrategy {
  public:
   AssassinAttack() : AttackStrategy(){};
-  double attackEnemy(Character* currCharacter, Enemy* currEnemy) {
+  double attackEnemy(Character* currCharacter, Enemy* currEnemy){
   // Assassins have very high attack but low defense
   return (3 * ( currCharacter->getLevel() * currCharacter->getAttack()) * (currCharacter->getMaxHP() 
          /currCharacter->getCurrentHP()) * (currCharacter->getAttack()  / currEnemy->get_enemy_def()));
 }
-  double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
+  double defenseEnemy(Character* currCharacter, Enemy* currEnemy){
   // Assassins have low defense
   return (0.5 *( currCharacter->getLevel() * currCharacter->getDefense()) * (currCharacter->getMaxHP() 
          /currCharacter->getCurrentHP()) * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
 }
+
+double attackOpponent(Human* currCharacter, Human* opponent){
+  // Assassins have very high attack but low defense
+  return (3 * ( currCharacter->getLevel() * currCharacter->getAttack()) * (currCharacter->getMaxHP() 
+         /currCharacter->getCurrentHP()) * (currCharacter->getAttack()  / opponent->getDefense()));}
+
+double defenseOpponent(Human* currCharacter, Human* opponent){       
+       // Assassins have low defense
+       return (0.5 *( currCharacter->getLevel() * currCharacter->getDefense()) * (currCharacter->getMaxHP() 
+               /currCharacter->getCurrentHP()) * ( currCharacter->getDefense()  / opponent->getAttack()));}
 };
 
 #endif  // ASSASSINATTACK_H

@@ -20,7 +20,9 @@ class AsianMom : public Human {
   ~AsianMom();
 
   void performAttack(Character& target) override;
+  void performAttack(Human& target) override;
   void performDefense(Character& attacker) override;
+  void performDefense(Human& attacker) override;
   virtual void levelUp() override;
   void AsianMomToFile(const string& username);
   void FileToAsianMom(const string& username);

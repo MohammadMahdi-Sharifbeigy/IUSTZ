@@ -19,6 +19,19 @@ class CyborgAttack : public AttackStrategy {
     return (3 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
   }
+
+
+  double attackOpponent(Human* currCharacter, Human* opponent) {
+    // Cyborgs have high attack due to their mechanical nature
+    return (4 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+              * ( currCharacter->getAttack() / opponent->getDefense()));
+  }
+
+  double defenseOpponent(Human* currCharacter, Human* opponent) {
+    // Cyborgs have high defense due to their armored body
+    return (3 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+              * ( currCharacter->getDefense() / opponent->getAttack()));
+  } 
 };
 
 #endif  // CYBORGATTACK_H

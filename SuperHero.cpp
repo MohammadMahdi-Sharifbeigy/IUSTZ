@@ -56,18 +56,57 @@ void SuperHero::performAttack(Character& target) {
   }
 }
 
-void SuperHero::performDefense(Character& attacker) {
+void SuperHero::performAttack(Human& target) {
   if (attackStrategy) {
-    if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      SuperHero::currHP -= damage;
+   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      double damage = attackStrategy->attackOpponent(this, &target);
+      // enemy->set_enemy_hp(damage);
+      target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
-    SuperHero::currHP -= SuperHero::getDefense();
+    cout << getName() << " attacks " << target.getName()
+         << " with a basic attack." << endl;
+    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      //enemy->set_enemy_hp(AsianMom::getAttack());
+      // enemy->takeDamage(AsianMom::getAttack());
+      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+    }
+  }
+}
+
+
+
+
+void SuperHero::performDefense(Character& attacker) {
+  Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
+  if (attackStrategy) {
+    if (enemy) {
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      SuperHero::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    SuperHero::currHP -= (enemy->get_enemy_atk() -  SuperHero::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
 }
+
+void SuperHero::performDefense(Human& attacker) {
+  if (attackStrategy) {
+    if (&attacker) {
+      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      SuperHero::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    SuperHero::currHP -= attacker.getAttack()-SuperHero::getDefense();
+    cout << getName() << " defends against " << attacker.getName()
+         << " with a basic defense." << endl;
+  }
+}
+
+
 
 void SuperHero::levelUp() {
   while (getCurrXP() >= getMaxXP()) {

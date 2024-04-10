@@ -20,6 +20,17 @@ class PaladinAttack : public AttackStrategy {
   return (3 *currCharacter->getLevel() * currCharacter->getDefense() * (currCharacter->getMaxHP() 
             /currCharacter->getCurrentHP()) * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
   }
+
+    double attackOpponent(Human* currCharacter, Human* opponent) {
+    // Asian Moms have moderate attack but high wisdom
+    return (currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getAttack() / opponent->getDefense() - 1));
+  }
+
+  double defenseOpponent(Human* currCharacter, Human* opponent) {
+    // Asian Moms have high defense due to their wisdom
+    return (currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getDefense() / opponent->getAttack() - 1));
+  }
+  
 };
 
 #endif  // PALADINATTACK_H

@@ -56,18 +56,58 @@ void Wizard::performAttack(Character& target) {
   }
 }
 
-void Wizard::performDefense(Character& attacker) {
+
+void Wizard::performAttack(Human& target) {
   if (attackStrategy) {
-    if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      Wizard::currHP -= damage;
+   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      double damage = attackStrategy->attackOpponent(this, &target);
+      // enemy->set_enemy_hp(damage);
+      target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
-    Wizard::currHP -= Wizard::getDefense();
+    cout << getName() << " attacks " << target.getName()
+         << " with a basic attack." << endl;
+    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      //enemy->set_enemy_hp(AsianMom::getAttack());
+      // enemy->takeDamage(AsianMom::getAttack());
+      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+    }
+  }
+}
+
+
+
+
+void Wizard::performDefense(Character& attacker) {
+  Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
+  if (attackStrategy) {
+    if (enemy) {
+      double damage = attackStrategy->defenseEnemy(this, enemy);
+      Wizard::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    Wizard::currHP -= (enemy->get_enemy_atk() -  Wizard::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
 }
+
+void Wizard::performDefense(Human& attacker) {
+  if (attackStrategy) {
+    if (&attacker) {
+      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      Wizard::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    Wizard::currHP -= attacker.getAttack()-Wizard::getDefense();
+    cout << getName() << " defends against " << attacker.getName()
+         << " with a basic defense." << endl;
+  }
+}
+
+
 
 void Wizard::levelUp() {
   while (getCurrXP() >= getMaxXP()) {

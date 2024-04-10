@@ -58,15 +58,48 @@ void Paladin::performAttack(Character& target) {
   }
 }
 
+void  Paladin::performAttack(Human& target) {
+  if (attackStrategy) {
+   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      double damage = attackStrategy->attackOpponent(this, &target);
+      // enemy->set_enemy_hp(damage);
+      target.setCurrentHP(target.getCurrentHP() - damage);
+    }
+  } else {
+    cout << getName() << " attacks " << target.getName()
+         << " with a basic attack." << endl;
+    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    if (&target) {
+      //enemy->set_enemy_hp(AsianMom::getAttack());
+      // enemy->takeDamage(AsianMom::getAttack());
+      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+    }
+  }
+}
+
 void Paladin::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
-      Paladin::currHP -= damage;
+      Paladin::currHP -= attacker.getAttack() - damage;
     }
   } else {
     Paladin::currHP -= Paladin::getDefense();
     cout << getName() << " defends against " << attacker.getcharType()
+         << " with a basic defense." << endl;
+  }
+}
+
+void Paladin::performDefense(Human& attacker) {
+  if (attackStrategy) {
+    if (&attacker) {
+      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      Paladin::currHP -= attacker.getAttack() - damage;
+    }
+  } else {
+    Paladin::currHP -= attacker.getAttack()-Paladin::getDefense();
+    cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
 }
