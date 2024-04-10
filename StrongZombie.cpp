@@ -9,10 +9,17 @@ StrongZombie::StrongZombie(int level) : Enemy(level) {
   Character::name = "Strong Zombie";
   role = STRONGZOMBIE;
   srand(time(NULL));
+  level++;
   maxHP = 3 * level + rand() % (5 * level / 2) + 100 ; // Stronger health
   currHP = maxHP;
   attack = 5 * level + rand() % (5 * level / 2); // Stronger attack
+  if (attack == 0) {
+      attack = 10.0;
+  }
   defense = 3 * level + rand() % (5 * level / 2); // Stronger defense
+  if (defense == 0) {
+     defense = 10.0;
+  }
   level = abs(level - 2 + rand() % 3) + 1; // Less variability in level
   giveExp = level * 15 * attack / defense; // More experience given
 }

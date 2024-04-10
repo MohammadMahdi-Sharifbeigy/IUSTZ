@@ -8,11 +8,18 @@ WeakZombie::WeakZombie() {}
 WeakZombie::WeakZombie(int level) : Enemy(level) {
   Character::name = "Weak Zombie";
   role = WEAKZOMBIE;
-  srand(time(NULL));
-  maxHP = level + rand() % (3 * level / 4); // Weaker health
+  srand(time(NULL));\
+  level ++;
+  maxHP = level + rand() % (3 * level / 4) + 100; // Weaker health
   currHP = maxHP;
   attack = 2 * level + rand() % (3 * level / 4); // Weaker attack
+  if (attack == 0) {
+      attack = 5.0;
+  }
   defense = level + rand() % (3 * level / 4); // Weaker defense
+  if (defense == 0) {
+     defense = 5.0;
+  }
   level = abs(level - 4 + rand() % 6) + 1; // More variability in level
   giveExp = level * 5 * attack / defense; // Less experience given
 }
