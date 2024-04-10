@@ -15,7 +15,8 @@ Enemy* EnemyFactory::createEnemy(characterType type, int level, Human *humanRef)
             return new StrongZombie(level);
         default:
             return nullptr;
-    }        
+    }     
+    return nullptr;   
 }
 
 Enemy* EnemyFactory::createEnemy(characterType type, int level,Human* human, Human *humanRef = nullptr){
@@ -32,4 +33,5 @@ Enemy* EnemyFactory::createEnemy(characterType type, int level,Human* human, Hum
         default:
             return nullptr;
     }
+    return nullptr;
 }

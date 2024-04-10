@@ -12,14 +12,6 @@
 
 using namespace std;
 
-static int getRandomNumber(int a, int b) {
-  random_device rd;
-  mt19937 eng(rd());
-  uniform_int_distribution<> distr(a, b);
-
-  return distr(eng);
-}
-
 class Enemy : public Character {
  public:
   Enemy() {}
@@ -50,13 +42,13 @@ class Enemy : public Character {
   };
 
   int getMaxHP() { return maxHP; }
-    
+
   int getCurrentHP() { return currHP; }
-    
-  void setMaxHP (int maxHP) {this->maxHP = maxHP ;}
-    
-  void setCurrentHP (int currHP) {this->currHP = currHP ;}
-    
+
+  void setMaxHP(int maxHP) { this->maxHP = maxHP; }
+
+  void setCurrentHP(int currHP) { this->currHP = currHP; }
+
   double get_enemy_atk() { return attack; }
 
   double get_enemy_def() { return defense; }
@@ -64,21 +56,21 @@ class Enemy : public Character {
   int get_enemy_lvl() { return level; }
 
   int get_enemy_exp() { return giveExp; }
-    
-  int get_enemy_coin() {return giveCoin;}
-    
-  void set_enemy_atk(int attack) {this->attack = attack;}
-    
-  void set_enemy_def(int defense) {this->defense = defense;}
-    
+
+  int get_enemy_coin() { return giveCoin; }
+
+  void set_enemy_atk(int attack) { this->attack = attack; }
+
+  void set_enemy_def(int defense) { this->defense = defense; }
+
   void set_enemy_hp(int value) { currHP -= value; }
-  
+
   characterType getcharType() const { return role; }
 
   characterType setRole(characterType newRole) { return newRole; }
 
   void levelUp() override {}
-  
+
   string NameMaker() override {
     string name = "Enemy";
     return name;

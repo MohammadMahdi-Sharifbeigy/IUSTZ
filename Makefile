@@ -4,12 +4,8 @@ UNAME_S := $(shell uname -s)
 # Define the compiler
 CXX = g++
 
-# Define base compile-time flags
+# Define compile-time flags
 CXXFLAGS = -std=c++17 -Wall
-
-# ncurses-specific files
-NCURSES_FILES = Login.cpp main.cpp
-NCURSES_OBJECTS = $(NCURSES_FILES:.cpp=.o)
 
 # Define the name of the executable
 ifeq ($(UNAME_S),Windows_NT)
@@ -18,33 +14,29 @@ else
     TARGET = game
 endif
 
-# Automatically find all cpp files in the current directory, excluding ncurses-specific files
-SOURCES = $(filter-out $(NCURSES_FILES), $(wildcard *.cpp))
+# Automatically find all cpp files in the current directory
+SOURCES = $(wildcard *.cpp)
 
-# Define object files for regular compilation
+# Define object files
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Default target
 all: $(TARGET)
 
 # Link the target with all objects
-$(TARGET): $(OBJECTS) $(NCURSES_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ -lncurses
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Compile each cpp file to an object file
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
-# Compile ncurses-specific cpp files to object files with -lncurses
-$(NCURSES_OBJECTS): %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -lncurses
-
 # Clean up the build
 clean:
 ifeq ($(UNAME_S),Windows_NT)
-	del /f $(TARGET) $(OBJECTS) $(NCURSES_OBJECTS)
+	del /f $(TARGET) $(OBJECTS)
 else
-	rm -f $(TARGET) $(OBJECTS) $(NCURSES_OBJECTS)
+	rm -f $(TARGET) $(OBJECTS)
 endif
 
 .PHONY: all clean
