@@ -8,25 +8,31 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall
 DEBUGFLAGS = -g -O0 -DDEBUG
 
-# ncurses-specific files
-NCURSES_FILES = Login.cpp main.cpp
-NCURSES_OBJECTS = $(NCURSES_FILES:.cpp=.o)
+# Define the path to the source files
+SRC_DIRS := Characters GameLoop Items Reports Fonts
+
+# Automatically find all cpp files in the specified subdirectories
+SOURCES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
+
+# Define the object files based on the source files
+OBJECTS := $(patsubst %.cpp,%.o,$(SOURCES))
 
 # Define the name of the executable
 ifeq ($(UNAME_S),Windows_NT)
     TARGET = game.exe
     DEBUGTARGET = game_debug.exe
+    # Use Windows-specific find command
+    SOURCES += $(shell dir /s /b *.cpp | findstr /v "Login.cpp main.cpp")
 else
     TARGET = game
     DEBUGTARGET = game_debug
+    # Use Unix-like find command
+    SOURCES += $(shell find . -name '*.cpp' ! -name 'Login.cpp' ! -name 'main.cpp')
 endif
 
-# Automatically find all cpp files in the current directory, excluding ncurses-specific files
-SOURCES = $(filter-out $(NCURSES_FILES), $(wildcard *.cpp))
-
-# Define object files for regular compilation
-OBJECTS = $(SOURCES:.cpp=.o)
-DEBUGOBJECTS = $(SOURCES:.cpp=.debug.o)
+# ncurses-specific files
+NCURSES_FILES := GameLoop/Login.cpp
+NCURSES_OBJECTS := $(NCURSES_FILES:.cpp=.o)
 
 # Default target
 all: $(TARGET)
@@ -44,15 +50,11 @@ $(DEBUGTARGET): $(DEBUGOBJECTS) $(NCURSES_OBJECTS)
 
 # Compile each cpp file to an object file
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-# Compile each cpp file to a debug object file
-%.debug.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Compile ncurses-specific cpp files to object files
 $(NCURSES_OBJECTS): %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean up the build
 clean:

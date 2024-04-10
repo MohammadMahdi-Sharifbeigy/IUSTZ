@@ -5,18 +5,16 @@
 #include <limits>
 #include <vector>
 #include <SFML/Audio.hpp>
-#include "Character.h"
-#include "CharacterType.h"
-#include "Enemy.h"
-#include "GameState.h"
-#include "HealingPotion.h"
-#include "Login.cpp"
-#include "Paladin.h"
-#include "Shop.h"
-#include "Sword.h"
-#include "Zombie.h"
-//#include "font.h"
-// #include "ASCIIArt/ASCIIArts.h"
+#include "Characters/Character.h"
+#include "Characters/CharacterType.h"
+#include "Characters/Enemies/Enemy.h"
+#include "GameLoop/GameState.h"
+#include "Items/HealingPotion.h"
+#include "GameLoop/Login.cpp"
+#include "Characters/Humans/Paladin.h"
+#include "GameLoop/Shop.h"
+#include "Items/Sword.h"
+#include "Characters/Enemies/Zombie.h"
 
 #ifdef _WIN32
 #include <conio.h>
