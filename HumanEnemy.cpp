@@ -270,7 +270,7 @@ bool HumanEnemyModel::useHealingPotion() {
          << " points." << endl;
     cout << "Enemy's current HP: " << getCurrentHP() + ((getMaxHP() * 10) / 100)
          << endl;
-    removeInventory(index);
+    removeInventory(index+1);
     return true;
   }
   return false;
@@ -286,7 +286,7 @@ bool HumanEnemyModel::useAttackPotion() {
     set_enemy_atk(get_enemy_atk() + ((get_enemy_atk() * 20) / 100));
     cout << "Enemy's attack has increased by " << (get_enemy_atk() * 20) / 100
          << " points." << endl;
-    removeInventory(index);
+    removeInventory(index+1);
     this->haveUsedAtkP = true;
     return true;
   }
@@ -303,7 +303,7 @@ bool HumanEnemyModel::useDefensePotion() {
     set_enemy_def(get_enemy_def() + ((get_enemy_def() * 20) / 100));
     cout << "Enemy's defense has increased by " << (get_enemy_def() * 20) / 100
          << " points." << endl;
-    removeInventory(index);
+    removeInventory(index+1);
     this->haveUsedDefP = true;
     return true;
   }
