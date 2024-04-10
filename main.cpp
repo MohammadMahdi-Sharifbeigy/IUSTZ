@@ -264,11 +264,7 @@ void enemyAttack(Enemy* enemy, Human* player) {
       " unleashes a barrage of bites and scratches, relentless in its "
       "pursuit!"};
   int msgIndex = rand() % (sizeof(attackMessages) / sizeof(attackMessages[0]));
-  double damage =
-      enemy->getAttack();  // Assuming getAttack() returns the damage value
-  player->takeDamage(
-      damage);  // Simulate the player taking damage from the zombie
-
+  double damage = enemy->get_enemy_atk();
   cout << "The " << enemy->getName() << attackMessages[msgIndex] << " "
        << player->getName() << " suffers " << damage << " damage!" << endl
        << endl;
@@ -477,7 +473,7 @@ void combat(Human* player, Enemy* enemy) {
     }
 
     // Enemy's turn to attack
-    if (enemy->getRole() != characterType::WEAKZOMBIE ||
+    if (enemy->getRole() != characterType::WEAKZOMBIE &&
         enemy->getRole() != characterType::STRONGZOMBIE) {
       dynamic_cast<HumanEnemyModel*>(enemy)->Update(*player);
     } else {

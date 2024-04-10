@@ -31,7 +31,7 @@ class Enemy : public Character {
   int level;
   int giveExp;
   int giveCoin;
-  characterType role;
+  // characterType role;
 
  public:
   virtual void takeDamage(double amount) override {
@@ -65,9 +65,9 @@ class Enemy : public Character {
 
   void set_enemy_hp(int value) { currHP -= value; }
 
-  characterType getcharType() const { return role; }
+  // characterType getcharType() const { return role; }
 
-  characterType setRole(characterType newRole) { return newRole; }
+  // characterType setRole(characterType newRole) { return newRole; }
 
   void levelUp() override {}
 

@@ -8,10 +8,10 @@
 
 // Utility function for generating a random number within a range
 static int getRandomNumber(int min, int max) {
-    std::random_device rd;
-    std::mt19937 eng(rd());
-    std::uniform_int_distribution<> distr(min, max);
-    return distr(eng);
+  std::random_device rd;
+  std::mt19937 eng(rd());
+  std::uniform_int_distribution<> distr(min, max);
+  return distr(eng);
 }
 
 static void enemyAttack(Enemy* enemy, Human* player, int damage) {
@@ -24,7 +24,7 @@ static void enemyAttack(Enemy* enemy, Human* player, int damage) {
       " unleashes a barrage of bites and scratches, relentless in its "
       "pursuit!"};
   int msgIndex = rand() % (sizeof(attackMessages) / sizeof(attackMessages[0]));
-  player->takeDamage(damage);  
+  player->takeDamage(damage);
 
   cout << "The " << enemy->getName() << attackMessages[msgIndex] << " "
        << player->getName() << " suffers " << damage << " damage!" << endl
@@ -32,47 +32,52 @@ static void enemyAttack(Enemy* enemy, Human* player, int damage) {
 }
 
 HumanEnemyModel::HumanEnemyModel(int level, Human& human)
-    : Enemy(level), human(human), state(State::ATTACK), haveUsedAtkP(false), haveUsedDefP(false) {
-    srand(static_cast<unsigned int>(time(nullptr)));
-    attackStrategy = new HumanEnemyAttack(); 
-    Character::name = "Human Enemy";
-    level = abs(level + rand() % 4) + 1;
-    int ran = (rand() % (5 * level / 4));
-    maxHP = 2 * level + ran + 100;
-    currHP = maxHP;
-    attack = 4 * level + ran;
-    defense = 2 * level + ran;
-    role = getRandomRole();  // Set role randomly
-    haveUsedAtkP = false;
-    haveUsedDefP = false;
-    Human* hum =
+    : Enemy(level),
+      human(human),
+      state(State::ATTACK),
+      haveUsedAtkP(false),
+      haveUsedDefP(false) {
+  srand(static_cast<unsigned int>(time(nullptr)));
+  attackStrategy = new HumanEnemyAttack();
+  Character::name = "Human Enemy";
+  level = abs(level + rand() % 4) + 1;
+  int ran = (rand() % (5 * level / 4));
+  maxHP = 2 * level + ran + 100;
+  currHP = maxHP;
+  attack = 4 * level + ran;
+  defense = 2 * level + ran;
+  role = getRandomRole();  // Set role randomly
+  haveUsedAtkP = false;
+  haveUsedDefP = false;
+  Human* hum =
       new Paladin("name", 1, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
-    int random = getRandomNumber(1, 6);
-    Item* armor = ItemFactory::createItem(random, hum, true);
-    this->addInventory(armor);
-    random = getRandomNumber(8, 19);
-    Item* weapon = ItemFactory::createItem(random, hum, true);
-    this->addInventory(weapon);
-    random = getRandomNumber(22, 27);
-    Item* throwable = ItemFactory::createItem(random, hum, true);
-    this->addInventory(throwable, 10);
-    random = getRandomNumber(30, 31);
-    Item* potion = ItemFactory::createItem(random, hum, true);
-    this->addInventory(potion);
-    Item* healingPotion = ItemFactory::createItem(29, hum, true);
-    random = getRandomNumber(1, 2);
-    this->addInventory(healingPotion, random);
+  int random = getRandomNumber(1, 6);
+  Item* armor = ItemFactory::createItem(random, hum, true);
+  this->addInventory(armor);
+  random = getRandomNumber(8, 19);
+  Item* weapon = ItemFactory::createItem(random, hum, true);
+  this->addInventory(weapon);
+  random = getRandomNumber(22, 27);
+  Item* throwable = ItemFactory::createItem(random, hum, true);
+  this->addInventory(throwable, 10);
+  random = getRandomNumber(30, 31);
+  Item* potion = ItemFactory::createItem(random, hum, true);
+  this->addInventory(potion);
+  Item* healingPotion = ItemFactory::createItem(29, hum, true);
+  random = getRandomNumber(1, 2);
+  this->addInventory(healingPotion, random);
 }
 
 HumanEnemyModel::~HumanEnemyModel() {
-    delete attackStrategy;
-    for (auto* item : inventory) {
-        delete item;
-    }
+  delete attackStrategy;
+  for (auto* item : inventory) {
+    delete item;
+  }
 }
 
 characterType HumanEnemyModel::getRandomRole() {
-    return static_cast<characterType>(getRandomNumber(0, static_cast<int>(characterType::WIZARD)));
+  return static_cast<characterType>(
+      getRandomNumber(0, static_cast<int>(characterType::WIZARD)));
 }
 
 int HumanEnemyModel::inventorySize() {
@@ -270,7 +275,7 @@ bool HumanEnemyModel::useHealingPotion() {
          << " points." << endl;
     cout << "Enemy's current HP: " << getCurrentHP() + ((getMaxHP() * 10) / 100)
          << endl;
-    removeInventory(index+1);
+    removeInventory(index + 1);
     return true;
   }
   return false;
@@ -286,7 +291,7 @@ bool HumanEnemyModel::useAttackPotion() {
     set_enemy_atk(get_enemy_atk() + ((get_enemy_atk() * 20) / 100));
     cout << "Enemy's attack has increased by " << (get_enemy_atk() * 20) / 100
          << " points." << endl;
-    removeInventory(index+1);
+    removeInventory(index + 1);
     this->haveUsedAtkP = true;
     return true;
   }
@@ -303,7 +308,7 @@ bool HumanEnemyModel::useDefensePotion() {
     set_enemy_def(get_enemy_def() + ((get_enemy_def() * 20) / 100));
     cout << "Enemy's defense has increased by " << (get_enemy_def() * 20) / 100
          << " points." << endl;
-    removeInventory(index+1);
+    removeInventory(index + 1);
     this->haveUsedDefP = true;
     return true;
   }
@@ -415,47 +420,55 @@ void HumanEnemyModel::Update(Human& target) {
   setStateBasedOnHP();
   switch (this->state) {
     case State::ATTACK: {
-      int random = rand() % 4;
-      if (random == 0) {
-        defInUpdate(target, true);
-
+      if (target.getState() == State::NEARDEATH) {
+        atkInUpdate(target, false);
       } else {
-        atkInUpdate(target, true);
+        int random = rand() % 4;
+        if (random == 0) {
+          defInUpdate(target, true);
+
+        } else {
+          atkInUpdate(target, true);
+        }
+        setStateBasedOnHP();
       }
-      setStateBasedOnHP();
       break;
     }
     case State::DEFENSE: {
       bool atk = useAttackPotion();
       bool def = useDefensePotion();
-      if (!atk && !def) {
-        int random = rand() % 5;
-        if (this->haveUsedAtkP) {
-          if (random == 0 || random == 1) {
-            defInUpdate(target, false);
+      if (target.getState() == State::NEARDEATH) {
+        atkInUpdate(target, false);
+      } else {
+        if (!atk && !def) {
+          int random = rand() % 5;
+          if (this->haveUsedAtkP) {
+            if (random == 0 || random == 1) {
+              defInUpdate(target, false);
+
+            } else {
+              atkInUpdate(target, true);
+            }
+
+          } else if (this->haveUsedDefP) {
+            if (random == 0 || random == 1) {
+              atkInUpdate(target, false);
+
+            } else {
+              defInUpdate(target, true);
+            }
 
           } else {
-            atkInUpdate(target, true);
-          }
+            if (random == 0 || random == 1) {
+              atkInUpdate(target, false);
 
-        } else if (this->haveUsedDefP) {
-          if (random == 0 || random == 1) {
-            atkInUpdate(target, false);
-
-          } else {
-            defInUpdate(target, true);
-          }
-
-        } else {
-          if (random == 0 || random == 1) {
-            atkInUpdate(target, false);
-
-          } else {
-            defInUpdate(target, false);
+            } else {
+              defInUpdate(target, false);
+            }
           }
         }
+        setStateBasedOnHP();
       }
-      setStateBasedOnHP();
       break;
     }
     case State::NEARDEATH: {
