@@ -512,7 +512,7 @@ void explore(GameState& gameState) {
                             characterType::STRONGZOMBIE,
                             characterType::HUMANENEMY};
   characterType type = types[rand() % 3];
-  Enemy* enemy = EnemyFactory::createEnemy(type, player->getLevel(), player);
+  Enemy* enemy = EnemyFactory::createEnemy(type, player->getLevel(), player, nullptr);
   Item* potion = new HealingPotion("Elixir of Healing", 50.0, false, 50.0, 1);
   switch (event) {
     case 0:
