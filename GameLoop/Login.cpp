@@ -8,9 +8,9 @@
 using namespace std;
 
 static Human* Login(){
-     // Load an audio file
+          // Load an audio file
     sf::SoundBuffer WelcomeBuffer;
-    if (!WelcomeBuffer.loadFromFile("GameLoop/Welcome.wav")) {
+    if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
         std::cerr << "Could not load the Welcome audio file!" << std::endl;
     }
 
@@ -18,13 +18,11 @@ static Human* Login(){
     sf::Sound WelcomeSound;
     WelcomeSound.setBuffer(WelcomeBuffer);
     WelcomeSound.play();
-
+    cout  << Wellcome1 << endl;
     // Wait until the sound is finished
     while (WelcomeSound.getStatus() == sf::Sound::Playing) {
         // Keep the program running until the sound has finished playing
-        //
-        cout  << Wellcome1 << endl;
-        sf::sleep(sf::milliseconds(5000));
+        sf::sleep(sf::milliseconds(100));
     }
 
      cout<<"***Welcome to our game***"<<endl;
@@ -49,6 +47,7 @@ static Human* Login(){
         cout<<"Enter your name: "<<endl;
         string username;
         cin>>username;
+        cout << "\033[2J\033[1;1H";
         cout<<"Now , let's answer some questions !"<<endl<<endl;
         vector<question> ques;
         question ques1 , ques2, ques3 , ques4 , ques5 , ques6 , ques7 , ques8 , ques9 , ques10;
@@ -177,11 +176,11 @@ static Human* Login(){
                 maxin.push_back(i);
             }
         }
-        int random = rand() % maxin.size();
-        maxindex = maxin[random];
+          cout << "\033[2J\033[1;1H";
+          
             // Load an audio file
         sf::SoundBuffer MagicBuffer;
-        if (!MagicBuffer.loadFromFile("GameLoop/Magic2.wav")) {
+        if (!MagicBuffer.loadFromFile("Magic2.wav")) {
             std::cerr << "Could not load the Magic audio file!" << std::endl;
         }
 
@@ -194,35 +193,190 @@ static Human* Login(){
         while (MagicSound.getStatus() == sf::Sound::Playing) {
         // Keep the program running until the sound has finished playing
         sf::sleep(sf::milliseconds(100));
-
-    }
+    } 
+         
+        int random = rand() % maxin.size();
+        maxindex = maxin[random];
 
         if(maxindex == 0){
-            cout<<"We recommend you to choose <Paladin> as your character based on your personality!"<<endl;
-            cout<<"But you are free to choose any character you want!"<<endl;
+            cout<< 
+R"(
+We recommend you to choose <Paladin> as your character based on your personality!
+ But you are free to choose any character you want!         .  ,   A           {}
+                                                            . / \, | ,        .--.
+                                                            .|    =|= >      /.--.\
+                                                            . \ /` | `       |====|
+                                                            .  `   |         |`::`|
+                                                            .      |     .-;`\..../`;_.-^-._
+ ***CHARACHTERS***                                          .     /\\/  /  |...::..|`   :   `|
+                                                            .     |:'\ |   /'''::''|   .:.   |
+1. Paladin                                                  .      \ /\;-,/\   ::  |..:::::..|
+2. Assassin                                                 .      |\ <` >  >._::_.| ':::::' |
+3. SuprHero                                                 .      | `""`  /   ^^  |   ':'   |
+4. Sniper                                                   .      |       |       \    :    /
+5. Wizard                                                   .      |       |        \   :   /
+6. Cyborg                                                   .      |       |___/\___|`-.:.-`
+7. Asian Mom"                                               .      |        \_ || _/    `
+Enter your choice:                                          .      |        <_ >< _>
+                                                            .      |        |  ||  |
+                                                            .      |        |  ||  |
+                                                            .      |       _\.:||:./_
+                                                            .      |      /____/\____\  )" << endl;
         }else if(maxindex == 1){
-            cout<<"We recommend you to choose <Assassin> as your character based on your personality!"<<endl;
-            cout<<"But you are free to choose any character you want!"<<endl;
+            cout<<
+R"(
+We recommend you to choose <Assassin> as your character based on your personality!
+ But you are free to choose any character you want!         .                       _
+                                                            .                       \`\
+                                                            .                        \ \                     
+                                                            .                         \.\
+                                                            .                          \.\  
+                                                            .                 _         \.\/)
+                                                            .            _ _-' ')__     (\.\/)
+                                                            .           /       /  \.'`'-\/)\\
+ ***CHARACHTERS***                                          .           \__ ,.-'(_  Y    (_\.\)
+                                                            .            / <     ,\  \    ,\\.\\
+1. Paladin                                                  .            \_ \ _. /y(_|    : |\.\|
+2. Assassin                                                 .                _\_\\   |    : | \.\
+3. SuprHero                                                 .            (   `'-._>/ )     \|  \.\
+4. Sniper                                                   .            \         `:=.    (\   \.\
+5. Wizard                                                   .             \_      (    `--._)`--'\.\=7
+6. Cyborg                                                   .            _/|\_    \-._     `-:_ /```-3    
+7. Asian Mom"                                               .           /  |  `-   \  t--._    Y    _3 
+                                                            .        ,-'   |       /  |   /``'-.\--T x\
+Enter your choice:                                          .      _/     _(    ,./  /   (          \ x\
+                                                            .         _.-/  \  /    <     \          \ x\
+                                                            .      <`'  /   |\/      `-.   :          \_x\
+                                                            .       \  /    |           `. |
+                                                            .        \_|    /             `                                                                                                   
+                                                            .          |   /                `.
+                                                            .         /  _/\                /     )" << endl;
         }else if(maxindex == 2){
-            cout<<"We recommend you to choose <SuperHero> as your character based on your personality!"<<endl;
-            cout<<"But you are free to choose any character you want!"<<endl;
+           cout <<  
+R"(
+                                                            .                    ,,,,                       
+We recommend you to choose <SuperHero> as your character    .              ,;) .';;;;',                     
+based on your personality!                                  .  ;;,,_,-.-.,;;'_,(|);;;/),,_                  
+But you are free to choose any character you want!          .   `';;/:|:);{ ;;;|| );/ /;;;[__               
+                                                            .      L;/-';/ {;;[',/;[/;;;.') ]              
+                                                            .       .:`''` - {;;'.__/;;;/  . _'-._          
+***CHARACHTERS***                                           .     .'/   (     {;NULL;/.'_7:.  '). ]_        
+                                                            .   .''/     ( '._ );}{;//.'    '-:  '.,L      
+1. Paladin                                                  . .'. /       (  ( |;;;/_/         (._./;]   _, 
+2. Assassin                                                 .  . /        |( ( /;;/_/             ';;;],;;_,
+3. SuprHero                                                 . . /         )__(/;;/_/                (;;'''''
+4. Sniper                                                   .  /        _;:':;;;;:';-._             );      
+5. Wizard                                                   . /        /   (  `'`   --.'-._          V     
+6. Cyborg                                                   .        .'     '.  ,'         '-,              
+7. Asian Mom"                                               .       /    /   r--,..__       '.]             
+                                                            .     .'    '  .'        '--._     ]            
+                                                            .     (     :.(;>        _ .' '- ;/             
+                                                            .     |      /:;(    ,_.';(   __.'              
+Enter your choice:                                          .      '- -''|;:/    (;;;;-'--'                 
+                                                            .            |;/      ;;(                       
+                                                            .            ''      /;;|                      
+                                                            .                    (;;|                     
+                                                            .                      V                        )" << endl ;
         }else if(maxindex == 3){
-            cout<<"We recommend you to choose <Sniper> as your character based on your personality!"<<endl;
-            cout<<"But you are free to choose any character you want!"<<endl;
+            cout<<
+R"(
+We recommend you to choose <Sniper> as your character       .      |\              
+based on your personality!                                  .      || .---.       
+                                                            .      ||/_____\         
+                                                            .      ||(== ==)       
+But you are free to choose any character you want!          .      || \_-_/_        
+                                                            .      :-"`'V'//-.       
+***CHARACHTERS***                                           .     / ,   |// , `\   
+                                                            .    / /NULL//Ll|| |  
+1. Paladin                                                  .   /_/||__//   || |  
+2. Assassin                                                 .   \ \/---|[]==|| |  
+3. SuprHero                                                 .    \/\__/ |   \| | 
+4. Sniper                                                   .    /\|_   | Ll_\ |  
+5. Wizard                                                   .    `--|`^"""^`||_|   
+6. Cyborg                                                   .       |   |   ||/     
+7. Asian Mom"                                               .       |   |   | 
+                                                            .       |   |   |     
+Enter your choice:                                          .       |   |   |       
+                                                            .       L___l___J       
+                                                            .        |_ | _|       
+                                                            .       (___|___)    
+                                                            .        ^^^ ^^^           )"<<endl;
         }else if(maxindex == 4){
-            cout<<"We recommend you to choose <Wizard> as your character based on your personality!"<<endl;
-            cout<<"But you are free to choose any character you want!"<<endl;
+            cout << 
+R"(
+We recommend you to choose <Wizard> as your character   .                    ____
+based on your personality!                              .                  .'* *.'
+But you are free to choose any character you want!      .               __/_*_*(_
+                                                        .              / _______ \
+                                                        .            _\_)/&__&\(_/_
+                                                        .            / _((\- -/))_ \
+                                                        .            \ \())(-)(()/ /
+***CHARACHTERS***                                       .             ' \(((()))/ '
+                                                        .            / ' \)).))/  ' \
+1. Paladin                                              .           / _ \ - | -  /_  \
+2. Assassin                                             .          (   ( .;''';.  .'  )
+3. SuprHero                                             .          _\"__ /      \ __"/_
+4. Sniper                                               .            \/  \ NULL /  \/
+5. Wizard                                               .             .'  '... ' ' )
+6. Cyborg                                               .              / /  |  \ \
+7. Asian Mom"                                           .             / .   .   . \
+                                                        .            /   .     .   \
+                                                        .           /   /   |   \   \
+                                                        .         .'   /    b    '.  '.
+Enter your choice:                                      .     _.-'    /     Bb     '-. '-._
+                                                        . _.-'       |      BBb       '-.  '-.
+                                                        .(________mrf\____.dBBBb.________)____)   )" << endl ;
         }else if(maxindex == 5){
-            cout<<"We recommend you to choose <Cyborg> as your character based on your personality!"<<endl;
-            cout<<"But you are free to choose any character you want!"<<endl;
+            cout<< 
+R"(
+                                                        .              _____
+We recommend you to choose <Cyborg> as your character   .             X_____\
+based on your personality!                              .     .-^-.  ||_| |_||  .-^-.
+But you are free to choose any character you want!      .    /_\_/_\_|  |_|  |_/_\_/_\
+                                                        .    ||(_)| __\_____/__ |(_)||
+                                                        .    \/| | |::|\```/|::| | |\/
+***CHARACHTERS***                                       .    /`--- |::|'NULL'|:: |_---'\
+                                                        .   / /  \ |::|-|-|-|::| /  \ \
+1. Paladin                                              .  /_/   /|`--'-+-+-`--'|\   \_\
+2. Assassin                                             .  | \  / |===/_\ /_\===| \  / |
+3. SuprHero                                             .  |  \/  /---/-/-\-\  o\  \/  |
+4. Sniper                                               .  | ||| | O / /   \ \   | ||| |
+5. Wizard                                               .  | ||| ||----\ | /----|o|||| |
+6. Cyborg                                               .  \/|\/  |     |||     |o|\/|\/
+7. Asian Mom"                                           .  \_o/   |----|||||----|-' \o_/
+                                                        .         |##  |   |  ##|
+                                                        .         ||__ |   | __||
+                                                        .        [|'  `|] [|'  `|]
+                                                        .        [|`--'|] [|`--'|]
+                                                        .        /|__| |\ /| |__|\
+Enter your choice:                                      .        ||__|_|| ||_|__||
+                                                        .        \|----|/ \|----|/    
+                                                        .        /______\ /______\
+                                                        .        |__||__| |__||__|          )" << endl ;
         }else{
-            cout<<"We recommend you to choose <Asian Mom> as your character based on your personality!"<<endl;
-            cout<<"But you are free to choose any character you want!"<<endl;
+            cout<<""<<endl;
+            cout << R"(
+We recommend you to choose <Asian Mom> as your character.        w*W*W*W*w
+based on your personality!                              .         \"."."/
+                                                        .          //`\\
+                                                        .         (/a a\)
+But you are free to choose any character you want!      .         (\_-_/) 
+                                                        .        .-~'='~-.
+ ***CHARACHTERS***                                      .       /`~`"Y"`~`\
+                                                        .      / /(_ * _)\ \
+1. Paladin                                              .     / /  )   (  \ \
+2. Assassin                                             .     \ \_/\\_//\_/ / 
+3. SuprHero                                             .      \/_) '*' (_\/
+4. Sniper                                               .        |       |
+5. Wizard                                               .        |       |
+6. Cyborg                                               .        |       |
+7. Asian Mom"                                           .        |       |
+                                                        .        |       |
+Enter your choice:                                      .        |       |
+                                                        .        |       |
+                                                        .        |       |
+                                                        .        w*W*W*W*w     )" << endl ;
         }
-        
-        cout<< "***CHARACHTERS***"<<endl;
-        cout<< "1. Paladin" <<endl << "2. Assassin" << endl << "3. SuprHero"<< endl << "4. Sniper" << endl << "5. Wizard" <<endl << "6. Cyborg" << endl << "7. Asian Mom" << endl;
-        cout<<"Enter your choice: "<<endl;
         try{
             cin>>schoice;
             if(check_number(schoice)==0 || stoi(schoice)<1 ||stoi(schoice)>7){
