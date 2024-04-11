@@ -367,7 +367,7 @@ void explore(GameState& gameState, WINDOW* combat_win) {
 
    // Load an audio file
     sf::SoundBuffer ExploreBuffer;
-    if (!ExploreBuffer.loadFromFile("secret-world.wav")) {
+    if (!ExploreBuffer.loadFromFile("GameLoop/secret-world.wav")) {
         std::cerr << "Could not load the Explore audio file!" << std::endl;
     }
     // Create a sound object and play it

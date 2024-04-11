@@ -5,6 +5,8 @@
 #include <string.h>
 #include <filesystem>
 
+using namespace std;
+
 bool is_empty(ifstream &pFile);
 
 inline bool exists_test (const std::string& name);

@@ -1,10 +1,10 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include "State.h"
+#include "../State.h"
 #include "HumanEnemy.h"
 #include "../Humans/Paladin.h"
-#include "../Fonts/font.h"
+#include "../../Fonts/font.h"
 
 // Model
 HumanEnemyModel::HumanEnemyModel(int level, Human& humanRef) : Enemy(level), humanRef(humanRef) {

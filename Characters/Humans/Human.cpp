@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "Human.h"
-#include "../Items/Item.h"
+#include "../../Items/Item.h"
 
 using namespace std;
 

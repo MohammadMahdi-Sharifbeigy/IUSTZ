@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include "Enemy.h"
 #include "EnemyFactory.h"
-#include "../Fonts/font.h"
+#include "../../Fonts/font.h"
 #include "../Humans/Human.h"
 #include "../Character.h"
 #include "../CharacterType.h"

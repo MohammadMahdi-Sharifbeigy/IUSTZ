@@ -1,3 +1,5 @@
+#ifndef FONT_H
+#define FONT_H
 #include <string>
 using namespace std;
 const string You_Died = R"(
@@ -437,3 +439,5 @@ R"(
  
 
 )";
+
+#endif

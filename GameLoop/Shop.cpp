@@ -325,7 +325,7 @@ void Shop::buyItemWithCountLimit(int choice,
   }
 
    sf::SoundBuffer BuyBuffer;
-    if (!BuyBuffer.loadFromFile("Buy.wav")) {
+    if (!BuyBuffer.loadFromFile("GameLoop/Buy.wav")) {
         std::cerr << "Could not load the Buy audio file!" << std::endl;
     }
 
@@ -360,7 +360,7 @@ void Shop::buy(int choice, Human* human) {
     human->setCoin(human->getCoin() - item->getPrice());
      // Load an audio file
     sf::SoundBuffer BuyBuffer;
-    if (!BuyBuffer.loadFromFile("Buy.wav")) {
+    if (!BuyBuffer.loadFromFile("GameLoop/Buy.wav")) {
         std::cerr << "Could not load the Buy audio file!" << std::endl;
     }
 
@@ -455,7 +455,7 @@ void Shop::sell(Human* human) {
 
               // Load an audio file
       sf::SoundBuffer SellBuffer;
-      if (!SellBuffer.loadFromFile("coin.wav")) {
+      if (!SellBuffer.loadFromFile("GameLoop/coin.wav")) {
           std::cerr << "Could not load the Sell audio file!" << std::endl;
       }
 
@@ -479,7 +479,7 @@ void Shop::sell(Human* human) {
         Item* item = human->itemsAt(index);
                   // Load an audio file
       sf::SoundBuffer SellBuffer;
-      if (!SellBuffer.loadFromFile("coin.wav")) {
+      if (!SellBuffer.loadFromFile("GameLoop/coin.wav")) {
           std::cerr << "Could not load the Sell audio file!" << std::endl;
       }
 

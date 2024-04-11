@@ -10,7 +10,7 @@ using namespace std;
 static Human* Login(){
      // Load an audio file
     sf::SoundBuffer WelcomeBuffer;
-    if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
+    if (!WelcomeBuffer.loadFromFile("GameLoop/Welcome.wav")) {
         std::cerr << "Could not load the Welcome audio file!" << std::endl;
     }
 
@@ -181,7 +181,7 @@ static Human* Login(){
         maxindex = maxin[random];
             // Load an audio file
         sf::SoundBuffer MagicBuffer;
-        if (!MagicBuffer.loadFromFile("Magic2.wav")) {
+        if (!MagicBuffer.loadFromFile("GameLoop/Magic2.wav")) {
             std::cerr << "Could not load the Magic audio file!" << std::endl;
         }
 

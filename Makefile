@@ -5,34 +5,27 @@ UNAME_S := $(shell uname -s)
 CXX = g++
 
 # Define base compile-time flags
-CXXFLAGS = -std=c++17 -Wall
+CXXFLAGS := -std=c++17 -Wall $(shell pkg-config --cflags sfml-all)
 DEBUGFLAGS = -g -O0 -DDEBUG
 
-# Define the path to the source files
-SRC_DIRS := Characters GameLoop Items Reports Fonts
+# Library flags and libraries
+LDFLAGS := $(shell pkg-config --libs sfml-all)
+LDFLAGS += -lncurses
 
-# Automatically find all cpp files in the specified subdirectories
-SOURCES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
-
-# Define the object files based on the source files
-OBJECTS := $(patsubst %.cpp,%.o,$(SOURCES))
+# Define the path to the source files and include the root directory
+# Automatically find all cpp files in the project
+SOURCES := $(shell find . -name '*.cpp')
+OBJECTS := $(SOURCES:.cpp=.o)
+DEBUGOBJECTS := $(SOURCES:.cpp=_debug.o)
 
 # Define the name of the executable
 ifeq ($(UNAME_S),Windows_NT)
     TARGET = game.exe
     DEBUGTARGET = game_debug.exe
-    # Use Windows-specific find command
-    SOURCES += $(shell dir /s /b *.cpp | findstr /v "Login.cpp main.cpp")
 else
     TARGET = game
     DEBUGTARGET = game_debug
-    # Use Unix-like find command
-    SOURCES += $(shell find . -name '*.cpp' ! -name 'Login.cpp' ! -name 'main.cpp')
 endif
-
-# ncurses-specific files
-NCURSES_FILES := GameLoop/Login.cpp
-NCURSES_OBJECTS := $(NCURSES_FILES:.cpp=.o)
 
 # Default target
 all: $(TARGET)
@@ -41,27 +34,27 @@ all: $(TARGET)
 debug: $(DEBUGTARGET)
 
 # Link the target with all objects
-$(TARGET): $(OBJECTS) $(NCURSES_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ -lncurses -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+$(TARGET): $(OBJECTS)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
 # Link the debug target with all debug objects
-$(DEBUGTARGET): $(DEBUGOBJECTS) $(NCURSES_OBJECTS)
-	$(CXX) $(DEBUGFLAGS) -o $@ $^ -lncurses -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+$(DEBUGTARGET): $(DEBUGOBJECTS)
+	$(CXX) $(DEBUGFLAGS) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
 # Compile each cpp file to an object file
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Compile ncurses-specific cpp files to object files
-$(NCURSES_OBJECTS): %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Compile debug objects
+%_debug.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $@
 
 # Clean up the build
 clean:
 ifeq ($(UNAME_S),Windows_NT)
-	del /f $(TARGET) $(DEBUGTARGET) $(OBJECTS) $(DEBUGOBJECTS) $(NCURSES_OBJECTS)
+	del /f $(TARGET) $(DEBUGTARGET) $(OBJECTS) $(DEBUGOBJECTS)
 else
-	rm -f $(TARGET) $(DEBUGTARGET) $(OBJECTS) $(DEBUGOBJECTS) $(NCURSES_OBJECTS)
+	rm -f $(TARGET) $(DEBUGTARGET) $(OBJECTS) $(DEBUGOBJECTS)
 endif
 
 .PHONY: all clean debug
