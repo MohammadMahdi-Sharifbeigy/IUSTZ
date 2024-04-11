@@ -21,8 +21,8 @@ class Human : public Character {
   double mind;
   int coin;
     State state;
-  Item* armor;
-  Item* weapon;
+  Item* armor = nullptr;
+  Item* weapon = nullptr;
   vector<Item*> inventory;
 
  public:
