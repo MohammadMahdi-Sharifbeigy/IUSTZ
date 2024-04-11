@@ -14,6 +14,19 @@ static int getRandomNumber(int min, int max) {
   return distr(eng);
 }
 
+int AttachSynergy(Item* item){
+  int Synergy;
+  if (item->getID() > 0 || item->getID() < 22) {
+    Passive* itemType  = dynamic_cast<Passive*>(item);
+    Synergy = itemType->getSynergyDamage();
+  }
+  else if (item->getID() > 29 || item->getID() < 38) {
+    Throwable* itemType  = dynamic_cast<Throwable*>(item);
+    Synergy = itemType->getSynergyDmg();  
+  }
+  return Synergy;
+}
+
 static void enemyAttack(Enemy* enemy, Human* player, int damage) {
   static const char* attackMessages[] = {
       " lunges with a ferocious snarl, claws bared!",
@@ -320,53 +333,53 @@ double HumanEnemyModel::useAtkItem(bool dontUse) {
   if (dontUse) {
     int random = rand() % 4;
     if (random == 0) {
-      synergy = dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
+      if (inventory[1]->getID() > 0 || inventory[1]->getID() < 22) {
+      synergy = AttachSynergy(inventory[1]);
       cout << "Enemy used " << inventory[1]->getName() << " to attack you"
-           << endl;
+      << endl;
+      }
     } else if (random == 1) {
       if (this->inventory.size() > 2) {
         int ID = this->inventory[2]->getID();
         if (ID > 21 && ID < 28) {
-          synergy = dynamic_cast<Throwable*>(inventory[2])->getSynergyDmg();
+          synergy = AttachSynergy(inventory[2]);
           cout << "Enemy used " << inventory[2]->getName() << " to attack you."
                << endl;
           removeInventory(2);
         } else {
-          synergy = dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
+          synergy = AttachSynergy(inventory[1]);
           cout << "Enemy used " << inventory[1]->getName() << " to attack you."
                << endl;
         }
-
       } else {
-        synergy = dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
+        synergy = AttachSynergy(inventory[1]);
         cout << "Enemy used " << inventory[1]->getName() << " to attack you."
              << endl;
       }
-
     } else {
       synergy = 0;
     }
   } else {
     int random = rand() % 2;
     if (random == 0) {
-      synergy = dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
+      synergy = AttachSynergy(inventory[1]);
       cout << "Enemy used " << inventory[1]->getName() << " to attack you"
            << endl;
     } else {
       if (this->inventory.size() > 2) {
         int ID = this->inventory[2]->getID();
         if (ID > 21 && ID < 28) {
-          synergy = dynamic_cast<Throwable*>(inventory[2])->getSynergyDmg();
+          synergy = AttachSynergy(inventory[2]);
           cout << "Enemy used " << inventory[2]->getName() << " to attack you."
                << endl;
           removeInventory(2);
         } else {
-          synergy = dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
+          synergy = AttachSynergy(inventory[1]);
           cout << "Enemy used " << inventory[1]->getName() << " to attack you."
                << endl;
         }
       } else {
-        synergy = dynamic_cast<Passive*>(inventory[1])->getSynergyDamage();
+        synergy = AttachSynergy(inventory[1]);
         cout << "Enemy used " << inventory[1]->getName() << " to attack you."
              << endl;
       }
@@ -384,14 +397,14 @@ double HumanEnemyModel::useDefItem(bool dontUse) {
   if (dontUse) {
     int random = rand() % 2;
     if (random == 0) {
-      synergy = dynamic_cast<Passive*>(inventory[0])->getSynergyDamage();
+      synergy = AttachSynergy(inventory[0]);
       cout << "Enemy used " << inventory[0]->getName() << " to defense."
            << endl;
     } else {
       synergy = 0;
     }
   } else {
-    synergy = dynamic_cast<Passive*>(inventory[0])->getSynergyDamage();
+    synergy = AttachSynergy(inventory[0]);
     cout << "Enemy used " << inventory[0]->getName() << " to defense." << endl;
   }
   synergy = (synergy * 60) / 100;
