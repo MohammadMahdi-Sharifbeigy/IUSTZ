@@ -23,9 +23,9 @@ string username;
   double pace;
   double mind;
   int coin;
-    State state;
-  Item* armor;
-  Item* weapon;
+  State state;
+  Item* armor = nullptr;
+  Item* weapon = nullptr;
   vector<Item*> inventory;
 
  public:
@@ -83,9 +83,9 @@ string username;
   vector<Item*> getInventory();
   // Item Functions
 
-    double chooseDefItems();
-    double chooseAtkItem();
-    Item* choosePotion();
+  double chooseDefItems();
+  double chooseAtkItem();
+  Item* choosePotion();
   Item* itemsAt(int index);
   void showInventory();
   void addInventory(Item* item);
