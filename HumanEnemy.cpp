@@ -17,7 +17,7 @@ static int getRandomNumber(int min, int max) {
 int AttachSynergy(Item* item){
   int Synergy;
   if (item->getID() > 0 || item->getID() < 22) {
-    Passive* itemType  = dynamic_cast<Passive*>(item);
+    Passive* itemType  = static_cast<Passive*>(item);
     Synergy = itemType->getSynergyDamage();
   }
   else if (item->getID() > 29 || item->getID() < 38) {
