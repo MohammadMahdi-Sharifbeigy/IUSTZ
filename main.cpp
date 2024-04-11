@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "EnemyFactory.h"
 #include "GameState.h"
+#include "GameStateMulti.h"
 #include "HealingPotion.h"
 #include "HumanEnemy.h"
 #include "Login.cpp"
@@ -335,7 +336,7 @@ void displayHealthBar(string name, double currentHP, double maxHP) {
 
 void combat(Human* player, Enemy* enemy) {
   srand(static_cast<unsigned int>(time(0)));
-  //Character* target = nullptr;
+  // Character* target = nullptr;
   int enemy_max_hp = enemy->getMaxHP();
   cout << "\nA wild " << enemy->getName() << " appears!" << endl;
   displayHealthBar(player->getName(), player->getCurrentHP(),
@@ -499,6 +500,42 @@ void combat(Human* player, Enemy* enemy) {
   }
 }
 
+void combatMulti(Human* player1, Human* player2) {
+  srand(static_cast<unsigned int>(time(nullptr)));
+  cout << "\n*** Combat Begins ***\n" << endl;
+
+  while (player1->getCurrentHP() > 0 && player2->getCurrentHP() > 0) {
+    // Player 1's turn
+    int damageToPlayer2 = player1->getAttack();
+    cout << player1->getName() << " attacks " << player2->getName() << " for "
+         << damageToPlayer2 << " damage." << endl;
+    player2->takeDamage(damageToPlayer2);
+    displayHealthBar(player2->getName(), player2->getCurrentHP(),
+                     player2->getMaxHP());
+
+    // Check if player 2 is defeated
+    if (player2->getCurrentHP() <= 0) {
+      cout << player2->getName() << " has been defeated!" << endl;
+      break;
+    }
+
+    // Player 2's turn
+    int damageToPlayer1 = player2->getAttack();
+    cout << player2->getName() << " attacks " << player1->getName() << " for "
+         << damageToPlayer1 << " damage." << endl;
+    player1->takeDamage(damageToPlayer1);
+    displayHealthBar(player1->getName(), player1->getCurrentHP(),
+                     player1->getMaxHP());
+
+    // Check if player 1 is defeated
+    if (player1->getCurrentHP() <= 0) {
+      cout << player1->getName() << " has been defeated!" << endl;
+      break;
+    }
+  }
+  cout << "\n*** Combat Ends ***\n" << endl;
+}
+
 void explore(GameState& gameState) {
   srand(time(nullptr));    // Seed for random number generation
   int event = rand() % 4;  // Random event: 0, 1, 2 or 3
@@ -591,8 +628,37 @@ void gameLoop(GameState& gameState) {
   }
 }
 
+void gameLoopMulti(GameStateMulti& gameState) {
+  // move each player to shop, after shop, move to combat, player will fight
+  // with eachother
+  bool exitGame = false;
+  while (!exitGame && !gameState.isGameOver()) {
+    Shop& shop = gameState.getGameShop();
+    cout << "First player, please enter the shop." << endl;
+    shop.welcomShop(gameState.getPlayer1Character());
+    cout << "Second player, please enter the shop." << endl;
+    shop.welcomShop(gameState.getPlayer2Character());
+
+    combatMulti(gameState.getPlayer1Character(),
+                gameState.getPlayer2Character());
+    gameState.setGameOver(true);
+  }
+}
 int main() {
   clearScreen();
+  cout << "Want to play multiplayer or single player? (m/s)" << endl;
+  char choice;
+  cin >> choice;
+  while (choice != 'm' && choice != 's') {
+    cout << "Invalid choice. Please try again." << endl;
+    cin >> choice;
+  }
+  if (choice == 'm') {
+    vector<Human*> players = LoginMultiplayer();
+    GameStateMulti gameStateMulti(players[0], players[1]);
+    gameLoopMulti(gameStateMulti);
+    return 0;
+  }
   Human* playerCharacter = Login();
   GameState gameState(playerCharacter);
   gameLoop(gameState);
