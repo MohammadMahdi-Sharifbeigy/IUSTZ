@@ -82,7 +82,7 @@ string username;
     void setState(State state);
   vector<Item*> getInventory();
   // Item Functions
-
+    void clearInventory();
   double chooseDefItems();
   double chooseAtkItem();
   Item* choosePotion();

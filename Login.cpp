@@ -1,6 +1,7 @@
 #include "Login.h"
 #include <string.h>
 #include <iostream>
+#include <cstdlib>
 #include <sstream>
 #include <vector>
 #include "AraghNana.h"
@@ -59,6 +60,15 @@
 
 using namespace std;
 
+static void clearScreen() {
+#ifdef _WIN32
+  system("cls");
+#else
+  system("clear");
+#endif
+}
+
+
 static void saveCharacter(Human* human) {
   string username = human->getUserName();
   if (human->getRole() == characterType::PALADIN) {
@@ -66,11 +76,11 @@ static void saveCharacter(Human* human) {
     player->PaladinToFile(username);
 
   } else if (human->getRole() == characterType::ASSASSIN) {
-    cout << "here" << endl;
+    //cout << "here" << endl;
     Assassin* player = dynamic_cast<Assassin*>(human);
-    cout << "no, here" << endl;
+   // cout << "no, here" << endl;
     player->AssassinToFile(player);
-    cout << "no no no" << endl;
+    //cout << "no no no" << endl;
 
   } else if (human->getRole() == characterType::SUPERHERO) {
     SuperHero* player = dynamic_cast<SuperHero*>(human);
@@ -93,6 +103,61 @@ static void saveCharacter(Human* human) {
     player->AsianMomToFile(username);
   }
 }
+
+static void giveBasicItems(Human* player){
+    if (player->getRole() == characterType::PALADIN) {
+      Item* armor = ItemFactory::createItem(1, player, true);
+      Item* potion = ItemFactory::createItem(29, player, true);
+      player->addInventory(armor);
+      player->addInventory(potion);
+     
+    } else if (player->getRole() == characterType::ASSASSIN) {
+      Item* armor = ItemFactory::createItem(2, player, true);
+      Item* potion = ItemFactory::createItem(29, player, true);
+      player->addInventory(armor);
+      player->addInventory(potion);
+      
+    } else if (player->getRole() == characterType::SUPERHERO) {
+      Item* armor = ItemFactory::createItem(6, player, true);
+      Item* potion = ItemFactory::createItem(18, player, true);
+      player->addInventory(armor);
+      player->addInventory(potion);
+     
+    } else if (player->getRole() == characterType::SNIPER) {
+      Item* armor = ItemFactory::createItem(5, player, true);
+      Item* potion =ItemFactory::createItem(29, player, true);
+      player->addInventory(armor);
+      player->addInventory(potion);
+        
+    } else if (player->getRole() == characterType::WIZARD) {
+      Item* armor = ItemFactory::createItem(3, player, true);
+      Item* potion = ItemFactory::createItem(29, player, true);
+      player->addInventory(armor);
+      player->addInventory(potion);
+      
+    } else if (player->getRole() == characterType::CYBORG) {
+      Item* armor = ItemFactory::createItem(4, player, true);
+      Item* potion =ItemFactory::createItem(29, player, true);
+      player->addInventory(armor);
+      player->addInventory(potion);
+      
+    } else {
+      Item* armor = ItemFactory::createItem(7, player , true);
+      Item* potion = ItemFactory::createItem(29, player, true);
+      player->addInventory(armor);
+      player->addInventory(potion);
+      
+    }
+
+    
+    
+    
+    
+}
+
+
+
+
 
 static Human* Login() {
   cout << "***Welcome to our game***" << endl;
@@ -406,7 +471,7 @@ menu:
       // Item* weapon =
       // ItemFactory::createItem(17,static_cast<Human*>(player),true);
       Item* armor =
-          ItemFactory::createItem(2, static_cast<Human*>(player), true);
+          ItemFactory::createItem(4, static_cast<Human*>(player), true);
       Item* potion =
           ItemFactory::createItem(29, static_cast<Human*>(player), true);
       //  player->addInventory(weapon);
@@ -451,7 +516,7 @@ menu:
       //  Item* weapon =
       //  ItemFactory::createItem(20,static_cast<Human*>(player),true);
       Item* armor =
-          ItemFactory::createItem(1, static_cast<Human*>(player), true);
+          ItemFactory::createItem(7, static_cast<Human*>(player), true);
       Item* potion =
           ItemFactory::createItem(29, static_cast<Human*>(player), true);
       // player->addInventory(weapon);
@@ -599,68 +664,77 @@ static vector<Human*> LoginMultiplayer() {
   age = stoi(sage);
   if (choice == 1) {
     Paladin* player =
-        new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+        new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 5000);
     Item* armor = ItemFactory::createItem(1, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 2) {
     Assassin* player =
-        new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
+        new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN, 5000);
     Item* armor = ItemFactory::createItem(2, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 3) {
     SuperHero* player = new SuperHero(name, age, 100.0, 3.0, 5.0,
-                                      characterType::SUPERHERO, 1000);
+                                      characterType::SUPERHERO, 5000);
     Item* armor = ItemFactory::createItem(6, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(18, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 4) {
     Sniper* player =
-        new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
-    Item* armor = ItemFactory::createItem(2, static_cast<Human*>(player), true);
+        new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 5000);
+    Item* armor = ItemFactory::createItem(5, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 5) {
     Wizard* player =
-        new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
+        new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 5000);
     Item* armor = ItemFactory::createItem(3, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 6) {
     Cyborg* player =
-        new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
+        new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 5000);
     Item* armor = ItemFactory::createItem(4, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else {
     AsianMom* player =
-        new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-    Item* armor = ItemFactory::createItem(1, static_cast<Human*>(player), true);
+        new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 5000);
+    Item* armor = ItemFactory::createItem(7, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   }
+    
+    clearScreen();
 
   cout << "Enter second character type: " << endl;
   cout << "***CHARACHTERS***" << endl;
@@ -702,66 +776,73 @@ static vector<Human*> LoginMultiplayer() {
   age = stoi(sage);
   if (choice == 1) {
     Paladin* player =
-        new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
+        new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 5000);
     Item* armor = ItemFactory::createItem(1, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 2) {
     Assassin* player =
-        new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN, 1000);
+        new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN, 5000);
     Item* armor = ItemFactory::createItem(2, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 3) {
     SuperHero* player = new SuperHero(name, age, 100.0, 3.0, 5.0,
-                                      characterType::SUPERHERO, 1000);
+                                      characterType::SUPERHERO, 5000);
     Item* armor = ItemFactory::createItem(6, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(18, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 4) {
     Sniper* player =
-        new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
-    Item* armor = ItemFactory::createItem(2, static_cast<Human*>(player), true);
+        new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 5000);
+    Item* armor = ItemFactory::createItem(5, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 5) {
     Wizard* player =
-        new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
+        new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 5000);
     Item* armor = ItemFactory::createItem(3, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else if (choice == 6) {
     Cyborg* player =
-        new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
+        new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 5000);
     Item* armor = ItemFactory::createItem(4, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   } else {
     AsianMom* player =
-        new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 1000);
-    Item* armor = ItemFactory::createItem(1, static_cast<Human*>(player), true);
+        new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 5000);
+    Item* armor = ItemFactory::createItem(7, static_cast<Human*>(player), true);
     Item* potion =
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    player->setLevel(6);
     players.push_back(player);
   }
   return players;

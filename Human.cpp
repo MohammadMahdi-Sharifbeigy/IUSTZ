@@ -300,6 +300,10 @@ int Human::inventorySize() {
   return inventory.size();
 }
 
+void Human::clearInventory(){
+    this->inventory.clear();
+}
+
 Item* Human::itemsAt(int index) {
   if (this->inventorySize()) {
     return inventory.at(index - 1);
