@@ -670,6 +670,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+    for(int i=0; i<3; i++){
+        player->setCurrXP(player->getMaxXP()+1);
+        player->levelUp();
+        clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 2) {
@@ -680,6 +686,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 3) {
@@ -700,6 +712,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 5) {
@@ -710,6 +728,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 6) {
@@ -720,6 +744,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else {
@@ -730,6 +760,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   }
@@ -782,6 +818,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 2) {
@@ -792,6 +834,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 3) {
@@ -802,6 +850,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(18, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 4) {
@@ -812,6 +866,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 5) {
@@ -822,6 +882,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 6) {
@@ -832,6 +898,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else {
@@ -842,6 +914,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
+      for(int i=0; i<3; i++){
+          player->setCurrXP(player->getMaxXP()+1);
+          player->levelUp();
+          clearScreen();
+      }
+      player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   }
