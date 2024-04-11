@@ -347,14 +347,18 @@ double HumanEnemyModel::useAtkItem(bool dontUse) {
                << endl;
           removeInventory(2);
         } else {
-          synergy = AttachSynergy(inventory[1]);
-          cout << "Enemy used " << inventory[1]->getName() << " to attack you."
-               << endl;
+          if (inventory[1]->getID() > 0 || inventory[1]->getID() < 22) {
+            synergy = AttachSynergy(inventory[1]);
+            cout << "Enemy used " << inventory[1]->getName() << " to attack you"
+            << endl;
+          }
         }
       } else {
-        synergy = AttachSynergy(inventory[1]);
-        cout << "Enemy used " << inventory[1]->getName() << " to attack you."
-             << endl;
+        if (inventory[1]->getID() > 0 || inventory[1]->getID() < 22) {
+          synergy = AttachSynergy(inventory[1]);
+          cout << "Enemy used " << inventory[1]->getName() << " to attack you"
+          << endl;
+        }
       }
     } else {
       synergy = 0;
@@ -362,9 +366,11 @@ double HumanEnemyModel::useAtkItem(bool dontUse) {
   } else {
     int random = rand() % 2;
     if (random == 0) {
-      synergy = AttachSynergy(inventory[1]);
-      cout << "Enemy used " << inventory[1]->getName() << " to attack you"
-           << endl;
+      if (inventory[1]->getID() > 0 || inventory[1]->getID() < 22) {
+        synergy = AttachSynergy(inventory[1]);
+        cout << "Enemy used " << inventory[1]->getName() << " to attack you"
+        << endl;
+      }
     } else {
       if (this->inventory.size() > 2) {
         int ID = this->inventory[2]->getID();
@@ -374,14 +380,18 @@ double HumanEnemyModel::useAtkItem(bool dontUse) {
                << endl;
           removeInventory(2);
         } else {
-          synergy = AttachSynergy(inventory[1]);
-          cout << "Enemy used " << inventory[1]->getName() << " to attack you."
-               << endl;
+          if (inventory[1]->getID() > 0 || inventory[1]->getID() < 22) {
+            synergy = AttachSynergy(inventory[1]);
+            cout << "Enemy used " << inventory[1]->getName() << " to attack you"
+            << endl;
+          } 
         }
       } else {
-        synergy = AttachSynergy(inventory[1]);
-        cout << "Enemy used " << inventory[1]->getName() << " to attack you."
-             << endl;
+        if (inventory[1]->getID() > 0 || inventory[1]->getID() < 22) {
+          synergy = AttachSynergy(inventory[1]);
+          cout << "Enemy used " << inventory[1]->getName() << " to attack you"
+          << endl;
+        }
       }
     }
   }
@@ -397,15 +407,20 @@ double HumanEnemyModel::useDefItem(bool dontUse) {
   if (dontUse) {
     int random = rand() % 2;
     if (random == 0) {
-      synergy = AttachSynergy(inventory[0]);
-      cout << "Enemy used " << inventory[0]->getName() << " to defense."
-           << endl;
+        if (inventory[0]->getID() > 0 || inventory[0]->getID() < 22) {
+          synergy = AttachSynergy(inventory[0]);
+          cout << "Enemy used " << inventory[0]->getName() << " to defense"
+          << endl;
+        }
     } else {
       synergy = 0;
     }
   } else {
-    synergy = AttachSynergy(inventory[0]);
-    cout << "Enemy used " << inventory[0]->getName() << " to defense." << endl;
+    if (inventory[0]->getID() > 0 || inventory[0]->getID() < 22) {
+      synergy = AttachSynergy(inventory[0]);
+      cout << "Enemy used " << inventory[0]->getName() << " to defense"
+      << endl;
+    }
   }
   synergy = (synergy * 60) / 100;
   if (synergy > 6) {
