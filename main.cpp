@@ -607,11 +607,6 @@ void combatMulti(Human* player1, Human* player2) {
             player1->removeInventory(player1->indexInInventory(playerPotion1) +
                                      1);
           }
-          displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                           player1->getMaxHP());
-          cout << endl;
-          displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                           player2->getMaxHP());
         }
         break;
       }
@@ -715,11 +710,6 @@ void combatMulti(Human* player1, Human* player2) {
             player2->removeInventory(player2->indexInInventory(playerPotion2) +
                                      1);
           }
-          displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                           player1->getMaxHP());
-          cout << endl;
-          displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                           player2->getMaxHP());
         }
         break;
       }
@@ -734,9 +724,6 @@ void combatMulti(Human* player1, Human* player2) {
     if (player1->getCurrentHP() <= 0) {
       cout << player1->getName() << " has been defeated!" << endl;
       break;
-    }
-    if (choice1 == 2) {
-      player1->setDefense(player1->getDefense() - defsynergy1);
     }
     displayHealthBar(player1->getName(), player1->getCurrentHP(),
                      player1->getMaxHP());
