@@ -13,7 +13,7 @@ class WizardAttack : public AttackStrategy {
     // Wizards have high attack due to their magic
     Human* human = dynamic_cast<Human*>(currCharacter);
     if (human) {
-      return (2 * human->getLevel() * human->getMind() * ( human->getMaxHP() / human->getCurrentHP())
+      return (2 * human->getMind() * ( human->getMaxHP() / human->getCurrentHP())
                 * (human->getAttack() / currEnemy->get_enemy_def()));
     }
     return 0;  // or some default value
@@ -22,7 +22,7 @@ class WizardAttack : public AttackStrategy {
       // Wizards have high defense due to their magic
       Human* human = dynamic_cast<Human*>(currCharacter);
       if (human) {
-        return (2 * human->getLevel() * human->getMind() * (human->getMaxHP() / human->getCurrentHP()) 
+        return (2 * human->getMind() * (human->getMaxHP() / human->getCurrentHP()) 
                   * ( human->getDefense()/currEnemy->get_enemy_atk()));
       }
       return 0;  // or some default value
@@ -30,13 +30,13 @@ class WizardAttack : public AttackStrategy {
 
     double attackOpponent(Human* currCharacter, Human* opponent) {
       // Wizards have high attack due to their magic
-      return (2.5 * currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+      return (2.5 * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
                 * (currCharacter->getAttack() / opponent->getDefense()));
     }
 
     double defenseOpponent(Human* currCharacter, Human* opponent) {
       // Wizards have high defense due to their magic
-      return (2.5 * currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP()) 
+      return (2.5 * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP()) 
                 * ( currCharacter->getDefense() / opponent->getAttack()));
     }
 };

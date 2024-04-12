@@ -13,7 +13,7 @@ class SniperAttack : public AttackStrategy {
     // Snipers have very high attack due to precision strikes
     Human* human = dynamic_cast<Human*>(currCharacter);
     if (human) {
-      return (1.5 * (human->getLevel() * human->getAccuracy() * human->getAttack()) *( human->getMaxHP() / human->getCurrentHP())
+      return (1.5 * (human->getAccuracy() * human->getAttack()) *( human->getMaxHP() / human->getCurrentHP())
                 * ( currCharacter->getAttack()  / currEnemy->get_enemy_def()) + 1);
     }
     return 0;  // or some default value
@@ -22,7 +22,7 @@ class SniperAttack : public AttackStrategy {
     // Snipers have low defense
     Human* human = dynamic_cast<Human*>(currCharacter);
     if (human) {
-      return (0.75 * (human->getLevel() * human->getDefense()) * (human->getMaxHP() / human->getCurrentHP()) 
+      return (0.75 * (human->getDefense()) * (human->getMaxHP() / human->getCurrentHP()) 
                   * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
     }
     return 0;  // or some default value
@@ -30,13 +30,13 @@ class SniperAttack : public AttackStrategy {
 
   double attackOpponent(Human* currCharacter, Human* opponent) {
     // Snipers have very high attack due to precision strikes
-    return (2 * (currCharacter->getLevel() * currCharacter->getAccuracy() * currCharacter->getAttack()) * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return (2 * (currCharacter->getAccuracy() * currCharacter->getAttack()) * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getAttack() / opponent->getDefense()) + 1);
   }
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Snipers have low defense
-    return (1 * (currCharacter->getLevel() * currCharacter->getDefense()) * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return (1 * (currCharacter->getDefense()) * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense() / opponent->getAttack()));
   }
 };
