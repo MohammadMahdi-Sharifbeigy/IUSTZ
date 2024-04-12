@@ -179,8 +179,9 @@ Explore the features and functionalities of the application.
 
 ## ◾️ FAQ
 
-#### ?
+#### Why does the stats_win appear messy when using multi-window mode? 
 
+In multi-window mode, your terminal screen is divided into different parts to accommodate multiple windows. If stats_win appears messy on your system and doesn't look great, try adjusting the size of your terminal. You can also use zoom in/out functions to find the best display configuration for your system.
 
 #### ?
 
