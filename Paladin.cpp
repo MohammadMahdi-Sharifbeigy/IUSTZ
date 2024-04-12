@@ -56,7 +56,7 @@ void Paladin::performAttack(Character& target) {
   }
 }
 
-void  Paladin::performAttack(Human& target) {
+void Paladin::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
@@ -76,6 +76,8 @@ void Paladin::performDefense(Character& attacker) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       Paladin::currHP -= attacker.getAttack() - damage;
+      cout << Paladin::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
     Paladin::currHP -= Paladin::getDefense();
@@ -89,9 +91,11 @@ void Paladin::performDefense(Human& attacker) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
       Paladin::currHP -= attacker.getAttack() - damage;
+      cout << Paladin::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Paladin::currHP -= attacker.getAttack()-Paladin::getDefense();
+    Paladin::currHP -= attacker.getAttack() - Paladin::getDefense();
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
@@ -100,9 +104,10 @@ void Paladin::performDefense(Human& attacker) {
 void Paladin::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 50);   // Paladins get a big HP boost
+    setMaxHP(getMaxHP() + 50);     // Paladins get a big HP boost
     setAttack(getAttack() + 2.5);  // Moderate attack increase
-    setDefense(getDefense() + 4);  // Paladins are known for their strong defense
+    setDefense(getDefense() +
+               4);  // Paladins are known for their strong defense
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);

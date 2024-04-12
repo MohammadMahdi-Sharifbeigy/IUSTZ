@@ -56,7 +56,6 @@ void Cyborg::performAttack(Character& target) {
   }
 }
 
-
 void Cyborg::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
@@ -72,31 +71,32 @@ void Cyborg::performAttack(Human& target) {
   }
 }
 
-
-
 void Cyborg::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       Cyborg::currHP -= attacker.getAttack() - damage;
+      cout << Cyborg::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Cyborg::currHP -= (enemy->get_enemy_atk() -  Cyborg::getDefense());
+    Cyborg::currHP -= (enemy->get_enemy_atk() - Cyborg::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
 }
-
 
 void Cyborg::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
       Cyborg::currHP -= attacker.getAttack() - damage;
+      cout << Cyborg::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Cyborg::currHP -= attacker.getAttack()-Cyborg::getDefense();
+    Cyborg::currHP -= attacker.getAttack() - Cyborg::getDefense();
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
@@ -105,8 +105,10 @@ void Cyborg::performDefense(Human& attacker) {
 void Cyborg::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 40);  // Cyborgs have high HP due to their mechanical nature
-    setAttack(getAttack() + 3);  // High attack increase due to advanced weaponry
+    setMaxHP(getMaxHP() +
+             40);  // Cyborgs have high HP due to their mechanical nature
+    setAttack(getAttack() +
+              3);  // High attack increase due to advanced weaponry
     setDefense(getDefense() + 5);  // High defense increase due to armored body
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);

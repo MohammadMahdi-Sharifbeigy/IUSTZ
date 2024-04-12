@@ -54,7 +54,6 @@ void Sniper::performAttack(Character& target) {
   }
 }
 
-
 void Sniper::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
@@ -76,9 +75,11 @@ void Sniper::performDefense(Character& attacker) {
     if (enemy) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       Sniper::currHP -= attacker.getAttack() - damage;
+      cout << Sniper::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Sniper::currHP -= (enemy->get_enemy_atk() -  Sniper::getDefense());
+    Sniper::currHP -= (enemy->get_enemy_atk() - Sniper::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -89,28 +90,29 @@ void Sniper::performDefense(Human& attacker) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
       Sniper::currHP -= attacker.getAttack() - damage;
+      cout << Sniper::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Sniper::currHP -= attacker.getAttack()-Sniper::getDefense();
+    Sniper::currHP -= attacker.getAttack() - Sniper::getDefense();
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
 }
 
-
-
-
 void Sniper::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);  // Moderate HP increase
-    setAttack(getAttack() + 4.5);  // Snipers have high attack due to precision strikes
+    setAttack(getAttack() +
+              4.5);  // Snipers have high attack due to precision strikes
     setDefense(getDefense() + 3.5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
     setEndurance(getEndurance() + 2);
-    setAccuracy(getAccuracy() + 7);  // High accuracy increase, crucial for snipers
+    setAccuracy(getAccuracy() +
+                7);  // High accuracy increase, crucial for snipers
     setPace(getPace() + 2);
     setMind(getMind() + 2);
     setMaxXP(getMaxXP() + 45);

@@ -54,7 +54,6 @@ void Wizard::performAttack(Character& target) {
   }
 }
 
-
 void Wizard::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
@@ -76,9 +75,11 @@ void Wizard::performDefense(Character& attacker) {
     if (enemy) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       Wizard::currHP -= attacker.getAttack() - damage;
+      cout << Wizard::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Wizard::currHP -= (enemy->get_enemy_atk() -  Wizard::getDefense());
+    Wizard::currHP -= (enemy->get_enemy_atk() - Wizard::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -89,20 +90,20 @@ void Wizard::performDefense(Human& attacker) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
       Wizard::currHP -= attacker.getAttack() - damage;
+      cout << Wizard::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Wizard::currHP -= attacker.getAttack()-Wizard::getDefense();
+    Wizard::currHP -= attacker.getAttack() - Wizard::getDefense();
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
 }
 
-
-
 void Wizard::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 20);    // Lower HP increase
+    setMaxHP(getMaxHP() + 20);   // Lower HP increase
     setAttack(getAttack() + 4);  // Moderate attack increase
     setDefense(getDefense() + 2.5);
     setLevel(getLevel() + 1);

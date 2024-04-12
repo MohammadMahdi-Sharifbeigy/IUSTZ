@@ -69,38 +69,36 @@ void AsianMom::performAttack(Human& target) {
   }
 }
 
-
-
-
 void AsianMom::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       AsianMom::currHP -= attacker.getAttack() - damage;
+      cout << AsianMom::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    AsianMom::currHP -= (enemy->get_enemy_atk() -  AsianMom::getDefense());
+    AsianMom::currHP -= (enemy->get_enemy_atk() - AsianMom::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
 }
-
-
 
 void AsianMom::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
       AsianMom::currHP -= attacker.getAttack() - damage;
+      cout << AsianMom::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    AsianMom::currHP -= attacker.getAttack()-AsianMom::getDefense();
+    AsianMom::currHP -= attacker.getAttack() - AsianMom::getDefense();
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
 }
-
 
 void AsianMom::levelUp() {
   while (getCurrXP() >= getMaxXP()) {

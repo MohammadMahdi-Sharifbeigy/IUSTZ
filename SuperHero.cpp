@@ -75,9 +75,11 @@ void SuperHero::performDefense(Character& attacker) {
     if (enemy) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       SuperHero::currHP -= attacker.getAttack() - damage;
+      cout << SuperHero::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    SuperHero::currHP -= (enemy->get_enemy_atk() -  SuperHero::getDefense());
+    SuperHero::currHP -= (enemy->get_enemy_atk() - SuperHero::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -88,9 +90,11 @@ void SuperHero::performDefense(Human& attacker) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
       SuperHero::currHP -= attacker.getAttack() - damage;
+      cout << SuperHero::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    SuperHero::currHP -= attacker.getAttack()-SuperHero::getDefense();
+    SuperHero::currHP -= attacker.getAttack() - SuperHero::getDefense();
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
@@ -99,8 +103,8 @@ void SuperHero::performDefense(Human& attacker) {
 void SuperHero::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() + 30);     // Moderate HP increase
-    setAttack(getAttack() + 5);   // Superheroes have strong attacks
+    setMaxHP(getMaxHP() + 30);       // Moderate HP increase
+    setAttack(getAttack() + 5);      // Superheroes have strong attacks
     setDefense(getDefense() + 3.5);  // Moderate defense increase
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);

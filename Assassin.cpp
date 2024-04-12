@@ -1,6 +1,7 @@
 #include "Assassin.h"
 #include <fstream>
 #include <iostream>
+#include "AssassinAttack.h"
 #include "AttackStrategy.h"
 #include "Character.h"
 #include "CharacterType.h"
@@ -8,7 +9,6 @@
 #include "FileCheck.h"
 #include "Human.h"
 #include "ItemFactory.h"
-#include "AssassinAttack.h"
 
 using namespace std;
 
@@ -45,7 +45,7 @@ void Assassin::performAttack(Character& target) {
       double damage = attackStrategy->attackEnemy(this, enemy);
       enemy->takeDamage(damage);
       cout << Assassin::getName() << " attacks " << target.getName() << " for "
-      << damage << " damage." << endl;
+           << damage << " damage." << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getcharType()
@@ -57,14 +57,13 @@ void Assassin::performAttack(Character& target) {
   }
 }
 
-
 void Assassin::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
       target.setCurrentHP(target.getCurrentHP() - damage);
       cout << Assassin::getName() << " attacks " << target.getName() << " for "
-      << damage << " damage." << endl;
+           << damage << " damage." << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getName()
@@ -81,12 +80,12 @@ void Assassin::performDefense(Character& attacker) {
     if (enemy) {
       double defense = attackStrategy->defenseEnemy(this, enemy);
       Assassin::currHP -= attacker.getAttack() - defense;
-      cout << Assassin::getName() << " uses "
-      << defense << " for defense." << endl;
+      cout << Assassin::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    if (enemy->get_enemy_atk() > Assassin::getDefense() ){
-      Assassin::currHP -= (enemy->get_enemy_atk() -  Assassin::getDefense());
+    if (enemy->get_enemy_atk() > Assassin::getDefense()) {
+      Assassin::currHP -= (enemy->get_enemy_atk() - Assassin::getDefense());
     }
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
@@ -98,11 +97,11 @@ void Assassin::performDefense(Human& attacker) {
     if (&attacker) {
       double defense = attackStrategy->defenseOpponent(this, &attacker);
       Assassin::currHP -= attacker.getAttack() - defense;
-      cout << Assassin::getName() << " uses "
-      << defense << " for defense." << endl;
+      cout << Assassin::getName() << " got defended by " << defense << " armor."
+           << endl;
     }
   } else {
-    Assassin::currHP -= attacker.getAttack()-Assassin::getDefense();
+    Assassin::currHP -= attacker.getAttack() - Assassin::getDefense();
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }
@@ -112,13 +111,16 @@ void Assassin::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 25);  // Assassins have moderate HP increase
-    setAttack(getAttack() + 4);  // Assassins have very high attack due to their deadly skills
+    setAttack(getAttack() +
+              4);  // Assassins have very high attack due to their deadly skills
     setDefense(getDefense() + 1.5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 2.5);
     setStrength(getStrength() + 2);
-    setEndurance(getEndurance() + 5);  // Increase endurance, representing physical stamina
-    setAccuracy(getAccuracy() + 5);  // High accuracy increase, crucial for assassins
+    setEndurance(getEndurance() +
+                 5);  // Increase endurance, representing physical stamina
+    setAccuracy(getAccuracy() +
+                5);  // High accuracy increase, crucial for assassins
     setPace(getPace() + 2);
     setMind(getMind() + 7);  // Increase mind, representing strategic thinking
     setMaxXP(getMaxXP() + 55);
@@ -237,15 +239,15 @@ void Assassin::AssassinToFile(Human* player) {
 void Assassin::FileToAssassin(const string& username) {
   string filename = isCSV(username) ? username : username + ".csv";
   ifstream file(filename);
-  
+
   if (file.good() && !std::filesystem::is_empty(filename)) {
     string line;
-    getline(file, line); // Skip the header line
-    getline(file, line); // Read the data line
-    
+    getline(file, line);  // Skip the header line
+    getline(file, line);  // Read the data line
+
     stringstream ss(line);
     string attribute;
-    
+
     // Parsing basic attributes
     getline(ss, this->username, ',');
     getline(ss, this->name, ',');
@@ -303,7 +305,7 @@ void Assassin::FileToAssassin(const string& username) {
     this->mind = stof(attribute);
 
     // Handling inventory
-    getline(ss, attribute, ','); // Get inventory size
+    getline(ss, attribute, ',');  // Get inventory size
     int n = stoi(attribute);
     for (int i = 0; i < n; ++i) {
       int ID, count;
@@ -311,7 +313,7 @@ void Assassin::FileToAssassin(const string& username) {
       ID = stoi(attribute);
       getline(ss, attribute, ',');
       count = stoi(attribute);
-      
+
       Item* item = ItemFactory::createItem(ID, this, true);
       item->setCount(count);
       this->addInventory(item);
@@ -320,7 +322,7 @@ void Assassin::FileToAssassin(const string& username) {
     this->name = "Error404";
     this->age = 0;
   }
-  file.close(); // Close the file after reading
+  file.close();  // Close the file after reading
 }
 // double convertedPrice = atof(sprice.c_str());
 // if (vip == "true")
