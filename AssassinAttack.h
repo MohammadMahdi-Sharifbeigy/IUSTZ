@@ -11,24 +11,24 @@ class AssassinAttack : public AttackStrategy {
   AssassinAttack() : AttackStrategy(){};
   double attackEnemy(Character* currCharacter, Enemy* currEnemy){
   // Assassins have very high attack but low defense
-  return (1.5 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+  return (2* (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
             * ( currCharacter->getAttack()/ currEnemy->get_enemy_def()));
 }
   double defenseEnemy(Character* currCharacter, Enemy* currEnemy){
   // Assassins have low defense
-  return (0.5 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+  return ((currCharacter->getMaxHP() / currCharacter->getCurrentHP())
             * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
 }
 
 double attackOpponent(Human* currCharacter, Human* opponent){
   // Assassins have very high attack but low defense
-  return (1.75 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+  return (2.5 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
             * ( currCharacter->getDefense()  / opponent->getDefense()));
 }
 
 double defenseOpponent(Human* currCharacter, Human* opponent){       
        // Assassins have low defense
-  return (0.5 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+  return (1.5 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense()  / opponent->getDefense()));
 }
 

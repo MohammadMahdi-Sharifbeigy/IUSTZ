@@ -62,7 +62,7 @@ void Paladin::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      target.setCurrentHP(target.getCurrentHP() - damage);
+      target.takeDamage(damage);
       cout << getName() << " dealt " << damage << " damage to "
            << target.getName() << endl;
     }
@@ -70,21 +70,22 @@ void Paladin::performAttack(Human& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     if (&target) {
-      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+      target.takeDamage(this->getAttack());
     }
   }
 }
 
 void Paladin::performDefense(Character& attacker) {
+  Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
-    if (Enemy* enemy = dynamic_cast<Enemy*>(&attacker)) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      Paladin::currHP -= attacker.getAttack() - damage;
+    if (enemy) {
+      double defense = attackStrategy->defenseEnemy(this, enemy);
+      Paladin::takeDamage(attacker.getAttack() - defense);
       cout << Paladin::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Paladin::currHP -= Paladin::getDefense();
+    Paladin::takeDamage(enemy->get_enemy_atk() - Paladin::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -93,15 +94,15 @@ void Paladin::performDefense(Character& attacker) {
 void Paladin::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Paladin::currHP -= attacker.getAttack() - damage;
+        Paladin::takeDamage(attacker.getAttack() - defense);
       }
       cout << Paladin::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Paladin::currHP -= attacker.getAttack() - Paladin::getDefense();
+    Paladin::takeDamage(attacker.getAttack() - Paladin::getDefense());
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }

@@ -60,7 +60,7 @@ void Wizard::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      target.setCurrentHP(target.getCurrentHP() - damage);
+      target.takeDamage(damage);
       cout << getName() << " dealt " << damage << " damage to "
            << target.getName() << endl;
     }
@@ -68,7 +68,7 @@ void Wizard::performAttack(Human& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     if (&target) {
-      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+      target.takeDamage(this->getAttack());
     }
   }
 }
@@ -77,13 +77,13 @@ void Wizard::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      Wizard::currHP -= attacker.getAttack() - damage;
+      double defense = attackStrategy->defenseEnemy(this, enemy);
+      Wizard::takeDamage(attacker.getAttack() - defense);
       cout << Wizard::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Wizard::currHP -= (enemy->get_enemy_atk() - Wizard::getDefense());
+    Wizard::takeDamage((enemy->get_enemy_atk() - Wizard::getDefense()));
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -92,15 +92,15 @@ void Wizard::performDefense(Character& attacker) {
 void Wizard::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Wizard::currHP -= attacker.getAttack() - damage;
+        Wizard::takeDamage(attacker.getAttack() - defense);
       }
       cout << Wizard::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Wizard::currHP -= attacker.getAttack() - Wizard::getDefense();
+    Wizard::takeDamage(attacker.getAttack() - Wizard::getDefense());
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }

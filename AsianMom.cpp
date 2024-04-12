@@ -50,8 +50,9 @@ void AsianMom::performAttack(Character& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
+    double damage  = AsianMom::getAttack();
     if (enemy) {
-      enemy->takeDamage(AsianMom::getAttack());
+      enemy->takeDamage(damage);
     }
   }
 }
@@ -60,7 +61,7 @@ void AsianMom::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      target.setCurrentHP(target.getCurrentHP() - damage);
+      target.takeDamage(damage);
       cout << getName() << " dealt " << damage << " damage to "
            << target.getName() << endl;
     }
@@ -68,7 +69,7 @@ void AsianMom::performAttack(Human& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     if (&target) {
-      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+      target.takeDamage(this->getAttack());
     }
   }
 }
@@ -77,13 +78,15 @@ void AsianMom::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      AsianMom::currHP -= attacker.getAttack() - damage;
-      cout << AsianMom::getName() << " got defended by " << defense << " armor."
-           << endl;
+      double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
+      if (defense >= 0) {
+        AsianMom::takeDamage(defense);
+        cout << AsianMom::getName() << " got defended by " << defense << " armor."
+             << endl;
+      }
     }
   } else {
-    AsianMom::currHP -= (enemy->get_enemy_atk() - AsianMom::getDefense());
+    AsianMom::takeDamage(enemy->get_enemy_atk() - AsianMom::getDefense());
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -92,15 +95,15 @@ void AsianMom::performDefense(Character& attacker) {
 void AsianMom::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double damage = attackStrategy->defenseOpponent(this, &attacker);
-      if (attacker.getAttack() >= defense) {
-        AsianMom::currHP -= attacker.getAttack() - damage;
+      double defense = attacker.getAttack()- attackStrategy->defenseOpponent(this, &attacker);
+      if (defense >= 0) {
+        AsianMom::takeDamage(defense);
+        cout << AsianMom::getName() << " got defended by " << defense << " armor."
+             << endl;
       }
-      cout << AsianMom::getName() << " got defended by " << defense << " armor."
-           << endl;
     }
   } else {
-    AsianMom::currHP -= attacker.getAttack() - AsianMom::getDefense();
+    AsianMom::takeDamage(attacker.getAttack() - AsianMom::getDefense());
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }

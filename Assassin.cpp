@@ -61,7 +61,7 @@ void Assassin::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      target.setCurrentHP(target.getCurrentHP() - damage);
+      target.takeDamage(damage);
       cout << getName() << " dealt " << damage << " damage to "
            << target.getName() << endl;
     }
@@ -69,7 +69,7 @@ void Assassin::performAttack(Human& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     if (&target) {
-      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+      target.takeDamage(this->getAttack());
     }
   }
 }
@@ -79,13 +79,13 @@ void Assassin::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (enemy) {
       double defense = attackStrategy->defenseEnemy(this, enemy);
-      Assassin::currHP -= attacker.getAttack() - defense;
+      Assassin::takeDamage(attacker.getAttack() - defense);
       cout << Assassin::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
     if (enemy->get_enemy_atk() > Assassin::getDefense()) {
-      Assassin::currHP -= (enemy->get_enemy_atk() - Assassin::getDefense());
+      Assassin::takeDamage((enemy->get_enemy_atk() - Assassin::getDefense()));
     }
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
@@ -97,13 +97,13 @@ void Assassin::performDefense(Human& attacker) {
     if (&attacker) {
       double defense = attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Assassin::currHP -= attacker.getAttack() - defense;
+        Assassin::takeDamage(attacker.getAttack() - defense);
       }
       cout << Assassin::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Assassin::currHP -= attacker.getAttack() - Assassin::getDefense();
+    Assassin::takeDamage(attacker.getAttack() - Assassin::getDefense());
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }

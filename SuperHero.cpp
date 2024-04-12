@@ -60,7 +60,7 @@ void SuperHero::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      target.setCurrentHP(target.getCurrentHP() - damage);
+      target.takeDamage(damage);
       cout << getName() << " dealt " << damage << " damage to "
            << target.getName() << endl;
     }
@@ -68,7 +68,7 @@ void SuperHero::performAttack(Human& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     if (&target) {
-      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+      target.takeDamage(this->getAttack());
     }
   }
 }
@@ -77,13 +77,13 @@ void SuperHero::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      SuperHero::currHP -= attacker.getAttack() - damage;
+      double defense = attackStrategy->defenseEnemy(this, enemy);
+      SuperHero::takeDamage(attacker.getAttack() - defense);
       cout << SuperHero::getName() << " got defended by " << defense
            << " armor." << endl;
     }
   } else {
-    SuperHero::currHP -= (enemy->get_enemy_atk() - SuperHero::getDefense());
+    SuperHero::takeDamage((enemy->get_enemy_atk() - SuperHero::getDefense()));
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -92,15 +92,15 @@ void SuperHero::performDefense(Character& attacker) {
 void SuperHero::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        SuperHero::currHP -= attacker.getAttack() - damage;
+        SuperHero::takeDamage(attacker.getAttack() - defense);
       }
       cout << SuperHero::getName() << " got defended by " << defense
            << " armor." << endl;
     }
   } else {
-    SuperHero::currHP -= attacker.getAttack() - SuperHero::getDefense();
+    SuperHero::takeDamage(attacker.getAttack() - SuperHero::getDefense());
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }

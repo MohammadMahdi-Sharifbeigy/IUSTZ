@@ -60,7 +60,7 @@ void Sniper::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      target.setCurrentHP(target.getCurrentHP() - damage);
+      target.takeDamage(damage);
       cout << getName() << " dealt " << damage << " damage to "
            << target.getName() << endl;
     }
@@ -68,7 +68,7 @@ void Sniper::performAttack(Human& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     if (&target) {
-      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+      target.takeDamage(this->getAttack());
     }
   }
 }
@@ -77,13 +77,13 @@ void Sniper::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      Sniper::currHP -= attacker.getAttack() - damage;
+      double defense = attackStrategy->defenseEnemy(this, enemy);
+      Sniper::takeDamage(attacker.getAttack() - defense);
       cout << Sniper::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Sniper::currHP -= (enemy->get_enemy_atk() - Sniper::getDefense());
+    Sniper::takeDamage((enemy->get_enemy_atk() - Sniper::getDefense()));
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -92,15 +92,15 @@ void Sniper::performDefense(Character& attacker) {
 void Sniper::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Sniper::currHP -= attacker.getAttack() - damage;
+        Sniper::takeDamage(attacker.getAttack() - defense);
       }
       cout << Sniper::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Sniper::currHP -= attacker.getAttack() - Sniper::getDefense();
+    Sniper::takeDamage(attacker.getAttack() - Sniper::getDefense());
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }

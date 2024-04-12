@@ -62,7 +62,7 @@ void Cyborg::performAttack(Human& target) {
   if (attackStrategy) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      target.setCurrentHP(target.getCurrentHP() - damage);
+      target.takeDamage(damage);
       cout << getName() << " dealt " << damage << " damage to "
            << target.getName() << endl;
     }
@@ -70,7 +70,7 @@ void Cyborg::performAttack(Human& target) {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
     if (&target) {
-      target.setCurrentHP(target.getCurrentHP() - this->getAttack());
+      target.takeDamage(this->getAttack());
     }
   }
 }
@@ -79,13 +79,13 @@ void Cyborg::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      Cyborg::currHP -= attacker.getAttack() - damage;
+      double defense = attackStrategy->defenseEnemy(this, enemy);
+      Cyborg::takeDamage(attacker.getAttack() - defense);
       cout << Cyborg::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Cyborg::currHP -= (enemy->get_enemy_atk() - Cyborg::getDefense());
+    Cyborg::takeDamage((enemy->get_enemy_atk() - Cyborg::getDefense()));
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -94,15 +94,15 @@ void Cyborg::performDefense(Character& attacker) {
 void Cyborg::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double damage = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Cyborg::currHP -= attacker.getAttack() - damage;
+        Cyborg::takeDamage(attacker.getAttack() - defense);
       }
       cout << Cyborg::getName() << " got defended by " << defense << " armor."
            << endl;
     }
   } else {
-    Cyborg::currHP -= attacker.getAttack() - Cyborg::getDefense();
+    Cyborg::takeDamage(attacker.getAttack() - Cyborg::getDefense());
     cout << getName() << " defends against " << attacker.getName()
          << " with a basic defense." << endl;
   }

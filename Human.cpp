@@ -22,10 +22,7 @@ void Human::takeDamage(double amount) {
   currHP -= amount;
   if (currHP < 0) {
     currHP = 0;
-  }
-  if (currHP > maxHP) {
-    currHP = maxHP;
-  }
+  }  
 };
 
 void Human::levelUp() {
