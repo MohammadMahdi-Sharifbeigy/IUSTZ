@@ -24,13 +24,13 @@ class SuperHeroAttack : public AttackStrategy {
 
   double attackOpponent(Human* currCharacter, Human* opponent) {
     // Superheroes have high attack
-    return (2 * currCharacter->getLevel() * (currCharacter->getMaxHP() 
+    return (3 * currCharacter->getLevel() * (currCharacter->getMaxHP() 
           /currCharacter->getCurrentHP()) * (currCharacter->getAttack() / opponent->getDefense()));
   }
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Superheroes have balanced defense
-    return (currCharacter->getLevel() * (currCharacter->getMaxHP()
+    return (1.5 * currCharacter->getLevel() * (currCharacter->getMaxHP()
            /currCharacter->getCurrentHP()) * (currCharacter->getDefense() / opponent->getAttack()));
   } 
 };

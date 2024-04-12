@@ -44,7 +44,6 @@ void Cyborg::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
     }
   } else {
@@ -52,8 +51,7 @@ void Cyborg::performAttack(Character& target) {
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      enemy->set_enemy_hp(Cyborg::getAttack());
-      // enemy->takeDamage(Cyborg::getAttack());
+      enemy->takeDamage(Cyborg::getAttack());
     }
   }
 }
@@ -61,19 +59,14 @@ void Cyborg::performAttack(Character& target) {
 
 void Cyborg::performAttack(Human& target) {
   if (attackStrategy) {
-   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      // enemy->set_enemy_hp(damage);
       target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
-    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
-      //enemy->set_enemy_hp(AsianMom::getAttack());
-      // enemy->takeDamage(AsianMom::getAttack());
       target.setCurrentHP(target.getCurrentHP() - this->getAttack());
     }
   }
@@ -112,11 +105,9 @@ void Cyborg::performDefense(Human& attacker) {
 void Cyborg::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
-    setMaxHP(getMaxHP() +
-             40);  // Cyborgs have high HP due to their mechanical nature
-    setAttack(getAttack() +
-              15);  // High attack increase due to advanced weaponry
-    setDefense(getDefense() + 10);  // High defense increase due to armored body
+    setMaxHP(getMaxHP() + 40);  // Cyborgs have high HP due to their mechanical nature
+    setAttack(getAttack() + 3);  // High attack increase due to advanced weaponry
+    setDefense(getDefense() + 5);  // High defense increase due to armored body
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
@@ -124,8 +115,7 @@ void Cyborg::levelUp() {
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
     setMind(getMind() + 2);
-    setCurrXP(getCurrXP() - getMaxXP());
-    setMaxXP(getMaxXP() + 25);
+    setMaxXP(getMaxXP() + 70);
 
     cout << "Your level is now " << getLevel() << "!" << endl;
   }

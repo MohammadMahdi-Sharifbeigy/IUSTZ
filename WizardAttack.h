@@ -30,13 +30,13 @@ class WizardAttack : public AttackStrategy {
 
     double attackOpponent(Human* currCharacter, Human* opponent) {
       // Wizards have high attack due to their magic
-      return (2 * currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+      return (2.5 * currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
                 * (currCharacter->getAttack() / opponent->getDefense()));
     }
 
     double defenseOpponent(Human* currCharacter, Human* opponent) {
       // Wizards have high defense due to their magic
-      return (2 * currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP()) 
+      return (2.5 * currCharacter->getLevel() * currCharacter->getMind() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP()) 
                 * ( currCharacter->getDefense() / opponent->getAttack()));
     }
 };

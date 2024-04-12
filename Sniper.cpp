@@ -42,7 +42,6 @@ void Sniper::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
     }
   } else {
@@ -50,8 +49,7 @@ void Sniper::performAttack(Character& target) {
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      enemy->set_enemy_hp(Sniper::getAttack());
-      // enemy->takeDamage(Sniper::getAttack());
+      enemy->takeDamage(Sniper::getAttack());
     }
   }
 }
@@ -59,26 +57,18 @@ void Sniper::performAttack(Character& target) {
 
 void Sniper::performAttack(Human& target) {
   if (attackStrategy) {
-   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      // enemy->set_enemy_hp(damage);
       target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
-    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
-      //enemy->set_enemy_hp(AsianMom::getAttack());
-      // enemy->takeDamage(AsianMom::getAttack());
       target.setCurrentHP(target.getCurrentHP() - this->getAttack());
     }
   }
 }
-
-
-
 
 void Sniper::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
@@ -114,20 +104,16 @@ void Sniper::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);  // Moderate HP increase
-    setAttack(getAttack() +
-              20);  // Snipers have high attack due to precision strikes
-    setDefense(getDefense() + 5);
+    setAttack(getAttack() + 4.5);  // Snipers have high attack due to precision strikes
+    setDefense(getDefense() + 3.5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
     setEndurance(getEndurance() + 2);
-    setAccuracy(getAccuracy() +
-                5);  // High accuracy increase, crucial for snipers
+    setAccuracy(getAccuracy() + 7);  // High accuracy increase, crucial for snipers
     setPace(getPace() + 2);
     setMind(getMind() + 2);
-    setCurrXP(getCurrXP() - getMaxXP());
-    setMaxXP(getMaxXP() + 25);
-
+    setMaxXP(getMaxXP() + 45);
     cout << "Your level is now " << getLevel() << "!" << endl;
   }
 }

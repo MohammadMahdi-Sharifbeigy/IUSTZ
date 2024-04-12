@@ -12,7 +12,7 @@ WeakZombie::WeakZombie(int level) : Enemy(level) {
   level ++;
   maxHP = level + rand() % (3 * level / 4) + 100; // Weaker health
   currHP = maxHP;
-  attack = 2 * level + rand() % (3 * level / 4); // Weaker attack
+  attack = 4.5 * level + rand() % (3 * level / 4); // Weaker attack
   if (attack == 0) {
       attack = 5.0;
   }

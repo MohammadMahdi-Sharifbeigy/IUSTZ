@@ -42,7 +42,6 @@ void SuperHero::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
     }
   } else {
@@ -50,34 +49,25 @@ void SuperHero::performAttack(Character& target) {
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      enemy->set_enemy_hp(SuperHero::getAttack());
-      // enemy->takeDamage(SuperHero::getAttack());
+      enemy->takeDamage(SuperHero::getAttack());
     }
   }
 }
 
 void SuperHero::performAttack(Human& target) {
   if (attackStrategy) {
-   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      // enemy->set_enemy_hp(damage);
       target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
-    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
-      //enemy->set_enemy_hp(AsianMom::getAttack());
-      // enemy->takeDamage(AsianMom::getAttack());
       target.setCurrentHP(target.getCurrentHP() - this->getAttack());
     }
   }
 }
-
-
-
 
 void SuperHero::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
@@ -106,14 +96,12 @@ void SuperHero::performDefense(Human& attacker) {
   }
 }
 
-
-
 void SuperHero::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 30);     // Moderate HP increase
-    setAttack(getAttack() + 15);   // Superheroes have strong attacks
-    setDefense(getDefense() + 5);  // Moderate defense increase
+    setAttack(getAttack() + 5);   // Superheroes have strong attacks
+    setDefense(getDefense() + 3.5);  // Moderate defense increase
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
@@ -121,8 +109,7 @@ void SuperHero::levelUp() {
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
     setMind(getMind() + 2);
-    setCurrXP(getCurrXP() - getMaxXP());
-    setMaxXP(getMaxXP() + 25);
+    setMaxXP(getMaxXP() + 75);
 
     cout << "Your level is now " << getLevel() << "!" << endl;
   }

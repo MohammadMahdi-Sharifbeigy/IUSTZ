@@ -42,7 +42,6 @@ void Wizard::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
     }
   } else {
@@ -50,8 +49,7 @@ void Wizard::performAttack(Character& target) {
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      enemy->set_enemy_hp(Wizard::getAttack());
-      // enemy->takeDamage(Wizard::getAttack());
+      enemy->takeDamage(Wizard::getAttack());
     }
   }
 }
@@ -59,26 +57,18 @@ void Wizard::performAttack(Character& target) {
 
 void Wizard::performAttack(Human& target) {
   if (attackStrategy) {
-   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      // enemy->set_enemy_hp(damage);
       target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
-    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
-      //enemy->set_enemy_hp(AsianMom::getAttack());
-      // enemy->takeDamage(AsianMom::getAttack());
       target.setCurrentHP(target.getCurrentHP() - this->getAttack());
     }
   }
 }
-
-
-
 
 void Wizard::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
@@ -113,17 +103,16 @@ void Wizard::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 20);    // Lower HP increase
-    setAttack(getAttack() + 10);  // Moderate attack increase
-    setDefense(getDefense() + 5);
+    setAttack(getAttack() + 4);  // Moderate attack increase
+    setDefense(getDefense() + 2.5);
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
     setEndurance(getEndurance() + 2);
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
-    setMind(getMind() + 5);  // Wizards are known for their wisdom and magic
-    setCurrXP(getCurrXP() - getMaxXP());
-    setMaxXP(getMaxXP() + 25);
+    setMind(getMind() + 8);  // Wizards are known for their wisdom and magic
+    setMaxXP(getMaxXP() + 55);
 
     cout << "Your level is now " << getLevel() << "!" << endl;
   }

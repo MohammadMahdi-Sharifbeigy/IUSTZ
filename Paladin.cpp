@@ -44,7 +44,6 @@ void Paladin::performAttack(Character& target) {
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
     }
   } else {
@@ -52,27 +51,21 @@ void Paladin::performAttack(Character& target) {
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      enemy->set_enemy_hp(Paladin::getAttack());
-      // enemy->takeDamage(Paladin::getAttack());
+      enemy->takeDamage(Paladin::getAttack());
     }
   }
 }
 
 void  Paladin::performAttack(Human& target) {
   if (attackStrategy) {
-   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      // enemy->set_enemy_hp(damage);
       target.setCurrentHP(target.getCurrentHP() - damage);
     }
   } else {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
-    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
-      //enemy->set_enemy_hp(AsianMom::getAttack());
-      // enemy->takeDamage(AsianMom::getAttack());
       target.setCurrentHP(target.getCurrentHP() - this->getAttack());
     }
   }
@@ -108,9 +101,8 @@ void Paladin::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 50);   // Paladins get a big HP boost
-    setAttack(getAttack() + 5);  // Moderate attack increase
-    setDefense(getDefense() +
-               10);  // Paladins are known for their strong defense
+    setAttack(getAttack() + 2.5);  // Moderate attack increase
+    setDefense(getDefense() + 4);  // Paladins are known for their strong defense
     setLevel(getLevel() + 1);
     setStamina(getStamina() + 15);
     setStrength(getStrength() + 2);
@@ -118,8 +110,7 @@ void Paladin::levelUp() {
     setAccuracy(getAccuracy() + 2);
     setPace(getPace() + 2);
     setMind(getMind() + 2);
-    setCurrXP(getCurrXP() - getMaxXP());
-    setMaxXP(getMaxXP() + 25);
+    setMaxXP(getMaxXP() + 45);
 
     cout << "Your level is now " << getLevel() << "!" << endl;
   }

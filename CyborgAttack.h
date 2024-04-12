@@ -11,25 +11,23 @@ class CyborgAttack : public AttackStrategy {
   CyborgAttack() : AttackStrategy(){};
   double attackEnemy(Character* currCharacter, Enemy* currEnemy) {
     // Cyborgs have high attack due to their mechanical nature
-    return (4 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return (2.5 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getAttack()/ currEnemy->get_enemy_def()));
   }
   double defenseEnemy(Character* currCharacter, Enemy* currEnemy) {
     // Cyborgs have high defense due to their armored body
-    return (3 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return (currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
   }
-
-
   double attackOpponent(Human* currCharacter, Human* opponent) {
     // Cyborgs have high attack due to their mechanical nature
-    return (4 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return (3.5 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getAttack() / opponent->getDefense()));
   }
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Cyborgs have high defense due to their armored body
-    return (3 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return (2.5 * currCharacter->getLevel() * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense() / opponent->getAttack()));
   } 
 };

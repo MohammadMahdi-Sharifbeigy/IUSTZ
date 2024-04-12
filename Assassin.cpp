@@ -43,16 +43,16 @@ void Assassin::performAttack(Character& target) {
   if (attackStrategy) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&target)) {
       double damage = attackStrategy->attackEnemy(this, enemy);
-      // enemy->set_enemy_hp(damage);
       enemy->takeDamage(damage);
+      cout << Assassin::getName() << " attacks " << target.getName() << " for "
+      << damage << " damage." << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getcharType()
          << " with a basic attack." << endl;
     Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (enemy) {
-      enemy->set_enemy_hp(Assassin::getAttack());
-      // enemy->takeDamage(Assassin::getAttack());
+      enemy->takeDamage(Assassin::getAttack());
     }
   }
 }
@@ -60,19 +60,16 @@ void Assassin::performAttack(Character& target) {
 
 void Assassin::performAttack(Human& target) {
   if (attackStrategy) {
-   // Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
-      // enemy->set_enemy_hp(damage);
       target.setCurrentHP(target.getCurrentHP() - damage);
+      cout << Assassin::getName() << " attacks " << target.getName() << " for "
+      << damage << " damage." << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getName()
          << " with a basic attack." << endl;
-    //Enemy* enemy = dynamic_cast<Enemy*>(&target);
     if (&target) {
-      //enemy->set_enemy_hp(AsianMom::getAttack());
-      // enemy->takeDamage(AsianMom::getAttack());
       target.setCurrentHP(target.getCurrentHP() - this->getAttack());
     }
   }
@@ -82,11 +79,15 @@ void Assassin::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double damage = attackStrategy->defenseEnemy(this, enemy);
-      Assassin::currHP -= attacker.getAttack() - damage;
+      double defense = attackStrategy->defenseEnemy(this, enemy);
+      Assassin::currHP -= attacker.getAttack() - defense;
+      cout << Assassin::getName() << " uses "
+      << defense << " for defense." << endl;
     }
   } else {
-    Assassin::currHP -= (enemy->get_enemy_atk() -  Assassin::getDefense());
+    if (enemy->get_enemy_atk() > Assassin::getDefense() ){
+      Assassin::currHP -= (enemy->get_enemy_atk() -  Assassin::getDefense());
+    }
     cout << getName() << " defends against " << attacker.getcharType()
          << " with a basic defense." << endl;
   }
@@ -95,8 +96,10 @@ void Assassin::performDefense(Character& attacker) {
 void Assassin::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double damage = attackStrategy->defenseOpponent(this, &attacker);
-      Assassin::currHP -= attacker.getAttack() - damage;
+      double defense = attackStrategy->defenseOpponent(this, &attacker);
+      Assassin::currHP -= attacker.getAttack() - defense;
+      cout << Assassin::getName() << " uses "
+      << defense << " for defense." << endl;
     }
   } else {
     Assassin::currHP -= attacker.getAttack()-Assassin::getDefense();
@@ -109,21 +112,16 @@ void Assassin::levelUp() {
   while (getCurrXP() >= getMaxXP()) {
     cout << "You have leveled up!" << endl;
     setMaxHP(getMaxHP() + 25);  // Assassins have moderate HP increase
-    setAttack(
-        getAttack() +
-        30);  // Assassins have very high attack due to their deadly skills
-    setDefense(getDefense() + 10);
+    setAttack(getAttack() + 4);  // Assassins have very high attack due to their deadly skills
+    setDefense(getDefense() + 1.5);
     setLevel(getLevel() + 1);
-    setStamina(getStamina() + 15);
+    setStamina(getStamina() + 2.5);
     setStrength(getStrength() + 2);
-    setEndurance(getEndurance() +
-                 10);  // Increase endurance, representing physical stamina
-    setAccuracy(getAccuracy() +
-                10);  // High accuracy increase, crucial for assassins
+    setEndurance(getEndurance() + 5);  // Increase endurance, representing physical stamina
+    setAccuracy(getAccuracy() + 5);  // High accuracy increase, crucial for assassins
     setPace(getPace() + 2);
     setMind(getMind() + 7);  // Increase mind, representing strategic thinking
-    setCurrXP(getCurrXP() - getMaxXP());
-    setMaxXP(getMaxXP() + 25);
+    setMaxXP(getMaxXP() + 55);
 
     cout << "Your level is now " << getLevel() << "!" << endl;
   }
