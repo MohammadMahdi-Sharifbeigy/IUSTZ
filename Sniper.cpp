@@ -77,8 +77,8 @@ void Sniper::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double defense = attackStrategy->defenseEnemy(this, enemy);
-      Sniper::takeDamage(attacker.getAttack() - defense);
+      double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
+      Sniper::takeDamage(defense);
       cout << Sniper::getName() << " got defended by " << defense << " armor."
            << endl;
     }
@@ -92,9 +92,9 @@ void Sniper::performDefense(Character& attacker) {
 void Sniper::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double defense = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Sniper::takeDamage(attacker.getAttack() - defense);
+        Sniper::takeDamage(defense);
       }
       cout << Sniper::getName() << " got defended by " << defense << " armor."
            << endl;

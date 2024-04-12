@@ -79,8 +79,8 @@ void Cyborg::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double defense = attackStrategy->defenseEnemy(this, enemy);
-      Cyborg::takeDamage(attacker.getAttack() - defense);
+      double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
+      Cyborg::takeDamage(defense);
       cout << Cyborg::getName() << " got defended by " << defense << " armor."
            << endl;
     }
@@ -94,9 +94,9 @@ void Cyborg::performDefense(Character& attacker) {
 void Cyborg::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double defense = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Cyborg::takeDamage(attacker.getAttack() - defense);
+        Cyborg::takeDamage(defense);
       }
       cout << Cyborg::getName() << " got defended by " << defense << " armor."
            << endl;

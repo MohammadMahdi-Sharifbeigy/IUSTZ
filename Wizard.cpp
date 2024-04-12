@@ -77,8 +77,8 @@ void Wizard::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double defense = attackStrategy->defenseEnemy(this, enemy);
-      Wizard::takeDamage(attacker.getAttack() - defense);
+      double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
+      Wizard::takeDamage(defense);
       cout << Wizard::getName() << " got defended by " << defense << " armor."
            << endl;
     }
@@ -92,9 +92,9 @@ void Wizard::performDefense(Character& attacker) {
 void Wizard::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double defense = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Wizard::takeDamage(attacker.getAttack() - defense);
+        Wizard::takeDamage(defense);
       }
       cout << Wizard::getName() << " got defended by " << defense << " armor."
            << endl;

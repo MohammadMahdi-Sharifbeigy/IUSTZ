@@ -77,8 +77,8 @@ void SuperHero::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double defense = attackStrategy->defenseEnemy(this, enemy);
-      SuperHero::takeDamage(attacker.getAttack() - defense);
+      double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
+      SuperHero::takeDamage(defense);
       cout << SuperHero::getName() << " got defended by " << defense
            << " armor." << endl;
     }
@@ -92,9 +92,9 @@ void SuperHero::performDefense(Character& attacker) {
 void SuperHero::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double defense = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        SuperHero::takeDamage(attacker.getAttack() - defense);
+        SuperHero::takeDamage(defense);
       }
       cout << SuperHero::getName() << " got defended by " << defense
            << " armor." << endl;

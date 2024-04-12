@@ -12,7 +12,7 @@ StrongZombie::StrongZombie(int level) : Enemy(level) {
   level++;
   maxHP = 3 * level + rand() % (5 * level / 2) + 100 ; // Stronger health
   currHP = maxHP;
-  attack = 7 * level + rand() % (5 * level / 2); // Stronger attack
+  attack = 5 * level + rand() % (5 * level / 2); // Stronger attack
   if (attack == 0) {
       attack = 10.0;
   }

@@ -79,8 +79,8 @@ void Paladin::performDefense(Character& attacker) {
   Enemy* enemy = dynamic_cast<Enemy*>(&attacker);
   if (attackStrategy) {
     if (enemy) {
-      double defense = attackStrategy->defenseEnemy(this, enemy);
-      Paladin::takeDamage(attacker.getAttack() - defense);
+      double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
+      Paladin::takeDamage(defense);
       cout << Paladin::getName() << " got defended by " << defense << " armor."
            << endl;
     }
@@ -94,9 +94,9 @@ void Paladin::performDefense(Character& attacker) {
 void Paladin::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double defense = attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);
       if (attacker.getAttack() >= defense) {
-        Paladin::takeDamage(attacker.getAttack() - defense);
+        Paladin::takeDamage(defense);
       }
       cout << Paladin::getName() << " got defended by " << defense << " armor."
            << endl;
