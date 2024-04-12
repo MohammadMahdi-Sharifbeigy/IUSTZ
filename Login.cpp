@@ -658,6 +658,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -673,6 +674,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -687,9 +689,10 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(18, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-        for (int i = 1; i < 3; i++) {
-      player->levelUp();
-      clearScreen();
+      for (int i = 1; i < 3; i++) {
+        player->setCurrXP(player->getMaxXP() + 1); 
+        player->levelUp();
+        clearScreen();
     }
     player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
@@ -703,6 +706,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -718,6 +722,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -733,6 +738,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -748,6 +754,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -805,6 +812,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -820,6 +828,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -835,6 +844,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -850,6 +860,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -865,6 +876,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -880,6 +892,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
@@ -895,6 +908,7 @@ static vector<Human*> LoginMultiplayer() {
     player->addInventory(armor);
     player->addInventory(potion);
     for (int i = 1; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
       clearScreen();
     }
