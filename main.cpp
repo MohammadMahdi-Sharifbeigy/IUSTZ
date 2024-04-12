@@ -5,6 +5,7 @@
 #include <iostream>
 #include <limits>
 #include <vector>
+#include <SFML/Audio.hpp>
 #include "Character.h"
 #include "CharacterType.h"
 #include "Enemy.h"
@@ -898,6 +899,25 @@ void gameLoopMulti(GameStateMulti& gameState) {
 
 int main() {
   clearScreen();
+    cout << Wellcome1 << endl;
+    //       // Load an audio file
+    // sf::SoundBuffer WelcomeBuffer;
+    // if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
+    //     std::cerr << "Could not load the Welcome audio file!" << std::endl;
+    // }
+
+    // // Create a sound object and play it
+    // sf::Sound WelcomeSound;
+    // WelcomeSound.setBuffer(WelcomeBuffer);
+    // WelcomeSound.play();
+    // cout  << Wellcome1 << endl;
+    // // Wait until the sound is finished
+    // while (WelcomeSound.getStatus() == sf::Sound::Playing) {
+    //     // Keep the program running until the sound has finished playing
+    //     sf::sleep(sf::milliseconds(100));
+    // }
+
+    clearScreen();
   cout << "Do you want to play multiplayer or single player? (m/s)" << endl;
   char choice;
   cin >> choice;
