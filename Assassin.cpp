@@ -44,8 +44,8 @@ void Assassin::performAttack(Character& target) {
     if (Enemy* enemy = dynamic_cast<Enemy*>(&target)) {
       double damage = attackStrategy->attackEnemy(this, enemy);
       enemy->takeDamage(damage);
-      cout << Assassin::getName() << " attacks " << target.getName() << " for "
-           << damage << " damage." << endl;
+      cout << getName() << " dealt " << damage << " damage to "
+           << target.getName() << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getcharType()
@@ -62,8 +62,8 @@ void Assassin::performAttack(Human& target) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
       target.setCurrentHP(target.getCurrentHP() - damage);
-      cout << Assassin::getName() << " attacks " << target.getName() << " for "
-           << damage << " damage." << endl;
+      cout << getName() << " dealt " << damage << " damage to "
+           << target.getName() << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getName()

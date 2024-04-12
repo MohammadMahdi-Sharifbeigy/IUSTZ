@@ -43,6 +43,8 @@ void SuperHero::performAttack(Character& target) {
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
       enemy->takeDamage(damage);
+      cout << getName() << " dealt " << damage << " damage to "
+           << target.getName() << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getcharType()
@@ -59,6 +61,8 @@ void SuperHero::performAttack(Human& target) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
       target.setCurrentHP(target.getCurrentHP() - damage);
+      cout << getName() << " dealt " << damage << " damage to "
+           << target.getName() << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getName()
@@ -75,8 +79,8 @@ void SuperHero::performDefense(Character& attacker) {
     if (enemy) {
       double damage = attackStrategy->defenseEnemy(this, enemy);
       SuperHero::currHP -= attacker.getAttack() - damage;
-      cout << SuperHero::getName() << " got defended by " << defense << " armor."
-           << endl;
+      cout << SuperHero::getName() << " got defended by " << defense
+           << " armor." << endl;
     }
   } else {
     SuperHero::currHP -= (enemy->get_enemy_atk() - SuperHero::getDefense());
@@ -90,8 +94,8 @@ void SuperHero::performDefense(Human& attacker) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
       SuperHero::currHP -= attacker.getAttack() - damage;
-      cout << SuperHero::getName() << " got defended by " << defense << " armor."
-           << endl;
+      cout << SuperHero::getName() << " got defended by " << defense
+           << " armor." << endl;
     }
   } else {
     SuperHero::currHP -= attacker.getAttack() - SuperHero::getDefense();

@@ -43,6 +43,8 @@ void Wizard::performAttack(Character& target) {
     if (enemy) {
       double damage = attackStrategy->attackEnemy(this, enemy);
       enemy->takeDamage(damage);
+      cout << getName() << " dealt " << damage << " damage to "
+           << target.getName() << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getcharType()
@@ -59,6 +61,8 @@ void Wizard::performAttack(Human& target) {
     if (&target) {
       double damage = attackStrategy->attackOpponent(this, &target);
       target.setCurrentHP(target.getCurrentHP() - damage);
+      cout << getName() << " dealt " << damage << " damage to "
+           << target.getName() << endl;
     }
   } else {
     cout << getName() << " attacks " << target.getName()
