@@ -125,63 +125,6 @@ void AsianMom::levelUp() {
   }
 }
 
-// AsianMomView Member Function Definitions
-void AsianMomView::displayAsianMomStatus(AsianMom& asianMom) {
-  // Display AsianMom's status to the user
-  cout << "Character Status: " << endl;
-  cout << "Name: " << asianMom.getName() << endl;
-  cout << "Age: " << asianMom.getAge() << endl;
-  cout << "HP: " << asianMom.getCurrentHP() << " / " << asianMom.getMaxHP()
-       << endl;
-  cout << "XP: " << asianMom.getCurrXP() << " / "
-       << asianMom.getNextLevelXP(asianMom.getMaxXP(), asianMom.getCurrXP())
-       << endl;
-  cout << "Attack: " << asianMom.getAttack() << endl;
-  cout << "Defense: " << asianMom.getDefense() << endl;
-  cout << "Stamina: " << asianMom.getStamina() << endl;
-  cout << "Strength: " << asianMom.getStrength() << endl;
-  cout << "Endurance: " << asianMom.getEndurance() << endl;
-  cout << "Accuracy: " << asianMom.getAccuracy() << endl;
-  cout << "Pace: " << asianMom.getPace() << endl;
-  cout << "Mind: " << asianMom.getMind() << endl;
-  cout << "Coins: " << asianMom.getCoin() << endl;
-  cout << "Role: " << asianMom.getRole() << endl;
-  if (asianMom.getArmor()) {
-    cout << "Armor ID: " << asianMom.getArmor()->getID() << endl;
-  } else {
-    cout << "Armor: None" << endl;
-  }
-  if (asianMom.getWeapon()) {
-    cout << "Weapon ID: " << asianMom.getWeapon()->getID() << endl;
-  } else {
-    cout << "Weapon: None" << endl;
-  }
-}
-
-// AsianMomController Member Function Definitions
-AsianMomController::AsianMomController(const AsianMom& model,
-                                       const AsianMomView& view)
-    : model(model), view(view) {}
-
-void AsianMomController::updateView() {
-  view.displayAsianMomStatus(model);
-}
-
-void AsianMomController::handleAttack(Character& target) {
-  model.performAttack(target);
-  updateView();
-}
-
-void AsianMomController::handleDefense(Character& attacker) {
-  model.performDefense(attacker);
-  updateView();
-}
-
-void AsianMomController::handleLevelUp() {
-  model.levelUp();
-  updateView();
-}
-
 inline characterType StringToCharacterType(const string& str) {
   if (str == "Paladin")
     return PALADIN;

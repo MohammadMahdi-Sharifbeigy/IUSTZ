@@ -1,4 +1,3 @@
-// AsianMom.h - Combining Model, View, and Controller
 #ifndef ASIANMOM_H
 #define ASIANMOM_H
 
@@ -9,7 +8,6 @@
 
 using namespace std;
 
-// Model
 class AsianMom : public Human {
  private:
   AttackStrategy* attackStrategy;
@@ -24,28 +22,13 @@ class AsianMom : public Human {
   void performDefense(Character& attacker) override;
   void performDefense(Human& attacker) override;
   virtual void levelUp() override;
-  void AsianMomToFile(const string& username);
-  void FileToAsianMom(const string& username);
-};
 
-// View
-class AsianMomView {
- public:
-  void displayAsianMomStatus(AsianMom& asianMom); // Declaration only
-};
-
-// Controller
-class AsianMomController {
- private:
-  AsianMom model;
-  AsianMomView view;
-
- public:
-  AsianMomController(const AsianMom& model, const AsianMomView& view);
-  void updateView();
   void handleAttack(Character& target);
   void handleDefense(Character& attacker);
   void handleLevelUp();
+
+  void AsianMomToFile(const string& username);
+  void FileToAsianMom(const string& username);
 };
 
 #endif  // ASIANMOM_H
