@@ -301,12 +301,46 @@ void handleShopInteraction(GameState& gameState) {
   shop.welcomeShop(gameState.getPlayerCharacter());
 }
 
+void easterEgg(Human* player) {
+  clearScreen();
+  cout << ".";
+  sleepMilliseconds(500);
+  cout << ".";
+  sleepMilliseconds(500);
+  cout << ".";
+  sleepMilliseconds(500);
+  clearScreen();
+  cout << "Sike! It's not an option!" << endl;
+  sleepMilliseconds(1000);
+  cout << "Type \"save me\" to get back to the game" << endl;
+  string input;
+  cin >> input;
+  while (input != "save me") {
+    cout << "I said, type \"save me\"" << endl;
+    cin >> input;
+  }
+  clearScreen();
+  cout << ".";
+  sleepMilliseconds(500);
+  cout << ".";
+  sleepMilliseconds(500);
+  cout << ".";
+  sleepMilliseconds(500);
+  cout << "Do you want us to save you as PDF or JPEG?" << endl;
+  sleepMilliseconds(3000);
+  cout << "HAHAHA" << endl;
+  sleepMilliseconds(1000);
+  cout << "Kidding!" << endl;
+  playerDied(player);
+}
+
 void combatMenu(Human* player) {
   cout << "\nCombat Options:" << endl;
   cout << "1. Attack" << endl;
   cout << "2. Defend" << endl;
   cout << "3. Use Potion" << endl;
   cout << "4. View Inventory" << endl;
+  cout << "0 for Suicide..." << endl;
   cout << "Choose an action: ";
 }
 
@@ -346,6 +380,9 @@ void combat(Human* player, Enemy* enemy) {
     int choice;
     cin >> choice;
     switch (choice) {
+      case 0:
+        easterEgg(player);
+        break;
       case 1:
         clearScreen();
         synergy = player->chooseAtkItem();
@@ -514,6 +551,9 @@ void combatMulti(Human* player1, Human* player2) {
     combatMenu(player1);
     cin >> choice1;
     switch (choice1) {
+      case 0:
+        easterEgg(player1);
+        break;
       case 1: {
         clearScreen();
         synergy1 = player1->chooseAtkItem();
@@ -623,6 +663,9 @@ void combatMulti(Human* player1, Human* player2) {
     combatMenu(player2);
     cin >> choice2;
     switch (choice2) {
+      case 0:
+        easterEgg(player2);
+        break;
       case 1: {
         clearScreen();
         synergy2 = player2->chooseAtkItem();
