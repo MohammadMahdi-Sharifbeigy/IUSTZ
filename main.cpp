@@ -303,34 +303,35 @@ void handleShopInteraction(GameState& gameState) {
 
 void easterEgg(Human* player) {
   clearScreen();
-  cout << ".";
+  cout << "." << flush;
   sleepMilliseconds(500);
-  cout << ".";
+  cout << "." << flush;
   sleepMilliseconds(500);
-  cout << ".";
+  cout << "." << flush;
   sleepMilliseconds(500);
   clearScreen();
-  cout << "Sike! It's not an option!" << endl;
+  cout << "Sike! It's not an option!" << flush << endl;
   sleepMilliseconds(1000);
-  cout << "Type \"save me\" to get back to the game" << endl;
+  cout << "Type \"save\" to get back to the game" << endl;
   string input;
   cin >> input;
-  while (input != "save me") {
-    cout << "I said, type \"save me\"" << endl;
+  while (input != "save") {
+    cout << "I said, type \"save\"" << endl;
     cin >> input;
   }
   clearScreen();
-  cout << ".";
+  cout << "." << flush;
   sleepMilliseconds(500);
-  cout << ".";
+  cout << "." << flush;
   sleepMilliseconds(500);
-  cout << ".";
+  cout << "." << flush;
   sleepMilliseconds(500);
-  cout << "Do you want us to save you as PDF or JPEG?" << endl;
+  cout << "Do you want us to save you as PDF or JPEG?" << flush << endl;
   sleepMilliseconds(3000);
   cout << "HAHAHA" << endl;
   sleepMilliseconds(1000);
   cout << "Kidding!" << endl;
+  waitForEnter();
   playerDied(player);
 }
 
