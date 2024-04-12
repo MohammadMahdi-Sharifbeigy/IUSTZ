@@ -95,7 +95,9 @@ void Cyborg::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
-      Cyborg::currHP -= attacker.getAttack() - damage;
+      if (attacker.getAttack() >= defense) {
+        Cyborg::currHP -= attacker.getAttack() - damage;
+      }
       cout << Cyborg::getName() << " got defended by " << defense << " armor."
            << endl;
     }

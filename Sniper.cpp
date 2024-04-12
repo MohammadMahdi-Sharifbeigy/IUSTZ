@@ -93,7 +93,9 @@ void Sniper::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
-      Sniper::currHP -= attacker.getAttack() - damage;
+      if (attacker.getAttack() >= defense) {
+        Sniper::currHP -= attacker.getAttack() - damage;
+      }
       cout << Sniper::getName() << " got defended by " << defense << " armor."
            << endl;
     }

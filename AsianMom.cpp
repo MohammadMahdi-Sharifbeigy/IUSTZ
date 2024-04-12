@@ -93,7 +93,9 @@ void AsianMom::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
-      AsianMom::currHP -= attacker.getAttack() - damage;
+      if (attacker.getAttack() >= defense) {
+        AsianMom::currHP -= attacker.getAttack() - damage;
+      }
       cout << AsianMom::getName() << " got defended by " << defense << " armor."
            << endl;
     }

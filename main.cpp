@@ -518,36 +518,17 @@ void combatMulti(Human* player1, Human* player2) {
 
   vector<Item*> items1 = player1->getInventory();
   vector<Item*> defenseItems1;
-  double synergy1;
+  double synergy1, synergy2, defsynergy1, defsynergy2;
   Item* playerPotion1;
 
   int choice1;
   vector<Item*> items2 = player2->getInventory();
   vector<Item*> defenseItems2;
-  double synergy2;
   Item* playerPotion2;
   int choice2;
 
   while (player1->getCurrentHP() > 0 && player2->getCurrentHP() > 0) {
     // Player 1's turn
-    /*  int damageToPlayer2 = player1->getAttack();
-      cout << player1->getName() << " attacks " << player2->getName() << " for "
-           << damageToPlayer2 << " damage." << endl;
-      player2->takeDamage(damageToPlayer2);
-      displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                       player2->getMaxHP());*/
-    /* vector<Item*> items1 = player1->getInventory();
-     vector<Item*> defenseItems1;
-     double synergy1;
-     Item* playerPotion1;
-     combatMenu(player1);
-     int choice1;
-     vector<Item*> items2 = player2->getInventory();
-     vector<Item*> defenseItems2;
-     double synergy2;
-     Item* playerPotion2;
-     combatMenu(player2);
-     int choice2;*/
     cout << endl << player1->getName() << "'s Turn: " << endl;
     combatMenu(player1);
     cin >> choice1;
@@ -566,10 +547,9 @@ void combatMulti(Human* player1, Human* player2) {
       }
       case 2: {
         clearScreen();
-        double defsynergy1 = player1->chooseDefItems();
+        defsynergy1 = player1->chooseDefItems();
         player1->setDefense(player1->getDefense() + defsynergy1);
         player1->performDefense(*player2);
-        player1->setDefense(player1->getDefense() - defsynergy1);
         break;
       }
       case 3: {
@@ -647,19 +627,17 @@ void combatMulti(Human* player1, Human* player2) {
       break;
     }
 
-    // Player 2's turn
-    /* int damageToPlayer1 = player2->getAttack();
-     cout << player2->getName() << " attacks " << player1->getName() << " for "
-          << damageToPlayer1 << " damage." << endl;
-     player1->takeDamage(damageToPlayer1);
-     displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                      player1->getMaxHP());*/
     displayHealthBar(player1->getName(), player1->getCurrentHP(),
                      player1->getMaxHP());
     cout << endl;
     displayHealthBar(player2->getName(), player2->getCurrentHP(),
                      player2->getMaxHP());
 
+    if (choice2 == 2) {
+      player2->setDefense(player2->getDefense() - defsynergy2);
+    }
+
+    // Player 2's turn
     cout << endl << player2->getName() << "'s Turn: " << endl;
     combatMenu(player2);
     cin >> choice2;
@@ -677,33 +655,9 @@ void combatMulti(Human* player1, Human* player2) {
       }
       case 2: {
         clearScreen();
-        for (size_t i = 0; i < items2.size(); ++i) {
-          if (items2[i]->getID() >= 1 && items2[i]->getID() <= 7) {
-            defenseItems2.push_back(items2[i]);
-          }
-        }
-        if (defenseItems2.size() == 0) {
-          cout << "No defense items available." << endl;
-
-          continue;
-        }
-        cout << "Choose a defense item to use:" << endl;
-        for (size_t i = 0; i < defenseItems2.size(); ++i) {
-          cout << i + 1 << ". " << defenseItems2[i]->getName() << endl;
-        }
-        int defenseChoice2;
-        cin >> defenseChoice2;
-        while (defenseChoice2 < 1 || defenseChoice2 > defenseItems2.size()) {
-          cout << "Invalid choice." << endl;
-          cin >> defenseChoice2;
-        }
-        double defsynergy2 = player2->chooseDefItems();
+        defsynergy2 = player2->chooseDefItems();
         player2->setDefense(player2->getDefense() + defsynergy2);
         player2->performDefense(*player2);
-        player2->setDefense(player2->getDefense() + defsynergy2);
-        cout << player2->getName() << " uses "
-             << defenseItems2[defenseChoice2 - 1]->getName() << " for defense."
-             << endl;
         break;
       }
       case 3: {
@@ -779,6 +733,9 @@ void combatMulti(Human* player1, Human* player2) {
     if (player1->getCurrentHP() <= 0) {
       cout << player1->getName() << " has been defeated!" << endl;
       break;
+    }
+    if (choice1 == 2) {
+      player1->setDefense(player1->getDefense() - defsynergy1);
     }
     displayHealthBar(player1->getName(), player1->getCurrentHP(),
                      player1->getMaxHP());

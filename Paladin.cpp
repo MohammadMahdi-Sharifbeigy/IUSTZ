@@ -94,7 +94,9 @@ void Paladin::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
-      Paladin::currHP -= attacker.getAttack() - damage;
+      if (attacker.getAttack() >= defense) {
+        Paladin::currHP -= attacker.getAttack() - damage;
+      }
       cout << Paladin::getName() << " got defended by " << defense << " armor."
            << endl;
     }

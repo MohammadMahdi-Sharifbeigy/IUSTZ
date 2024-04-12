@@ -93,7 +93,9 @@ void Wizard::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
       double damage = attackStrategy->defenseOpponent(this, &attacker);
-      Wizard::currHP -= attacker.getAttack() - damage;
+      if (attacker.getAttack() >= defense) {
+        Wizard::currHP -= attacker.getAttack() - damage;
+      }
       cout << Wizard::getName() << " got defended by " << defense << " armor."
            << endl;
     }
