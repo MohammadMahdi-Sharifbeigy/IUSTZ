@@ -28,6 +28,7 @@
 #include "Katana.h"
 #include "LaserGun.h"
 #include "LittleRobots.h"
+#include "Login.cpp"
 #include "MagicShield.h"
 #include "NinjaStar.h"
 #include "Nuts.h"
@@ -48,9 +49,15 @@
 #include "Throwable.h"
 #include "Wand.h"
 #include "WhipOfTruth.h"
-#include "Login.cpp"
 
 using namespace std;
+
+static void waitForEnter() {
+  cout << "Press Enter to continue...";
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  string input;
+  getline(cin, input);
+}
 
 Shop::Shop() {}
 
@@ -255,6 +262,7 @@ void Shop::buyItem(Human* human) {
 
     choice = stoi(schoice);
     if (choice == 0) {
+      clearScreen();
       break;
     } else if (choice >= 1 && choice <= 21) {
       buy(choice, human);
@@ -276,14 +284,16 @@ void Shop::buyItemWithCountLimit(int choice,
   if (nowcount >= maxCount) {
     cout << "Sorry, you already have the maximum limit of " << maxCount
          << " of this item. You can't buy more!" << endl;
+    waitForEnter();
     return;
   }
-    if(item->isVIP()){
-        if(human->getLevel()<5){
-            cout<<"Sorry you can't buy VIP items untill you reach level 5"<<endl;
-            return;
-        }
+  if (item->isVIP()) {
+    if (human->getLevel() < 5) {
+      cout << "Sorry you can't buy VIP items untill you reach level 5" << endl;
+      waitForEnter();
+      return;
     }
+  }
 
   cout << "How many do you want? ";
 
@@ -323,21 +333,24 @@ void Shop::buyItemWithCountLimit(int choice,
   int totalPrice = item->getPrice() * count;
   if (human->getCoin() < totalPrice) {
     cout << "Sorry, you don't have enough coins to buy the item." << endl;
+    waitForEnter();
     return;
   }
 
   human->setCoin(human->getCoin() - totalPrice);
   human->addInventory(item, count);
+  waitForEnter();
 }
 
 void Shop::buy(int choice, Human* human) {
   Item* item = ItemFactory::createItem(choice, human, false);
-    if(item->isVIP()){
-        if(human->getLevel()<5){
-            cout<<"Sorry you can't buy VIP items untill you reach level 5"<<endl;
-            return;
-        }
+  if (item->isVIP()) {
+    if (human->getLevel() < 5) {
+      cout << "Sorry you can't buy VIP items untill you reach level 5" << endl;
+      waitForEnter();
+      return;
     }
+  }
   if (human->getCoin() < item->getPrice()) {
     cout << "Sorry, you don't have enough coins to buy the item." << endl;
   } else if (human->existInInventory(item)) {
@@ -347,10 +360,11 @@ void Shop::buy(int choice, Human* human) {
     cout << "you bought " << item->getName() << "!" << endl;
     human->addInventory(item);
   }
+  waitForEnter();
 }
 
 void Shop::sell(Human* human) {
-//  human->showInventory();
+  //  human->showInventory();
   if (human->inventorySize() == 0) {
     cout << "You don't have any items to sell! Enter 0 to exit." << endl;
     int index;
@@ -367,12 +381,13 @@ void Shop::sell(Human* human) {
         cin >> sindex;
       }
     }
+    clearScreen();
     return;
   }
   int index = 1;
   string sindex;
   while (index != 0) {
-      human->showInventory();
+    human->showInventory();
     cout << "Enter the number of the item that you want to sell or enter 0 to "
             "exit:"
          << endl;
@@ -421,24 +436,25 @@ void Shop::sell(Human* human) {
       }
       count = stoi(scount);
       double price = human->priceItemsAt(index);
-        Item* item = human->itemsAt(index);
-        cout << "You sold "<<count<<" "<<item->getName()<<endl;
+      Item* item = human->itemsAt(index);
+      cout << "You sold " << count << " " << item->getName() << endl;
       human->removeInventory(index, count);
       human->setCoin(human->getCoin() + price * count);
-        cout << "Coins : "<< human->getCoin()<<endl;
+      cout << "Coins : " << human->getCoin() << endl;
     } else {
-        count = 1;
+      count = 1;
       double price = human->priceItemsAt(index);
-        Item* item = human->itemsAt(index);
-        cout << "You sold "<<count<<" "<<item->getName()<<endl;
+      Item* item = human->itemsAt(index);
+      cout << "You sold " << count << " " << item->getName() << endl;
       human->removeInventory(index, count);
       human->setCoin(human->getCoin() + price * count);
-        cout << "Coins : "<< human->getCoin()<<endl;
+      cout << "Coins : " << human->getCoin() << endl;
     }
+    waitForEnter();
   }
 }
 
-void Shop::welcomShop(Human* human) {
+void Shop::welcomeShop(Human* human) {
   cout << "**********WELCOME TO THE SHOP**********" << endl << endl;
   int choice = 1;
   string schoice;
@@ -461,12 +477,13 @@ void Shop::welcomShop(Human* human) {
     }
   }
   choice = stoi(schoice);
+  clearScreen();
   Shop shop = Shop();
   if (choice == 1) {
     shop.buyItem(human);
-      saveCharacter(human);
+    saveCharacter(human);
   } else if (choice == 2) {
     shop.sell(human);
-      saveCharacter(human);
+    saveCharacter(human);
   }
 }

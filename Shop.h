@@ -1,15 +1,13 @@
 #ifndef SHOP_H
 #define SHOP_H
 
-#include "Character.h"
-#include "Human.h"
-#include "Item.h"
-#include "Passive.h"
 #include "AraghNana.h"
 #include "Armor.h"
 #include "Book.h"
 #include "Bow.h"
 #include "BulletproofJacket.h"
+#include "Character.h"
+#include "CheckNumber.h"
 #include "Cloak.h"
 #include "Colt.h"
 #include "Consumable.h"
@@ -21,13 +19,16 @@
 #include "Food.h"
 #include "Grenade.h"
 #include "HealingPotion.h"
+#include "Human.h"
 #include "IronBody.h"
+#include "Item.h"
 #include "Katana.h"
 #include "LaserGun.h"
 #include "LittleRobots.h"
 #include "MagicShield.h"
 #include "NinjaStar.h"
 #include "Nuts.h"
+#include "Passive.h"
 #include "Pepper.h"
 #include "PersianDad.h"
 #include "PoisonDagger.h"
@@ -44,26 +45,25 @@
 #include "Throwable.h"
 #include "Wand.h"
 #include "WhipOfTruth.h"
-#include "CheckNumber.h"
 
+class Shop {
+ public:
+  Shop();
 
-class Shop{
-public:
-    Shop();
+  void showShop();
 
-    void showShop();
+  void buyItem(Human* human);
 
-    void buyItem(Human *human);
-    
-    void buyItemWithCountLimit(int choice, Human* human, Item* item, int maxCount);
+  void buyItemWithCountLimit(int choice,
+                             Human* human,
+                             Item* item,
+                             int maxCount);
 
-    void buy (int choice, Human* human);
-    
-    void sell(Human* human);
-    
-    void welcomShop(Human* human);
-    
+  void buy(int choice, Human* human);
+
+  void sell(Human* human);
+
+  void welcomeShop(Human* human);
 };
-
 
 #endif /* SHOP_H */

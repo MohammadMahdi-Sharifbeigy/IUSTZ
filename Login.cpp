@@ -1,7 +1,7 @@
 #include "Login.h"
 #include <string.h>
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 #include <sstream>
 #include <vector>
 #include "AraghNana.h"
@@ -68,7 +68,6 @@ static void clearScreen() {
 #endif
 }
 
-
 static void saveCharacter(Human* human) {
   string username = human->getUserName();
   if (human->getRole() == characterType::PALADIN) {
@@ -76,11 +75,11 @@ static void saveCharacter(Human* human) {
     player->PaladinToFile(username);
 
   } else if (human->getRole() == characterType::ASSASSIN) {
-    //cout << "here" << endl;
+    // cout << "here" << endl;
     Assassin* player = dynamic_cast<Assassin*>(human);
-   // cout << "no, here" << endl;
+    // cout << "no, here" << endl;
     player->AssassinToFile(player);
-    //cout << "no no no" << endl;
+    // cout << "no no no" << endl;
 
   } else if (human->getRole() == characterType::SUPERHERO) {
     SuperHero* player = dynamic_cast<SuperHero*>(human);
@@ -104,60 +103,50 @@ static void saveCharacter(Human* human) {
   }
 }
 
-static void giveBasicItems(Human* player){
-    if (player->getRole() == characterType::PALADIN) {
-      Item* armor = ItemFactory::createItem(1, player, true);
-      Item* potion = ItemFactory::createItem(29, player, true);
-      player->addInventory(armor);
-      player->addInventory(potion);
-     
-    } else if (player->getRole() == characterType::ASSASSIN) {
-      Item* armor = ItemFactory::createItem(2, player, true);
-      Item* potion = ItemFactory::createItem(29, player, true);
-      player->addInventory(armor);
-      player->addInventory(potion);
-      
-    } else if (player->getRole() == characterType::SUPERHERO) {
-      Item* armor = ItemFactory::createItem(6, player, true);
-      Item* potion = ItemFactory::createItem(18, player, true);
-      player->addInventory(armor);
-      player->addInventory(potion);
-     
-    } else if (player->getRole() == characterType::SNIPER) {
-      Item* armor = ItemFactory::createItem(5, player, true);
-      Item* potion =ItemFactory::createItem(29, player, true);
-      player->addInventory(armor);
-      player->addInventory(potion);
-        
-    } else if (player->getRole() == characterType::WIZARD) {
-      Item* armor = ItemFactory::createItem(3, player, true);
-      Item* potion = ItemFactory::createItem(29, player, true);
-      player->addInventory(armor);
-      player->addInventory(potion);
-      
-    } else if (player->getRole() == characterType::CYBORG) {
-      Item* armor = ItemFactory::createItem(4, player, true);
-      Item* potion =ItemFactory::createItem(29, player, true);
-      player->addInventory(armor);
-      player->addInventory(potion);
-      
-    } else {
-      Item* armor = ItemFactory::createItem(7, player , true);
-      Item* potion = ItemFactory::createItem(29, player, true);
-      player->addInventory(armor);
-      player->addInventory(potion);
-      
-    }
+static void giveBasicItems(Human* player) {
+  if (player->getRole() == characterType::PALADIN) {
+    Item* armor = ItemFactory::createItem(1, player, true);
+    Item* potion = ItemFactory::createItem(29, player, true);
+    player->addInventory(armor);
+    player->addInventory(potion);
 
-    
-    
-    
-    
+  } else if (player->getRole() == characterType::ASSASSIN) {
+    Item* armor = ItemFactory::createItem(2, player, true);
+    Item* potion = ItemFactory::createItem(29, player, true);
+    player->addInventory(armor);
+    player->addInventory(potion);
+
+  } else if (player->getRole() == characterType::SUPERHERO) {
+    Item* armor = ItemFactory::createItem(6, player, true);
+    Item* potion = ItemFactory::createItem(18, player, true);
+    player->addInventory(armor);
+    player->addInventory(potion);
+
+  } else if (player->getRole() == characterType::SNIPER) {
+    Item* armor = ItemFactory::createItem(5, player, true);
+    Item* potion = ItemFactory::createItem(29, player, true);
+    player->addInventory(armor);
+    player->addInventory(potion);
+
+  } else if (player->getRole() == characterType::WIZARD) {
+    Item* armor = ItemFactory::createItem(3, player, true);
+    Item* potion = ItemFactory::createItem(29, player, true);
+    player->addInventory(armor);
+    player->addInventory(potion);
+
+  } else if (player->getRole() == characterType::CYBORG) {
+    Item* armor = ItemFactory::createItem(4, player, true);
+    Item* potion = ItemFactory::createItem(29, player, true);
+    player->addInventory(armor);
+    player->addInventory(potion);
+
+  } else {
+    Item* armor = ItemFactory::createItem(7, player, true);
+    Item* potion = ItemFactory::createItem(29, player, true);
+    player->addInventory(armor);
+    player->addInventory(potion);
+  }
 }
-
-
-
-
 
 static Human* Login() {
   cout << "***Welcome to our game***" << endl;
@@ -180,6 +169,7 @@ menu:
     }
   }
   choice = stoi(schoice);
+  clearScreen();
   if (choice == 1) {
   signup:
     cout << "***Sign up***" << endl;
@@ -201,7 +191,8 @@ menu:
         goto signup;
       }
     }
-    cout << "Now , let's answer some questions !" << endl << endl;
+    clearScreen();
+    cout << "Now, let's answer some questions!" << endl << endl;
     vector<question> ques;
     question ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9,
         ques10;
@@ -327,6 +318,7 @@ menu:
       }
       choice = stoi(schoice);
       characters[choice - 1]++;
+      clearScreen();
     }
     int* max = max_element(begin(characters), characters + 7);
     long maxindex = distance(begin(characters), max);
@@ -344,38 +336,32 @@ menu:
       cout << "We recommend you to choose <Paladin> as your character based on "
               "your personality!"
            << endl;
-      cout << "But you are free to choose any character you want!" << endl;
     } else if (maxindex == 1) {
       cout << "We recommend you to choose <Assassin> as your character based "
               "on your personality!"
            << endl;
-      cout << "But you are free to choose any character you want!" << endl;
     } else if (maxindex == 2) {
       cout << "We recommend you to choose <SuperHero> as your character based "
               "on your personality!"
            << endl;
-      cout << "But you are free to choose any character you want!" << endl;
     } else if (maxindex == 3) {
       cout << "We recommend you to choose <Sniper> as your character based on "
               "your personality!"
            << endl;
-      cout << "But you are free to choose any character you want!" << endl;
     } else if (maxindex == 4) {
       cout << "We recommend you to choose <Wizard> as your character based on "
               "your personality!"
            << endl;
-      cout << "But you are free to choose any character you want!" << endl;
     } else if (maxindex == 5) {
       cout << "We recommend you to choose <Cyborg> as your character based on "
               "your personality!"
            << endl;
-      cout << "But you are free to choose any character you want!" << endl;
     } else {
       cout << "We recommend you to choose <Asian Mom> as your character based "
               "on your personality!"
            << endl;
-      cout << "But you are free to choose any character you want!" << endl;
     }
+    cout << "But you are free to choose any character you want!" << endl;
 
     cout << "***CHARACHTERS***" << endl;
     cout << "1. Paladin" << endl
@@ -400,9 +386,11 @@ menu:
       }
     }
     choice = stoi(schoice);
+    clearScreen();
     cout << "Enter the name of your character: " << endl;
     string name;
     cin >> name;
+    clearScreen();
     cout << "Enter the age of your character: " << endl;
     string sage;
     int age;
@@ -418,6 +406,7 @@ menu:
       }
     }
     age = stoi(sage);
+    clearScreen();
     if (choice == 1) {
       Paladin* player =
           new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
@@ -536,6 +525,7 @@ menu:
     string checkusername;
     string role;
     string line;
+    clearScreen();
     while (getline(file, line)) {  // Read the data line
       stringstream ss(line);
       getline(ss, checkusername, ',');
@@ -670,10 +660,10 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-    for(int i=0; i<3; i++){
-        player->setCurrXP(player->getMaxXP()+1);
-        player->levelUp();
-        clearScreen();
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
     }
     player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
@@ -686,12 +676,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 3) {
@@ -712,12 +702,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 5) {
@@ -728,12 +718,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 6) {
@@ -744,12 +734,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else {
@@ -760,17 +750,17 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   }
-    
-    clearScreen();
+
+  clearScreen();
 
   cout << "Enter second character type: " << endl;
   cout << "***CHARACHTERS***" << endl;
@@ -818,12 +808,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 2) {
@@ -834,12 +824,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 3) {
@@ -850,12 +840,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(18, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 4) {
@@ -866,12 +856,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 5) {
@@ -882,12 +872,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else if (choice == 6) {
@@ -898,12 +888,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   } else {
@@ -914,12 +904,12 @@ static vector<Human*> LoginMultiplayer() {
         ItemFactory::createItem(29, static_cast<Human*>(player), true);
     player->addInventory(armor);
     player->addInventory(potion);
-      for(int i=0; i<3; i++){
-          player->setCurrXP(player->getMaxXP()+1);
-          player->levelUp();
-          clearScreen();
-      }
-      player->setCurrentHP(player->getMaxHP());
+    for (int i = 0; i < 3; i++) {
+      player->setCurrXP(player->getMaxXP() + 1);
+      player->levelUp();
+      clearScreen();
+    }
+    player->setCurrentHP(player->getMaxHP());
     player->setLevel(6);
     players.push_back(player);
   }
