@@ -104,42 +104,56 @@ static void giveBasicItems(Human* player) {
   if (player->getRole() == characterType::PALADIN) {
     Item* armor = ItemFactory::createItem(1, player, true);
     Item* potion = ItemFactory::createItem(29, player, true);
+    Item* weapon = ItemFactory::createItem(8, player, true);
+    player->addInventory(weapon);
     player->addInventory(armor);
     player->addInventory(potion);
 
   } else if (player->getRole() == characterType::ASSASSIN) {
     Item* armor = ItemFactory::createItem(2, player, true);
     Item* potion = ItemFactory::createItem(29, player, true);
+    Item* weapon = ItemFactory::createItem(10, player, true);
+    player->addInventory(weapon);
     player->addInventory(armor);
     player->addInventory(potion);
 
   } else if (player->getRole() == characterType::SUPERHERO) {
     Item* armor = ItemFactory::createItem(6, player, true);
-    Item* potion = ItemFactory::createItem(18, player, true);
+    Item* potion = ItemFactory::createItem(29, player, true);
+    Item* weapon = ItemFactory::createItem(18, player, true);
+    player->addInventory(weapon);
     player->addInventory(armor);
     player->addInventory(potion);
 
   } else if (player->getRole() == characterType::SNIPER) {
     Item* armor = ItemFactory::createItem(5, player, true);
     Item* potion = ItemFactory::createItem(29, player, true);
+     Item* weapon = ItemFactory::createItem(16, player, true);
+    player->addInventory(weapon);
     player->addInventory(armor);
     player->addInventory(potion);
 
   } else if (player->getRole() == characterType::WIZARD) {
     Item* armor = ItemFactory::createItem(3, player, true);
     Item* potion = ItemFactory::createItem(29, player, true);
+     Item* weapon = ItemFactory::createItem(12, player, true);
+    player->addInventory(weapon);
     player->addInventory(armor);
     player->addInventory(potion);
 
   } else if (player->getRole() == characterType::CYBORG) {
     Item* armor = ItemFactory::createItem(4, player, true);
     Item* potion = ItemFactory::createItem(29, player, true);
+     Item* weapon = ItemFactory::createItem(14, player, true);
+    player->addInventory(weapon);
     player->addInventory(armor);
     player->addInventory(potion);
 
   } else {
     Item* armor = ItemFactory::createItem(7, player, true);
     Item* potion = ItemFactory::createItem(29, player, true);
+     Item* weapon = ItemFactory::createItem(20, player, true);
+    player->addInventory(weapon);
     player->addInventory(armor);
     player->addInventory(potion);
   }
@@ -329,7 +343,7 @@ menu:
     int random = rand() % maxin.size();
     maxindex = maxin[random];
      if(maxindex == 0){
-            cout<< 
+            cout<<
 R"(
 We recommend you to choose <Paladin> as your character based on your personality!
  But you are free to choose any character you want!         .  ,   A           {}
@@ -358,9 +372,9 @@ R"(
 We recommend you to choose <Assassin> as your character based on your personality!
  But you are free to choose any character you want!         .                       _
                                                             .                       \`\
-                                                            .                        \ \                     
+                                                            .                        \ \
                                                             .                         \.\
-                                                            .                          \.\  
+                                                            .                          \.\
                                                             .                 _         \.\/)
                                                             .            _ _-' ')__     (\.\/)
                                                             .           /       /  \.'`'-\/)\\
@@ -371,68 +385,68 @@ We recommend you to choose <Assassin> as your character based on your personalit
 3. SuprHero                                                 .            (   `'-._>/ )     \|  \.\
 4. Sniper                                                   .            \         `:=.    (\   \.\
 5. Wizard                                                   .             \_      (    `--._)`--'\.\=7
-6. Cyborg                                                   .            _/|\_    \-._     `-:_ /```-3    
-7. Asian Mom"                                               .           /  |  `-   \  t--._    Y    _3 
+6. Cyborg                                                   .            _/|\_    \-._     `-:_ /```-3
+7. Asian Mom"                                               .           /  |  `-   \  t--._    Y    _3
                                                             .        ,-'   |       /  |   /``'-.\--T x\
 Enter your choice:                                          .      _/     _(    ,./  /   (          \ x\
                                                             .         _.-/  \  /    <     \          \ x\
                                                             .      <`'  /   |\/      `-.   :          \_x\
                                                             .       \  /    |           `. |
-                                                            .        \_|    /             `                                                                                                   
+                                                            .        \_|    /             `
                                                             .          |   /                `.
                                                             .         /  _/\                /     )" << endl;
         }else if(maxindex == 2){
-           cout <<  
+           cout <<
 R"(
-                                                            .                    ,,,,                       
-We recommend you to choose <SuperHero> as your character    .              ,;) .';;;;',                     
-based on your personality!                                  .  ;;,,_,-.-.,;;'_,(|);;;/),,_                  
-But you are free to choose any character you want!          .   `';;/:|:);{ ;;;|| );/ /;;;[__               
-                                                            .      L;/-';/ {;;[',/;[/;;;.') ]              
-                                                            .       .:`''` - {;;'.__/;;;/  . _'-._          
-***CHARACHTERS***                                           .     .'/   (     {;NULL;/.'_7:.  '). ]_        
-                                                            .   .''/     ( '._ );}{;//.'    '-:  '.,L      
-1. Paladin                                                  . .'. /       (  ( |;;;/_/         (._./;]   _, 
+                                                            .                    ,,,,
+We recommend you to choose <SuperHero> as your character    .              ,;) .';;;;',
+based on your personality!                                  .  ;;,,_,-.-.,;;'_,(|);;;/),,_
+But you are free to choose any character you want!          .   `';;/:|:);{ ;;;|| );/ /;;;[__
+                                                            .      L;/-';/ {;;[',/;[/;;;.') ]
+                                                            .       .:`''` - {;;'.__/;;;/  . _'-._
+***CHARACHTERS***                                           .     .'/   (     {;NULL;/.'_7:.  '). ]_
+                                                            .   .''/     ( '._ );}{;//.'    '-:  '.,L
+1. Paladin                                                  . .'. /       (  ( |;;;/_/         (._./;]   _,
 2. Assassin                                                 .  . /        |( ( /;;/_/             ';;;],;;_,
 3. SuprHero                                                 . . /         )__(/;;/_/                (;;'''''
-4. Sniper                                                   .  /        _;:':;;;;:';-._             );      
-5. Wizard                                                   . /        /   (  `'`   --.'-._          V     
-6. Cyborg                                                   .        .'     '.  ,'         '-,              
-7. Asian Mom"                                               .       /    /   r--,..__       '.]             
-                                                            .     .'    '  .'        '--._     ]            
-                                                            .     (     :.(;>        _ .' '- ;/             
-                                                            .     |      /:;(    ,_.';(   __.'              
-Enter your choice:                                          .      '- -''|;:/    (;;;;-'--'                 
-                                                            .            |;/      ;;(                       
-                                                            .            ''      /;;|                      
-                                                            .                    (;;|                     
+4. Sniper                                                   .  /        _;:':;;;;:';-._             );
+5. Wizard                                                   . /        /   (  `'`   --.'-._          V
+6. Cyborg                                                   .        .'     '.  ,'         '-,
+7. Asian Mom"                                               .       /    /   r--,..__       '.]
+                                                            .     .'    '  .'        '--._     ]
+                                                            .     (     :.(;>        _ .' '- ;/
+                                                            .     |      /:;(    ,_.';(   __.'
+Enter your choice:                                          .      '- -''|;:/    (;;;;-'--'
+                                                            .            |;/      ;;(
+                                                            .            ''      /;;|
+                                                            .                    (;;|
                                                             .                      V                        )" << endl ;
         }else if(maxindex == 3){
             cout<<
 R"(
-We recommend you to choose <Sniper> as your character       .      |\              
-based on your personality!                                  .      || .---.       
-                                                            .      ||/_____\         
-                                                            .      ||(== ==)       
-But you are free to choose any character you want!          .      || \_-_/_        
-                                                            .      :-"`'V'//-.       
-***CHARACHTERS***                                           .     / ,   |// , `\   
-                                                            .    / /NULL//Ll|| |  
-1. Paladin                                                  .   /_/||__//   || |  
-2. Assassin                                                 .   \ \/---|[]==|| |  
-3. SuprHero                                                 .    \/\__/ |   \| | 
-4. Sniper                                                   .    /\|_   | Ll_\ |  
-5. Wizard                                                   .    `--|`^"""^`||_|   
-6. Cyborg                                                   .       |   |   ||/     
-7. Asian Mom"                                               .       |   |   | 
-                                                            .       |   |   |     
-Enter your choice:                                          .       |   |   |       
-                                                            .       L___l___J       
-                                                            .        |_ | _|       
-                                                            .       (___|___)    
+We recommend you to choose <Sniper> as your character       .      |\
+based on your personality!                                  .      || .---.
+                                                            .      ||/_____\
+                                                            .      ||(== ==)
+But you are free to choose any character you want!          .      || \_-_/_
+                                                            .      :-"`'V'//-.
+***CHARACHTERS***                                           .     / ,   |// , `\
+                                                            .    / /NULL//Ll|| |
+1. Paladin                                                  .   /_/||__//   || |
+2. Assassin                                                 .   \ \/---|[]==|| |
+3. SuprHero                                                 .    \/\__/ |   \| |
+4. Sniper                                                   .    /\|_   | Ll_\ |
+5. Wizard                                                   .    `--|`^"""^`||_|
+6. Cyborg                                                   .       |   |   ||/
+7. Asian Mom"                                               .       |   |   |
+                                                            .       |   |   |
+Enter your choice:                                          .       |   |   |
+                                                            .       L___l___J
+                                                            .        |_ | _|
+                                                            .       (___|___)
                                                             .        ^^^ ^^^           )"<<endl;
         }else if(maxindex == 4){
-            cout << 
+            cout <<
 R"(
 We recommend you to choose <Wizard> as your character   .                    ____
 based on your personality!                              .                  .'* *.'
@@ -457,7 +471,7 @@ Enter your choice:                                      .     _.-'    /     Bb  
                                                         . _.-'       |      BBb       '-.  '-.
                                                         .(________mrf\____.dBBBb.________)____)   )" << endl ;
         }else if(maxindex == 5){
-            cout<< 
+            cout<<
 R"(
                                                         .              _____
 We recommend you to choose <Cyborg> as your character   .             X_____\
@@ -480,7 +494,7 @@ But you are free to choose any character you want!      .    /_\_/_\_|  |_|  |_/
                                                         .        [|`--'|] [|`--'|]
                                                         .        /|__| |\ /| |__|\
 Enter your choice:                                      .        ||__|_|| ||_|__||
-                                                        .        \|----|/ \|----|/    
+                                                        .        \|----|/ \|----|/
                                                         .        /______\ /______\
                                                         .        |__||__| |__||__|          )" << endl ;
         }else{
@@ -490,12 +504,12 @@ We recommend you to choose <Asian Mom> as your character.        w*W*W*W*w
 based on your personality!                              .         \"."."/
                                                         .          //`\\
                                                         .         (/a a\)
-But you are free to choose any character you want!      .         (\_-_/) 
+But you are free to choose any character you want!      .         (\_-_/)
                                                         .        .-~'='~-.
  ***CHARACHTERS***                                      .       /`~`"Y"`~`\
                                                         .      / /(_ * _)\ \
 1. Paladin                                              .     / /  )   (  \ \
-2. Assassin                                             .     \ \_/\\_//\_/ / 
+2. Assassin                                             .     \ \_/\\_//\_/ /
 3. SuprHero                                             .      \/_) '*' (_\/
 4. Sniper                                               .        |       |
 5. Wizard                                               .        |       |
@@ -546,106 +560,53 @@ Enter your choice:                                      .        |       |
       Paladin* player =
           new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 1000);
       player->setUserName(username);
-      // static_cast<Paladin*>(player)->PaladinToFile(username);
-      //  Item* weapon =
-      //  ItemFactory::createItem(8,static_cast<Human*>(player),true);
-      Item* armor =
-          ItemFactory::createItem(1, static_cast<Human*>(player), true);
-      Item* potion =
-          ItemFactory::createItem(29, static_cast<Human*>(player), true);
+      giveBasicItems(player);
       //  player->addInventory(weapon);
-      player->addInventory(armor);
-      player->addInventory(potion);
+      
       player->PaladinToFile(username);
       return player;
     } else if (choice == 2) {
       Assassin* player = new Assassin(name, age, 100.0, 3.0, 5.0,
                                       characterType::ASSASSIN, 1000);
       player->setUserName(username);
-      //    Item* weapon =
-      //    ItemFactory::createItem(10,static_cast<Human*>(player),true);
-      Item* armor =
-          ItemFactory::createItem(2, static_cast<Human*>(player), true);
-      Item* potion =
-          ItemFactory::createItem(29, static_cast<Human*>(player), true);
+      giveBasicItems(player);
       //  player->addInventory(weapon);
-      player->addInventory(armor);
-      player->addInventory(potion);
+      
       player->AssassinToFile(player);
       return player;
     } else if (choice == 3) {
       SuperHero* player = new SuperHero(name, age, 100.0, 3.0, 5.0,
                                         characterType::SUPERHERO, 1000);
       player->setUserName(username);
-      //  Item* weapon =
-      //  ItemFactory::createItem(20,static_cast<Human*>(player),true);
-      Item* armor =
-          ItemFactory::createItem(6, static_cast<Human*>(player), true);
-      Item* potion =
-          ItemFactory::createItem(18, static_cast<Human*>(player), true);
-      //   player->addInventory(weapon);
-      player->addInventory(armor);
-      player->addInventory(potion);
+       giveBasicItems(player);
       player->SuperHeroToFile(username);
       return player;
     } else if (choice == 4) {
       Sniper* player =
           new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 1000);
       player->setUserName(username);
-      // Item* weapon =
-      // ItemFactory::createItem(17,static_cast<Human*>(player),true);
-      Item* armor =
-          ItemFactory::createItem(4, static_cast<Human*>(player), true);
-      Item* potion =
-          ItemFactory::createItem(29, static_cast<Human*>(player), true);
-      //  player->addInventory(weapon);
-      player->addInventory(armor);
-      player->addInventory(potion);
+      giveBasicItems(player);
       player->SniperToFile(username);
       return player;
     } else if (choice == 5) {
       Wizard* player =
           new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 1000);
       player->setUserName(username);
-      // Item* weapon =
-      // ItemFactory::createItem(12,static_cast<Human*>(player),true);
-      Item* armor =
-          ItemFactory::createItem(3, static_cast<Human*>(player), true);
-      Item* potion =
-          ItemFactory::createItem(29, static_cast<Human*>(player), true);
-      // player->addInventory(weapon);
-      player->addInventory(armor);
-      player->addInventory(potion);
+      giveBasicItems(player);
       player->WizardToFile(username);
       return player;
     } else if (choice == 6) {
       Cyborg* player =
           new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 1000);
       player->setUserName(username);
-      // Item* weapon =
-      // ItemFactory::createItem(14,static_cast<Human*>(player),true);
-      Item* armor =
-          ItemFactory::createItem(4, static_cast<Human*>(player), true);
-      Item* potion =
-          ItemFactory::createItem(29, static_cast<Human*>(player), true);
-      // player->addInventory(weapon);
-      player->addInventory(armor);
-      player->addInventory(potion);
+       giveBasicItems(player);
       player->CyborgToFile(username);
       return player;
     } else {
       AsianMom* player = new AsianMom(name, age, 100.0, 3.0, 5.0,
                                       characterType::ASIANMOM, 1000);
       player->setUserName(username);
-      //  Item* weapon =
-      //  ItemFactory::createItem(20,static_cast<Human*>(player),true);
-      Item* armor =
-          ItemFactory::createItem(7, static_cast<Human*>(player), true);
-      Item* potion =
-          ItemFactory::createItem(29, static_cast<Human*>(player), true);
-      // player->addInventory(weapon);
-      player->addInventory(armor);
-      player->addInventory(potion);
+       giveBasicItems(player);
       player->AsianMomToFile(username);
       return player;
     }
@@ -790,11 +751,7 @@ static vector<Human*> LoginMultiplayer() {
   if (choice == 1) {
     Paladin* player =
         new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 5000);
-    Item* armor = ItemFactory::createItem(1, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -806,11 +763,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 2) {
     Assassin* player =
         new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN, 5000);
-    Item* armor = ItemFactory::createItem(2, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -822,13 +775,9 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 3) {
     SuperHero* player = new SuperHero(name, age, 100.0, 3.0, 5.0,
                                       characterType::SUPERHERO, 5000);
-    Item* armor = ItemFactory::createItem(6, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(18, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+    giveBasicItems(player);
       for (int i = 1; i < 3; i++) {
-        player->setCurrXP(player->getMaxXP() + 1); 
+        player->setCurrXP(player->getMaxXP() + 1);
         player->levelUp();
         clearScreen();
     }
@@ -838,11 +787,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 4) {
     Sniper* player =
         new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 5000);
-    Item* armor = ItemFactory::createItem(5, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -854,11 +799,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 5) {
     Wizard* player =
         new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 5000);
-    Item* armor = ItemFactory::createItem(3, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -870,11 +811,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 6) {
     Cyborg* player =
         new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 5000);
-    Item* armor = ItemFactory::createItem(4, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -886,11 +823,7 @@ static vector<Human*> LoginMultiplayer() {
   } else {
     AsianMom* player =
         new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 5000);
-    Item* armor = ItemFactory::createItem(7, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -944,11 +877,7 @@ static vector<Human*> LoginMultiplayer() {
   if (choice == 1) {
     Paladin* player =
         new Paladin(name, age, 100.0, 3.0, 5.0, characterType::PALADIN, 5000);
-    Item* armor = ItemFactory::createItem(1, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -960,11 +889,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 2) {
     Assassin* player =
         new Assassin(name, age, 100.0, 3.0, 5.0, characterType::ASSASSIN, 5000);
-    Item* armor = ItemFactory::createItem(2, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 0; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -976,11 +901,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 3) {
     SuperHero* player = new SuperHero(name, age, 100.0, 3.0, 5.0,
                                       characterType::SUPERHERO, 5000);
-    Item* armor = ItemFactory::createItem(6, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(18, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -992,11 +913,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 4) {
     Sniper* player =
         new Sniper(name, age, 100.0, 3.0, 5.0, characterType::SNIPER, 5000);
-    Item* armor = ItemFactory::createItem(5, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -1008,11 +925,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 5) {
     Wizard* player =
         new Wizard(name, age, 100.0, 3.0, 5.0, characterType::WIZARD, 5000);
-    Item* armor = ItemFactory::createItem(3, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -1024,11 +937,7 @@ static vector<Human*> LoginMultiplayer() {
   } else if (choice == 6) {
     Cyborg* player =
         new Cyborg(name, age, 100.0, 3.0, 5.0, characterType::CYBORG, 5000);
-    Item* armor = ItemFactory::createItem(4, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+    giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
@@ -1040,11 +949,7 @@ static vector<Human*> LoginMultiplayer() {
   } else {
     AsianMom* player =
         new AsianMom(name, age, 100.0, 3.0, 5.0, characterType::ASIANMOM, 5000);
-    Item* armor = ItemFactory::createItem(7, static_cast<Human*>(player), true);
-    Item* potion =
-        ItemFactory::createItem(29, static_cast<Human*>(player), true);
-    player->addInventory(armor);
-    player->addInventory(potion);
+     giveBasicItems(player);
     for (int i = 1; i < 3; i++) {
       player->setCurrXP(player->getMaxXP() + 1);
       player->levelUp();
