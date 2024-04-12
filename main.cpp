@@ -232,7 +232,7 @@ void displayMainMenu() {
        << "1. Explore\n"
        << "2. Shop\n"
        << "3. View Inventory\n"
-       << "4. character\n"
+       << "4. Mirror\n"
        << "5. Quit Game\n"
        << "Enter your choice: ";
 }
