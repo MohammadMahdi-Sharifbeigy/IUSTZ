@@ -539,18 +539,25 @@ void combatMulti(Human* player1, Human* player2) {
         break;
       case 1: {
         clearScreen();
+        if(choice2 == 2){
+          synergy1 = player1->chooseAtkItem();
+          player1->setAttack(player1->getAttack() + (int)synergy1);
+          player2->performDefense(*player1);
+          player1->setAttack(player1->getAttack() - (int)synergy1);
+
+        }else{
         synergy1 = player1->chooseAtkItem();
         player1->setAttack(player1->getAttack() + (int)synergy1);
         player1->performAttack(*player2);
         // player2->takeDamage(player1->getAttack() + (int)synergy1);
-        player1->setAttack(player1->getAttack() - (int)synergy1);
+        player1->setAttack(player1->getAttack() - (int)synergy1);}
         break;
       }
       case 2: {
         clearScreen();
         defsynergy1 = player1->chooseDefItems();
         player1->setDefense(player1->getDefense() + defsynergy1);
-        player1->performDefense(*player2);
+        //player1->performDefense(*player2);
         break;
       }
       case 3: {
@@ -643,17 +650,23 @@ void combatMulti(Human* player1, Human* player2) {
         break;
       case 1: {
         clearScreen();
+        if(choice1 == 2){
+             synergy2 = player2->chooseAtkItem();
+             player2->setAttack(player2->getAttack() + (int)synergy2);
+             player1->performDefense(*player2);
+             player2->setAttack(player2->getAttack() - (int)synergy2);
+        }else{
         synergy2 = player2->chooseAtkItem();
         player2->setAttack(player2->getAttack() + (int)synergy2);
         player2->performAttack(*player1);
-        player2->setAttack(player2->getAttack() - (int)synergy2);
+        player2->setAttack(player2->getAttack() - (int)synergy2);}
         break;
       }
       case 2: {
         clearScreen();
         defsynergy2 = player2->chooseDefItems();
         player2->setDefense(player2->getDefense() + defsynergy2);
-        player2->performDefense(*player2);
+       // player2->performDefense(*player2);
         break;
       }
       case 3: {
@@ -731,6 +744,10 @@ void combatMulti(Human* player1, Human* player2) {
     displayHealthBar(player2->getName(), player2->getCurrentHP(),
                      player2->getMaxHP());
   }
+  if (choice1 == 2) {
+      player1->setDefense(player1->getDefense() - defsynergy1);
+    }
+
   cout << "\n*** Combat Ends ***\n" << endl;
   waitForEnter();
 }
