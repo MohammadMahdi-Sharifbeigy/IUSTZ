@@ -232,30 +232,65 @@ void displayMainMenu() {
        << "1. Explore\n"
        << "2. Shop\n"
        << "3. View Inventory\n"
-       << "4. Quit Game\n"
+       << "4. character\n"
+       << "5. Quit Game\n"
        << "Enter your choice: ";
+}
+void displayCharacterASCII(Human* player,WINDOW* stats_win) {
+    string asciiArt;
+     werase(stats_win);
+    draw_borders(stats_win);
+    if (player->getRole() == characterType :: PALADIN) {
+        asciiArt = Paladin1;  // Use the ASCII art from the font.h header
+    } else if (player->getRole() == characterType :: ASSASSIN) {
+        asciiArt = Assassin1;  // Use the ASCII art from the font.h header
+
+    } else if (player->getRole() == characterType :: SUPERHERO) {
+        asciiArt = Superhero1;  // Use the ASCII art from the font.h header
+
+    } else if (player->getRole() == characterType :: SNIPER) {
+        asciiArt = Sniper1;  // Use the ASCII art from the font.h header  
+
+    } else if (player->getRole() == characterType :: WIZARD) {
+        asciiArt = Wizard1;  // Use the ASCII art from the font.h header
+
+    } else if (player->getRole() == characterType :: CYBORG) {
+        asciiArt = Cyborg1;  // Use the ASCII art from the font.h header
+
+    } else {
+        asciiArt = AsianMom1;  // Use the ASCII art from the font.h header
+    }
+
+    // Print ASCII art in the stats window
+    mvwprintw(stats_win, 1, 1, asciiArt.c_str());
+
+    // Refresh the stats window
+    wrefresh(stats_win);
 }
 
 void displayPlayerStats(Human* player, WINDOW* stats_win) {
-  werase(stats_win);
-  draw_borders(stats_win);
-  mvwprintw(stats_win, 1, 1, "Player Stats:");
-  mvwprintw(stats_win, 2, 1, "HP: %.1f/%.1f", player->getCurrentHP(),
-            player->getMaxHP());
-  mvwprintw(stats_win, 3, 1, "Attack: %.1f", player->getAttack());
-  mvwprintw(stats_win, 4, 1, "Defense: %.1f", player->getDefense());
-  mvwprintw(stats_win, 5, 1, "Gold: %d", player->getCoin());
-  mvwprintw(stats_win, 6, 1, "Level: %d", player->getLevel());
-  mvwprintw(stats_win, 7, 1, "XP: %d/%d", player->getCurrXP(),
-            player->getMaxXP());
-  mvwprintw(stats_win, 9, 1, "Inventory:");
-  vector<Item*> items = player->getInventory();
-  for (size_t i = 0; i < items.size(); ++i) {
-    mvwprintw(stats_win, 10 + i, 1, "%d- %s x%d", i + 1,
-              items[i]->getName().c_str(), items[i]->getCount());
-  }
+    werase(stats_win);
+    draw_borders(stats_win);
+   
+    mvwprintw(stats_win, 1, 1, "Player Stats:");
+    mvwprintw(stats_win, 2, 1, "HP: %.1f/%.1f", player->getCurrentHP(),
+              player->getMaxHP());
+    mvwprintw(stats_win, 3, 1, "Attack: %.1f", player->getAttack());
+    mvwprintw(stats_win, 4, 1, "Defense: %.1f", player->getDefense());
+    mvwprintw(stats_win, 5, 1, "Gold: %d", player->getCoin());
+    mvwprintw(stats_win, 6, 1, "Level: %d", player->getLevel());
+    mvwprintw(stats_win, 7, 1, "XP: %d/%d", player->getCurrXP(),
+              player->getMaxXP());
+    mvwprintw(stats_win, 9, 1, "Inventory:");
+    vector<Item*> items = player->getInventory();
+    for (size_t i = 0; i < items.size(); ++i) {
+      mvwprintw(stats_win, 10 + i, 1, "%d- %s x%d", i + 1,
+                items[i]->getName().c_str(), items[i]->getCount());
+    }
+  
   wrefresh(stats_win);
 }
+
 
 void handleShopInteraction(GameState& gameState) {
   Shop& shop = gameState.getGameShop();
@@ -469,7 +504,7 @@ void gameLoop(GameState& gameState) {
 
   while (!exitGame && !gameState.isGameOver()) {
     // Menu choices
-    vector<string> choices = {"Explore", "Shop", "Show Inventory", "Exit"};
+    vector<string> choices = {"Explore", "Shop", "Show Inventory","Mirror" , "Exit"};
     int choice;
     int highlight = 0;
 
@@ -505,7 +540,10 @@ void gameLoop(GameState& gameState) {
             curs_set(0);
           } else if (highlight == 2) {
             displayPlayerStats(gameState.getPlayerCharacter(), stats_win);
-          } else if (highlight == choices.size() - 1) {  // Exit choice
+          }else if (highlight == 3) { 
+           displayCharacterASCII(gameState.getPlayerCharacter(), stats_win);
+          } 
+           else if (highlight == choices.size() - 1) {  // Exit choice
             endwin();                                    // End ncurses mode
             clearScreen();
             return;
