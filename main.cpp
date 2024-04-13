@@ -24,6 +24,9 @@
 #include "ftxui/component/component_base.hpp"      // for ComponentBase
 #include "ftxui/component/screen_interactive.hpp"  // for ScreenInteractive
 #include "ftxui/dom/elements.hpp"  // for Element, separator, operator|, vbox, border
+#include "ftxui/component/component_options.hpp"   // for MenuOption
+#include "ftxui/dom/elements.hpp"  // for operator|, separator, Element, Decorator, color, text, hbox, size, bold, frame, inverted, vbox, HEIGHT, LESS_THAN, border
+#include "ftxui/screen/color.hpp"  // for Color, Color::Blue, Color::Cyan, Color::Green, Color::Red, Color::Yellow
 
 #ifdef _WIN32
 #include <conio.h>
@@ -408,6 +411,8 @@ void displayHealthBar(string name, double currentHP, double maxHP) {
 }
 
 void combat(Human* player, Enemy* enemy) {
+  sleepMilliseconds(500);
+  clearScreen();
   srand(static_cast<unsigned int>(time(0)));
   int enemy_max_hp = enemy->getMaxHP();
   displayHealthBar(player->getName(), player->getCurrentHP(),
@@ -806,39 +811,48 @@ void explore(GameState& gameState,
   Item* potion = new HealingPotion("Elixir of Healing", 50.0, false, 50.0, 1);
 
   // Creating a container to hold both the message and the Back button
-  auto container = Container::Vertical(
-      {Renderer([=]() -> Element {
-         string message;
-         switch (event) {
-           case 0:
-             player->addInventory(potion);
-             message = "You found a healing potion on the ground.";
-             break;
-           case 1:
-             player->takeDamage(10);
-             message = "You encountered a trap! You lose 10 HP. Your health: " +
-                       to_string((int)player->getCurrentHP()) + "/" +
-                       to_string((int)player->getMaxHP()) + ".";
-              if (player->getCurrentHP() <= 0) {
-               message += " You died!";
-             }
-             break;
-           case 2:
-             player->setCoin(player->getCoin() + 50);
-             message = "You found a hidden treasure chest containing 50 gold!";
-             break;
-           case 3:
-             message = "You encountered " + enemy->getName() +
-                       "! Prepare for combat!";
-              // combat(player, enemy);
-             break;
-           default:
-             message = "It's a peaceful walk. Nothing happens.";
-             break;
-         }
-         return vbox({text("Exploring..."), text(message)}) | border;
-       }),
-       Button("Back", return_to_menu)});
+  auto container = Container::Vertical({
+    Renderer([=, &screen, &gameState, &return_to_menu] {
+      clearScreen();
+      string message;
+      switch (event) {
+        case 0:
+          player->addInventory(potion);
+          message = "You found a healing potion on the ground.";
+          break;
+        case 1:
+          player->takeDamage(10);
+          if (player->getCurrentHP() <= 0) {
+            message += " You died!";
+            sleepMilliseconds(500);
+            return_to_menu(); // Call return_to_menu if the player died.
+          }
+          message = "You encountered a trap! You lose 10 HP. Your health: " +
+                    to_string((int)player->getCurrentHP()) + "/" +
+                    to_string((int)player->getMaxHP()) + ".";
+          break;
+        case 2:
+          player->setCoin(player->getCoin() + 50);
+          message = "You found a hidden treasure chest containing 50 gold!";
+          break;
+        case 3:
+          message = "You encountered " + enemy->getName() +
+                    "! Prepare for combat!";
+          break;
+        default:
+          message = "It's a peaceful walk. Nothing happens.";
+          break;
+      }
+      return vbox({text("Exploring..."), text(message)}) | border;
+    }),
+    Button("Back", return_to_menu)
+  });
+
+  // If the player encountered an enemy, initiate combat after the screen updates.
+  if (event == 3) {
+    combat(player, enemy); // Call your combat function here.
+    screen.ExitLoopClosure()();
+  }
 
   // Display the exploration results with the back button
   screen.Loop(container);
@@ -854,20 +868,12 @@ void gameLoop(GameState& gameState) {
     int selected_index = 0;
 
     // Create the menu component
-    auto menu = Menu(&menu_entries, &selected_index);
-
-    // Button to exit the loop after selection
-    auto confirm_button = Button("Select", [&] { screen.ExitLoopClosure()(); });
-
-    auto container = Container::Vertical({menu, confirm_button});
-    auto renderer = Renderer(container, [&] {
-      return vbox({text("Main Menu"), menu->Render() | border,
-                   confirm_button->Render(),
-                   text("Use Arrow keys to navigate and Enter to select.")});
-    });
+    MenuOption option;
+    option.on_enter = screen.ExitLoopClosure();
+    auto menu = Menu(&menu_entries, &selected_index, option);
 
     // Run the UI loop
-    screen.Loop(renderer);
+    screen.Loop(menu);
 
     // Handle the selected action outside of the UI loop
     switch (selected_index) {
@@ -925,9 +931,9 @@ void gameLoopMulti(GameStateMulti& gameState) {
       gameState.getPlayer1Character()->clearInventory();
       gameState.getPlayer2Character()->clearInventory();
       gameState.getPlayer1Character()->setCurrentHP(
-          gameState.getPlayer1Character()->getMaxHP());
+      gameState.getPlayer1Character()->getMaxHP());
       gameState.getPlayer2Character()->setCurrentHP(
-          gameState.getPlayer2Character()->getMaxHP());
+      gameState.getPlayer2Character()->getMaxHP());
       gameState.getPlayer1Character()->setCoin(5000);
       gameState.getPlayer2Character()->setCoin(5000);
       giveBasicItems(gameState.getPlayer1Character());
@@ -943,23 +949,20 @@ int main() {
   auto screen = ScreenInteractive::TerminalOutput();
 
   // Menu options
-  std::vector<std::string> options = {"Single Player", "Multiplayer"};
+  std::vector<std::string> entries = {
+      "Solo Player",
+      "Multi Player",
+  };
   int selected = 0;
-  auto menu = Menu(&options, &selected);
 
-  // Renderer with a confirmation button
-  auto confirm_button = Button("Confirm", [&] { screen.ExitLoopClosure()(); });
+  MenuOption option;
+  option.on_enter = screen.ExitLoopClosure();
 
-  auto container = Container::Vertical({menu, confirm_button});
-
-  auto renderer = Renderer(container, [&] {
-    return vbox(
-        {text("Do you want to play multiplayer or single player? (m/s)"),
-         menu->Render() | border, confirm_button->Render()});
-  });
-
-  // Main loop
-  screen.Loop(renderer);
+    auto menu = Menu(&entries, &selected, option);
+ 
+  screen.Loop(menu);
+ 
+  std::cout << "Selected element = " << selected << std::endl;;
 
   // Process the choice
   if (selected == 1) {  // Multiplayer
