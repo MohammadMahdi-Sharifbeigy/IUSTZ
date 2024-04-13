@@ -80,7 +80,9 @@ void Paladin::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (enemy) {
       double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
-      Paladin::takeDamage(defense);
+      if (attacker.getAttack() >= defense) {
+        Paladin::takeDamage(defense);
+      }
       cout << Paladin::getName() << " got defended by " << defense << " armor."
            << endl;
     }

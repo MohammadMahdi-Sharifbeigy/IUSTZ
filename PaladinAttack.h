@@ -23,13 +23,13 @@ class PaladinAttack : public AttackStrategy {
 
     double attackOpponent(Human* currCharacter, Human* opponent) {
   // Paladins have a balanced attack strategy
-  return (2 * (currCharacter->getMaxHP() /currCharacter->getCurrentHP())
+  return (4 * (currCharacter->getMaxHP() /currCharacter->getCurrentHP())
             * ( currCharacter->getAttack() / opponent->getDefense()));
   }
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Paladins have high defense
-    return (2.5 * (currCharacter->getMaxHP() 
+    return (18 * (currCharacter->getMaxHP() 
             /currCharacter->getCurrentHP()) * ( currCharacter->getDefense()  / opponent->getAttack()));
   }
   

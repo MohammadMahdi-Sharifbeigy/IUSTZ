@@ -78,7 +78,9 @@ void Wizard::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (enemy) {
       double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
-      Wizard::takeDamage(defense);
+      if (attacker.getAttack() >= defense) {
+        Wizard::takeDamage(defense);
+      }
       cout << Wizard::getName() << " got defended by " << defense << " armor."
            << endl;
     }

@@ -28,7 +28,7 @@ double attackOpponent(Human* currCharacter, Human* opponent){
 
 double defenseOpponent(Human* currCharacter, Human* opponent){       
        // Assassins have low defense
-  return (4 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+  return (10 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense()  / opponent->getDefense()));
 }
 

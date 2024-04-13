@@ -33,7 +33,7 @@ class AsianmomAttack : public AttackStrategy {
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Asian Moms have high defense due to their wisdom
-    return (3 * currCharacter->getMind() * (currCharacter->getDefense() / opponent->getAttack() - 1));
+    return (currCharacter->getMind() * (currCharacter->getDefense() / opponent->getAttack()));
   }
 };
 

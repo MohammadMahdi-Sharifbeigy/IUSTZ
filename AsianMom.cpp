@@ -95,7 +95,7 @@ void AsianMom::performDefense(Character& attacker) {
 void AsianMom::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double defense = attacker.getAttack()- attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);
       if (defense >= 0) {
         AsianMom::takeDamage(defense);
         cout << AsianMom::getName() << " got defended by " << defense << " armor."

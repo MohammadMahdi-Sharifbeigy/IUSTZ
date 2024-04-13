@@ -30,7 +30,7 @@ class SuperHeroAttack : public AttackStrategy {
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Superheroes have balanced defense
-    return (2 * (currCharacter->getMaxHP()
+    return (19 * (currCharacter->getMaxHP()
            /currCharacter->getCurrentHP()) * (currCharacter->getDefense() / opponent->getAttack()));
   } 
 };

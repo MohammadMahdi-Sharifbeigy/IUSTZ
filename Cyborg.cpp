@@ -80,7 +80,9 @@ void Cyborg::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (enemy) {
       double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
-      Cyborg::takeDamage(defense);
+      if (attacker.getAttack() >= defense) {
+        Cyborg::takeDamage(abs(defense));
+      }
       cout << Cyborg::getName() << " got defended by " << defense << " armor."
            << endl;
     }
@@ -94,7 +96,7 @@ void Cyborg::performDefense(Character& attacker) {
 void Cyborg::performDefense(Human& attacker) {
   if (attackStrategy) {
     if (&attacker) {
-      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);
+      double defense = attacker.getAttack() - attackStrategy->defenseOpponent(this, &attacker);     
       if (attacker.getAttack() >= defense) {
         Cyborg::takeDamage(defense);
       }

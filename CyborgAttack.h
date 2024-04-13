@@ -27,7 +27,7 @@ class CyborgAttack : public AttackStrategy {
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Cyborgs have high defense due to their armored body
-    return (2 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return (18 * (currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense() / opponent->getAttack()));
   } 
 };

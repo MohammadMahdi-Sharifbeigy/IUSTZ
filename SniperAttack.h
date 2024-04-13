@@ -22,7 +22,7 @@ class SniperAttack : public AttackStrategy {
     // Snipers have low defense
     Human* human = dynamic_cast<Human*>(currCharacter);
     if (human) {
-      return (1.25 * (human->getDefense()) * (human->getMaxHP() / human->getCurrentHP()) 
+      return (5 * (human->getDefense()) * (human->getMaxHP() / human->getCurrentHP()) 
                   * ( currCharacter->getDefense()  / currEnemy->get_enemy_atk()));
     }
     return 0;  // or some default value
@@ -36,7 +36,7 @@ class SniperAttack : public AttackStrategy {
 
   double defenseOpponent(Human* currCharacter, Human* opponent) {
     // Snipers have low defense
-    return ((1* currCharacter->getMaxHP() / currCharacter->getCurrentHP())
+    return ((18 * currCharacter->getMaxHP() / currCharacter->getCurrentHP())
               * ( currCharacter->getDefense() / opponent->getAttack()));
   }
 };

@@ -78,7 +78,9 @@ void SuperHero::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (enemy) {
       double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
-      SuperHero::takeDamage(defense);
+      if (attacker.getAttack() >= defense) {
+        SuperHero::takeDamage(defense);
+      }
       cout << SuperHero::getName() << " got defended by " << defense
            << " armor." << endl;
     }

@@ -79,7 +79,9 @@ void Assassin::performDefense(Character& attacker) {
   if (attackStrategy) {
     if (enemy) {
       double defense = attacker.getAttack() - attackStrategy->defenseEnemy(this, enemy);
-      Assassin::takeDamage(defense);
+      if (attacker.getAttack() >= defense) {
+        Assassin::takeDamage(defense);
+      }
       cout << Assassin::getName() << " got defended by " << defense << " armor."
            << endl;
     }
