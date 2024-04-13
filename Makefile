@@ -6,7 +6,12 @@ CXX = g++
 
 # Define compile-time flags
 CXXFLAGS = -std=c++17 -Wall
-DEBUGFLAGS = -g -O0 -DDEBUG
+
+# Include directories for SFML
+SFML_INCLUDE = -I/usr/local/include
+
+# SFML libraries
+SFML_LIBS = -lsfml-audio -lsfml-system
 
 # Define the name of the executable
 ifeq ($(UNAME_S),Windows_NT)
@@ -30,21 +35,21 @@ all: $(TARGET)
 # Debug target
 debug: $(DEBUGTARGET)
 
-# Link the target with all objects
+# Link the target with all objects and SFML libraries
 $(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(SFML_LIBS)
 
-# Link the debug target with all debug objects
+# Link the debug target with all debug objects and SFML libraries
 $(DEBUGTARGET): $(DEBUGOBJECTS)
-	$(CXX) $(DEBUGFLAGS) -o $@ $^
+	$(CXX) $(DEBUGFLAGS) -o $@ $^ $(SFML_LIBS)
 
 # Compile each cpp file to an object file
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) $(SFML_INCLUDE) -c $<
 
 # Compile each cpp file to a debug object file
 %.debug.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(SFML_INCLUDE) -c $< -o $@
 
 # Clean up the build
 clean:
