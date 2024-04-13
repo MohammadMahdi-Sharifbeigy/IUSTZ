@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <SFML/Audio.hpp>
 #include "AraghNana.h"
 #include "Armor.h"
 #include "AsianMom.h"
@@ -342,6 +343,25 @@ menu:
     }
     int random = rand() % maxin.size();
     maxindex = maxin[random];
+
+            // Load an audio file
+        sf::SoundBuffer MagicBuffer;
+        if (!MagicBuffer.loadFromFile("Magic2.wav")) {
+            std::cerr << "Could not load the Magic audio file!" << std::endl;
+        }
+
+        // Create a sound object and play it
+        sf::Sound MagicSound;
+        MagicSound.setBuffer(MagicBuffer);
+        MagicSound.play();
+
+        // Wait until the sound is finished
+        while (MagicSound.getStatus() == sf::Sound::Playing) {
+        // Keep the program running until the sound has finished playing
+        sf::sleep(sf::milliseconds(100));
+    } 
+
+
      if(maxindex == 0){
             cout<<
 R"(
