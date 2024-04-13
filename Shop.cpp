@@ -337,6 +337,22 @@ void Shop::buyItemWithCountLimit(int choice,
     return;
   }
 
+  sf::SoundBuffer BuyBuffer;
+  if (!BuyBuffer.loadFromFile("Buy.wav")) {
+    std::cerr << "Could not load the Buy audio file!" << std::endl;
+  }
+
+  // Create a sound object and play it
+  sf::Sound BuySound;
+  BuySound.setBuffer(BuyBuffer);
+  BuySound.play();
+  // Wait until the sound is finished
+  while (BuySound.getStatus() == sf::Sound::Playing) {
+    // Keep the program running until the sound has finished playing
+    cout << "you bought " << item->getName() << "!" << endl;
+    sf::sleep(sf::milliseconds(2000));
+  }
+
   human->setCoin(human->getCoin() - totalPrice);
   human->addInventory(item, count);
   waitForEnter();
@@ -357,7 +373,23 @@ void Shop::buy(int choice, Human* human) {
     cout << "You already have the item!" << endl;
   } else {
     human->setCoin(human->getCoin() - item->getPrice());
-    cout << "you bought " << item->getName() << "!" << endl;
+    // Load an audio file
+    sf::SoundBuffer BuyBuffer;
+    if (!BuyBuffer.loadFromFile("Buy.wav")) {
+      std::cerr << "Could not load the Buy audio file!" << std::endl;
+    }
+
+    // Create a sound object and play it
+    sf::Sound BuySound;
+    BuySound.setBuffer(BuyBuffer);
+    BuySound.play();
+    // Wait until the sound is finished
+    while (BuySound.getStatus() == sf::Sound::Playing) {
+      // Keep the program running until the sound has finished playing
+      cout << "you bought " << item->getName() << "!" << endl;
+
+      sf::sleep(sf::milliseconds(2000));
+    }
     human->addInventory(item);
   }
   waitForEnter();
@@ -437,7 +469,22 @@ void Shop::sell(Human* human) {
       count = stoi(scount);
       double price = human->priceItemsAt(index);
       Item* item = human->itemsAt(index);
-      cout << "You sold " << count << " " << item->getName() << endl;
+      // Load an audio file
+      sf::SoundBuffer SellBuffer;
+      if (!SellBuffer.loadFromFile("coin.wav")) {
+        std::cerr << "Could not load the Sell audio file!" << std::endl;
+      }
+
+      // Create a sound object and play it
+      sf::Sound SellSound;
+      SellSound.setBuffer(SellBuffer);
+      SellSound.play();
+      // Wait until the sound is finished
+      while (SellSound.getStatus() == sf::Sound::Playing) {
+        // Keep the program running until the sound has finished playing
+        cout << "You sold " << count << " " << item->getName() << endl;
+        sf::sleep(sf::milliseconds(2000));
+      }
       human->removeInventory(index, count);
       human->setCoin(human->getCoin() + price * count);
       cout << "Coins : " << human->getCoin() << endl;
@@ -445,7 +492,22 @@ void Shop::sell(Human* human) {
       count = 1;
       double price = human->priceItemsAt(index);
       Item* item = human->itemsAt(index);
-      cout << "You sold " << count << " " << item->getName() << endl;
+      // Load an audio file
+      sf::SoundBuffer SellBuffer;
+      if (!SellBuffer.loadFromFile("coin.wav")) {
+        std::cerr << "Could not load the Sell audio file!" << std::endl;
+      }
+
+      // Create a sound object and play it
+      sf::Sound SellSound;
+      SellSound.setBuffer(SellBuffer);
+      SellSound.play();
+      // Wait until the sound is finished
+      while (SellSound.getStatus() == sf::Sound::Playing) {
+        // Keep the program running until the sound has finished playing
+        cout << "You sold " << count << " " << item->getName() << endl;
+        sf::sleep(sf::milliseconds(2000));
+      }
       human->removeInventory(index, count);
       human->setCoin(human->getCoin() + price * count);
       cout << "Coins : " << human->getCoin() << endl;

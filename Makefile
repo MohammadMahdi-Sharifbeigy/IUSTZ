@@ -5,11 +5,12 @@ UNAME_S := $(shell uname -s)
 CXX = g++
 
 # Define base compile-time flags
-CXXFLAGS := -std=c++17 -Wall $(shell pkg-config --cflags ftxui)
+CXXFLAGS := -std=c++17 -Wall $(shell pkg-config --cflags ftxui) $(shell pkg-config --cflags sfml-all)
 DEBUGFLAGS = -g -O0 -DDEBUG
 
 # Library flags and libraries
 LDFLAGS := $(shell pkg-config --libs ftxui)
+LDFLAGS += $(shell pkg-config --libs sfml-all)
 
 # Define the path to the source files and include the root directory
 # Automatically find all cpp files in the project

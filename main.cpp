@@ -1,3 +1,4 @@
+#include <SFML/Audio.hpp>
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
@@ -22,9 +23,9 @@
 #include "ftxui/component/captured_mouse.hpp"  // for ftxui
 #include "ftxui/component/component.hpp"  // for Radiobox, Renderer, Tab, Toggle, Vertical
 #include "ftxui/component/component_base.hpp"      // for ComponentBase
+#include "ftxui/component/component_options.hpp"   // for MenuOption
 #include "ftxui/component/screen_interactive.hpp"  // for ScreenInteractive
 #include "ftxui/dom/elements.hpp"  // for Element, separator, operator|, vbox, border
-#include "ftxui/component/component_options.hpp"   // for MenuOption
 #include "ftxui/dom/elements.hpp"  // for operator|, separator, Element, Decorator, color, text, hbox, size, bold, frame, inverted, vbox, HEIGHT, LESS_THAN, border
 #include "ftxui/screen/color.hpp"  // for Color, Color::Blue, Color::Cyan, Color::Green, Color::Red, Color::Yellow
 
@@ -556,251 +557,21 @@ void combat(Human* player, Enemy* enemy) {
   }
 }
 
-void combatMulti(Human* player1, Human* player2) {
-  srand(static_cast<unsigned int>(time(nullptr)));
-  cout << "\n*** Combat Begins ***\n" << endl;
-  displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                   player1->getMaxHP());
-  cout << endl;
-  displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                   player2->getMaxHP());
-
-  vector<Item*> items1 = player1->getInventory();
-  vector<Item*> defenseItems1;
-  double synergy1, synergy2, defsynergy1, defsynergy2;
-  Item* playerPotion1;
-
-  int choice1;
-  vector<Item*> items2 = player2->getInventory();
-  vector<Item*> defenseItems2;
-  Item* playerPotion2;
-  int choice2;
-
-  while (player1->getCurrentHP() > 0 && player2->getCurrentHP() > 0) {
-    // Player 1's turn
-    cout << endl << player1->getName() << "'s Turn: " << endl;
-    combatMenu(player1);
-    cin >> choice1;
-    switch (choice1) {
-      case 0:
-        easterEgg(player1);
-        break;
-      case 1: {
-        clearScreen();
-        synergy1 = player1->chooseAtkItem();
-        player1->setAttack(player1->getAttack() + (int)synergy1);
-        player1->performAttack(*player2);
-        // player2->takeDamage(player1->getAttack() + (int)synergy1);
-        player1->setAttack(player1->getAttack() - (int)synergy1);
-        break;
-      }
-      case 2: {
-        clearScreen();
-        defsynergy1 = player1->chooseDefItems();
-        player1->setDefense(player1->getDefense() + defsynergy1);
-        player1->performDefense(*player2);
-        break;
-      }
-      case 3: {
-        clearScreen();
-        playerPotion1 = player1->choosePotion();
-        if (playerPotion1 == nullptr) {
-          continue;
-        } else {
-          if (playerPotion1->getID() == 29) {
-            dynamic_cast<HealingPotion*>(playerPotion1)->increaseHP(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 30) {
-            dynamic_cast<DamagePotion*>(playerPotion1)
-                ->increaseDamage(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 31) {
-            dynamic_cast<DefensePotion*>(playerPotion1)
-                ->increaseDefense(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 32) {
-            dynamic_cast<StaminaPotion*>(playerPotion1)
-                ->increaseStamina(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 33) {
-            dynamic_cast<Food*>(playerPotion1)->increaseStats(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 34) {
-            dynamic_cast<SweetTea*>(playerPotion1)->increaseHP(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 35) {
-            dynamic_cast<Saffron*>(playerPotion1)->increaseDamage(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 36) {
-            dynamic_cast<AraghNana*>(playerPotion1)->increaseDefense(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-
-          } else if (playerPotion1->getID() == 37) {
-            dynamic_cast<Nuts*>(playerPotion1)->increaseStamina(*player1);
-            player1->removeInventory(player1->indexInInventory(playerPotion1) +
-                                     1);
-          }
-          displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                           player1->getMaxHP());
-          cout << endl;
-          displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                           player2->getMaxHP());
-        }
-        break;
-      }
-      case 4: {
-        clearScreen();
-        checkInventory(player1);
-        player1->showInventory();
-        continue;
-      }
-    }
-    // Check if player 2 is defeated
-    if (player2->getCurrentHP() <= 0) {
-      cout << player2->getName() << " has been defeated!" << endl;
-      break;
-    }
-
-    displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                     player1->getMaxHP());
-    cout << endl;
-    displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                     player2->getMaxHP());
-
-    if (choice2 == 2) {
-      player2->setDefense(player2->getDefense() - defsynergy2);
-    }
-
-    // Player 2's turn
-    cout << endl << player2->getName() << "'s Turn: " << endl;
-    combatMenu(player2);
-    cin >> choice2;
-    switch (choice2) {
-      case 0:
-        easterEgg(player2);
-        break;
-      case 1: {
-        clearScreen();
-        synergy2 = player2->chooseAtkItem();
-        player2->setAttack(player2->getAttack() + (int)synergy2);
-        player2->performAttack(*player1);
-        player2->setAttack(player2->getAttack() - (int)synergy2);
-        break;
-      }
-      case 2: {
-        clearScreen();
-        defsynergy2 = player2->chooseDefItems();
-        player2->setDefense(player2->getDefense() + defsynergy2);
-        player2->performDefense(*player2);
-        break;
-      }
-      case 3: {
-        clearScreen();
-        playerPotion2 = player2->choosePotion();
-        if (playerPotion2 == nullptr) {
-          continue;
-        } else {
-          if (playerPotion2->getID() == 29) {
-            dynamic_cast<HealingPotion*>(playerPotion2)->increaseHP(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 30) {
-            dynamic_cast<DamagePotion*>(playerPotion2)
-                ->increaseDamage(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 31) {
-            dynamic_cast<DefensePotion*>(playerPotion2)
-                ->increaseDefense(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 32) {
-            dynamic_cast<StaminaPotion*>(playerPotion2)
-                ->increaseStamina(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 33) {
-            dynamic_cast<Food*>(playerPotion2)->increaseStats(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 34) {
-            dynamic_cast<SweetTea*>(playerPotion2)->increaseHP(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 35) {
-            dynamic_cast<Saffron*>(playerPotion2)->increaseDamage(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 36) {
-            dynamic_cast<AraghNana*>(playerPotion2)->increaseDefense(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-
-          } else if (playerPotion2->getID() == 37) {
-            dynamic_cast<Nuts*>(playerPotion2)->increaseStamina(*player2);
-            player2->removeInventory(player2->indexInInventory(playerPotion2) +
-                                     1);
-          }
-          displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                           player1->getMaxHP());
-          cout << endl;
-          displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                           player2->getMaxHP());
-        }
-        break;
-      }
-      case 4: {
-        clearScreen();
-        checkInventory(player2);
-        player2->showInventory();
-        continue;
-      }
-    }
-    // Check if player 1 is defeated
-    if (player1->getCurrentHP() <= 0) {
-      cout << player1->getName() << " has been defeated!" << endl;
-      break;
-    }
-    if (choice1 == 2) {
-      player1->setDefense(player1->getDefense() - defsynergy1);
-    }
-    displayHealthBar(player1->getName(), player1->getCurrentHP(),
-                     player1->getMaxHP());
-    cout << endl;
-    displayHealthBar(player2->getName(), player2->getCurrentHP(),
-                     player2->getMaxHP());
-  }
-  cout << "\n*** Combat Ends ***\n" << endl;
-  waitForEnter();
-}
-
 void explore(GameState& gameState,
              ScreenInteractive& screen,
              function<void()> return_to_menu) {
   srand(time(nullptr));    // Seed for random number generation
   int event = rand() % 4;  // Random event selection
+
+  // Load an audio file
+  sf::SoundBuffer ExploreBuffer;
+  if (!ExploreBuffer.loadFromFile("secret-world.wav")) {
+    std::cerr << "Could not load the Explore audio file!" << std::endl;
+  }
+  // Create a sound object and play it
+  sf::Sound ExploreSound;
+  ExploreSound.setBuffer(ExploreBuffer);
+  ExploreSound.play();
 
   Human* player = gameState.getPlayerCharacter();
   characterType types[3] = {characterType::WEAKZOMBIE,
@@ -811,46 +582,46 @@ void explore(GameState& gameState,
   Item* potion = new HealingPotion("Elixir of Healing", 50.0, false, 50.0, 1);
 
   // Creating a container to hold both the message and the Back button
-  auto container = Container::Vertical({
-    Renderer([=, &screen, &gameState, &return_to_menu] {
-      clearScreen();
-      string message;
-      switch (event) {
-        case 0:
-          player->addInventory(potion);
-          message = "You found a healing potion on the ground.";
-          break;
-        case 1:
-          player->takeDamage(10);
-          if (player->getCurrentHP() <= 0) {
-            message += " You died!";
-            sleepMilliseconds(500);
-            return_to_menu(); // Call return_to_menu if the player died.
-          }
-          message = "You encountered a trap! You lose 10 HP. Your health: " +
-                    to_string((int)player->getCurrentHP()) + "/" +
-                    to_string((int)player->getMaxHP()) + ".";
-          break;
-        case 2:
-          player->setCoin(player->getCoin() + 50);
-          message = "You found a hidden treasure chest containing 50 gold!";
-          break;
-        case 3:
-          message = "You encountered " + enemy->getName() +
-                    "! Prepare for combat!";
-          break;
-        default:
-          message = "It's a peaceful walk. Nothing happens.";
-          break;
-      }
-      return vbox({text("Exploring..."), text(message)}) | border;
-    }),
-    Button("Back", return_to_menu)
-  });
+  auto container = Container::Vertical(
+      {Renderer([=, &screen, &gameState, &return_to_menu] {
+         clearScreen();
+         string message;
+         switch (event) {
+           case 0:
+             player->addInventory(potion);
+             message = "You found a healing potion on the ground.";
+             break;
+           case 1:
+             player->takeDamage(10);
+             if (player->getCurrentHP() <= 0) {
+               message += " You died!";
+               sleepMilliseconds(500);
+               return_to_menu();  // Call return_to_menu if the player died.
+             }
+             message = "You encountered a trap! You lose 10 HP. Your health: " +
+                       to_string((int)player->getCurrentHP()) + "/" +
+                       to_string((int)player->getMaxHP()) + ".";
+             break;
+           case 2:
+             player->setCoin(player->getCoin() + 50);
+             message = "You found a hidden treasure chest containing 50 gold!";
+             break;
+           case 3:
+             message = "You encountered " + enemy->getName() +
+                       "! Prepare for combat!";
+             break;
+           default:
+             message = "It's a peaceful walk. Nothing happens.";
+             break;
+         }
+         return vbox({text("Exploring..."), text(message)}) | border;
+       }),
+       Button("Back", return_to_menu)});
 
-  // If the player encountered an enemy, initiate combat after the screen updates.
+  // If the player encountered an enemy, initiate combat after the screen
+  // updates.
   if (event == 3) {
-    combat(player, enemy); // Call your combat function here.
+    combat(player, enemy);  // Call your combat function here.
     screen.ExitLoopClosure()();
   }
 
@@ -902,49 +673,6 @@ void gameLoop(GameState& gameState) {
   }
 }
 
-void gameLoopMulti(GameStateMulti& gameState) {
-  bool exitGame = false;
-  while (!exitGame && !gameState.isGameOver()) {
-    clearScreen();
-    Shop& shop = gameState.getGameShop();
-    cout << "First player, please enter the shop." << endl;
-    shop.welcomeShop(gameState.getPlayer1Character());
-    clearScreen();
-    cout << "Second player, please enter the shop." << endl;
-    shop.welcomeShop(gameState.getPlayer2Character());
-    clearScreen();
-    combatMulti(gameState.getPlayer1Character(),
-                gameState.getPlayer2Character());
-    clearScreen();
-    cout << "Do you want to play again or exit the game? (p/e)" << endl;
-    char choice;
-    cin >> choice;
-    while (choice != 'p' && choice != 'e') {
-      cout << "Invalid choice. Please try again." << endl;
-      cin >> choice;
-    }
-    if (choice == 'p') {
-      cout << "Both players' inventorys will be earased and you will be "
-              "redirected to the shop"
-           << endl;
-      sleepMilliseconds(5000);
-      gameState.getPlayer1Character()->clearInventory();
-      gameState.getPlayer2Character()->clearInventory();
-      gameState.getPlayer1Character()->setCurrentHP(
-      gameState.getPlayer1Character()->getMaxHP());
-      gameState.getPlayer2Character()->setCurrentHP(
-      gameState.getPlayer2Character()->getMaxHP());
-      gameState.getPlayer1Character()->setCoin(5000);
-      gameState.getPlayer2Character()->setCoin(5000);
-      giveBasicItems(gameState.getPlayer1Character());
-      giveBasicItems(gameState.getPlayer2Character());
-
-    } else {
-      gameState.setGameOver(true);
-    }
-  }
-}
-
 int main() {
   auto screen = ScreenInteractive::TerminalOutput();
 
@@ -958,18 +686,14 @@ int main() {
   MenuOption option;
   option.on_enter = screen.ExitLoopClosure();
 
-    auto menu = Menu(&entries, &selected, option);
- 
+  auto menu = Menu(&entries, &selected, option);
+
   screen.Loop(menu);
- 
-  std::cout << "Selected element = " << selected << std::endl;;
 
   // Process the choice
   if (selected == 1) {  // Multiplayer
-    clearScreen();
-    vector<Human*> players = LoginMultiplayer();
-    GameStateMulti gameStateMulti(players[0], players[1]);
-    gameLoopMulti(gameStateMulti);
+    cout << "Sike! thats not an option!" << endl;
+    waitForEnter();
   } else {  // Single Player
     clearScreen();
     Human* playerCharacter = Login();
