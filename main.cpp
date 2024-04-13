@@ -19,6 +19,11 @@
 #include "Sword.h"
 #include "Zombie.h"
 #include "font.h"
+#include "ftxui/component/captured_mouse.hpp"  // for ftxui
+#include "ftxui/component/component.hpp"  // for Radiobox, Renderer, Tab, Toggle, Vertical
+#include "ftxui/component/component_base.hpp"      // for ComponentBase
+#include "ftxui/component/screen_interactive.hpp"  // for ScreenInteractive
+#include "ftxui/dom/elements.hpp"  // for Element, separator, operator|, vbox, border
 
 #ifdef _WIN32
 #include <conio.h>
@@ -29,6 +34,7 @@
 #endif
 
 using namespace std;
+using namespace ftxui;
 
 void displayHealthBar(string name, double currentHP, double maxHP);
 
@@ -276,23 +282,61 @@ void displayMainMenu() {
        << "Enter your choice: ";
 }
 
-void displayPlayerStats(Human* player) {
-  clearScreen();
-  cout << "Player Stats:\n"
-       << "HP: " << player->getCurrentHP() << "/" << player->getMaxHP() << "\n"
-       << "Attack: " << player->getAttack() << "\n"
-       << "Defense: " << player->getDefense() << "\n"
-       << "Gold: " << player->getCoin() << "\n"
-       << "Level: " << player->getLevel() << "\n"
-       << "XP: " << player->getCurrXP() << "/" << player->getMaxXP() << "\n"
-       << "Inventory:\n";
-  vector<Item*> items = player->getInventory();
-  for (size_t i = 0; i < items.size(); ++i) {
-    cout << items[i]->getName() << " x" << items[i]->getCount() << "\n";
+string statToString(const string& name, int current, int maximum = -1) {
+  if (maximum >= 0) {
+    return name + ": " + to_string(current) + "/" + to_string(maximum);
   }
-  cout << endl;
-  waitForEnter();
-  clearScreen();
+  return name + ": " + to_string(current);
+}
+
+// Function to dynamically generate the player's stats for rendering
+Element GenerateStats(Human* player) {
+  vector<Element> elements;
+  elements.push_back(text("Player Stats:") | bold | border);
+  elements.push_back(
+      text(statToString("HP", player->getCurrentHP(), player->getMaxHP())));
+  elements.push_back(text(statToString("Attack", player->getAttack())));
+  elements.push_back(text(statToString("Defense", player->getDefense())));
+  elements.push_back(text(statToString("Gold", player->getCoin())));
+  elements.push_back(text(statToString("Level", player->getLevel())));
+  elements.push_back(
+      text(statToString("XP", player->getCurrXP(), player->getMaxXP())));
+
+  elements.push_back(separator());
+  elements.push_back(text("Inventory:") | bold);
+  for (Item* item : player->getInventory()) {
+    elements.push_back(
+        text(item->getName() + " x" + to_string(item->getCount())));
+  }
+
+  return vbox(move(elements)) | border;
+}
+
+Component displayPlayerStats(Human* player, function<void()> on_back) {
+  return Container::Vertical(
+      {Renderer([player] { return GenerateStats(player); }),
+       Button("Back", on_back)});
+}
+
+void showPlayerStats(ScreenInteractive& screen, Human* player) {
+  auto stats_component =
+      displayPlayerStats(player, [&] { screen.ExitLoopClosure()(); });
+  screen.Loop(stats_component);
+}
+
+Component displayGameSaved(function<void()> on_back) {
+  return Container::Vertical(
+      {Renderer(
+           [] { return vbox({text("Game Saved!") | bold | center}) | border; }),
+       Button("Back", on_back)});
+}
+
+void showGameSavedMessage(ScreenInteractive& screen) {
+  auto saved_component = displayGameSaved([&] {
+    screen.ExitLoopClosure()();  // Close the "Game Saved" screen and return to
+                                 // the main UI
+  });
+  screen.Loop(saved_component);
 }
 
 void handleShopInteraction(GameState& gameState) {
@@ -747,10 +791,11 @@ void combatMulti(Human* player1, Human* player2) {
   waitForEnter();
 }
 
-void explore(GameState& gameState) {
-  clearScreen();
+void explore(GameState& gameState,
+             ScreenInteractive& screen,
+             function<void()> return_to_menu) {
   srand(time(nullptr));    // Seed for random number generation
-  int event = rand() % 4;  // Random event: 0, 1, 2 or 3
+  int event = rand() % 4;  // Random event selection
 
   Human* player = gameState.getPlayerCharacter();
   characterType types[3] = {characterType::WEAKZOMBIE,
@@ -759,101 +804,99 @@ void explore(GameState& gameState) {
   characterType type = types[rand() % 3];
   Enemy* enemy = EnemyFactory::createEnemy(type, player->getLevel(), player);
   Item* potion = new HealingPotion("Elixir of Healing", 50.0, false, 50.0, 1);
-  switch (event) {
-    case 0:
-      cout << exploreEnvironment() << endl;
-      sleepMilliseconds(3000);
-      cout << "You found a healing potion on the ground." << endl;
-      player->addInventory(potion);
-      saveCharacter(player);
-      cout << endl;
-      break;
-    case 1:
-      cout << exploreEnvironment() << endl;
-      sleepMilliseconds(3000);
-      cout << "You encountered a trap! You lose 10 HP." << endl;
-      player->takeDamage(10);
-      displayHealthBar(player->getName(), player->getCurrentHP(),
-                       player->getMaxHP());
-      cout << endl;
-      if (player->getCurrentHP() <= 0) {
-        cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
-        waitForEnter();
-        clearScreen();
-        playerDied(player);
-      }
-      saveCharacter(player);
-      break;
-    case 2:
-      cout << exploreEnvironment() << endl;
-      sleepMilliseconds(3000);
-      cout << "You found a hidden treasure chest containing 50 gold!" << endl;
-      player->setCoin(player->getCoin() + 50);
-      saveCharacter(player);
-      cout << endl;
-      break;
-    case 3:
-      cout << exploreEnvironment() << endl;
-      sleepMilliseconds(3000);
-      cout << "You encountered a " << enemy->getName() << "!" << endl;
-      sleepMilliseconds(1000);
-      cout << "One! " << flush;
-      sleepMilliseconds(1000);
-      cout << "Two! " << flush;
-      sleepMilliseconds(500);
-      cout << "." << flush;
-      sleepMilliseconds(500);
-      cout << "." << flush;
-      sleepMilliseconds(500);
-      cout << "." << flush;
-      sleepMilliseconds(1000);
-      cout << "And Three!" << flush;
-      sleepMilliseconds(1500);
-      clearScreen();
-      combat(gameState.getPlayerCharacter(), enemy);
-      clearScreen();
-      saveCharacter(player);
-      break;
-    default:
-      cout << "It's a peaceful walk. Nothing happens." << endl;
-  }
+
+  // Creating a container to hold both the message and the Back button
+  auto container = Container::Vertical(
+      {Renderer([=]() -> Element {
+         string message;
+         switch (event) {
+           case 0:
+             player->addInventory(potion);
+             message = "You found a healing potion on the ground.";
+             break;
+           case 1:
+             player->takeDamage(10);
+             message = "You encountered a trap! You lose 10 HP. Your health: " +
+                       to_string((int)player->getCurrentHP()) + "/" +
+                       to_string((int)player->getMaxHP()) + ".";
+              if (player->getCurrentHP() <= 0) {
+               message += " You died!";
+             }
+             break;
+           case 2:
+             player->setCoin(player->getCoin() + 50);
+             message = "You found a hidden treasure chest containing 50 gold!";
+             break;
+           case 3:
+             message = "You encountered " + enemy->getName() +
+                       "! Prepare for combat!";
+              // combat(player, enemy);
+             break;
+           default:
+             message = "It's a peaceful walk. Nothing happens.";
+             break;
+         }
+         return vbox({text("Exploring..."), text(message)}) | border;
+       }),
+       Button("Back", return_to_menu)});
+
+  // Display the exploration results with the back button
+  screen.Loop(container);
 }
 
 void gameLoop(GameState& gameState) {
-  bool exitGame = false;
-  while (!exitGame && !gameState.isGameOver()) {
-    displayMainMenu();
-    int choice;
-    cin >> choice;
+  auto screen = ScreenInteractive::TerminalOutput();
 
-    switch (choice) {
-      case 1:
-        explore(gameState);
+  while (!gameState
+              .isGameOver()) {  // Loop to re-enter FTXUI menu after each action
+    std::vector<std::string> menu_entries = {"Explore", "Shop", "View Stats",
+                                             "Save Game", "Exit"};
+    int selected_index = 0;
+
+    // Create the menu component
+    auto menu = Menu(&menu_entries, &selected_index);
+
+    // Button to exit the loop after selection
+    auto confirm_button = Button("Select", [&] { screen.ExitLoopClosure()(); });
+
+    auto container = Container::Vertical({menu, confirm_button});
+    auto renderer = Renderer(container, [&] {
+      return vbox({text("Main Menu"), menu->Render() | border,
+                   confirm_button->Render(),
+                   text("Use Arrow keys to navigate and Enter to select.")});
+    });
+
+    // Run the UI loop
+    screen.Loop(renderer);
+
+    // Handle the selected action outside of the UI loop
+    switch (selected_index) {
+      case 0:
+        // explore(gameState);
+        explore(gameState, screen, [&] { screen.ExitLoopClosure()(); });
+        if (gameState.getPlayerCharacter()->getCurrentHP() <= 0) {
+          playerDied(gameState.getPlayerCharacter());
+        }
         break;
-      case 2:
+      case 1:
         handleShopInteraction(gameState);
         break;
+      case 2:
+        // showPlayerStats(gameState.getPlayerCharacter());
+        showPlayerStats(screen, gameState.getPlayerCharacter());
+        break;
       case 3:
-        displayPlayerStats(gameState.getPlayerCharacter());
+        saveCharacter(gameState.getPlayerCharacter());
+        showGameSavedMessage(screen);
         break;
       case 4:
-        exitGame = true;
+        gameState.setGameOver(true);  // Set game over and exit the menu loop
         break;
-      case 5:
-        saveCharacter(gameState.getPlayerCharacter());
-        cout << endl << "Game saved." << endl;
-        waitForEnter();
-        clearScreen();
-        break;
-      default:
-        cout << "Invalid choice, please try again.\n";
     }
   }
 }
 
 void gameLoopMulti(GameStateMulti& gameState) {
-  // move each player to shop, after shop, move to combat, player will fight
-  // with eachother
   bool exitGame = false;
   while (!exitGame && !gameState.isGameOver()) {
     clearScreen();
@@ -897,23 +940,39 @@ void gameLoopMulti(GameStateMulti& gameState) {
 }
 
 int main() {
-  clearScreen();
-  cout << "Do you want to play multiplayer or single player? (m/s)" << endl;
-  char choice;
-  cin >> choice;
-  while (choice != 'm' && choice != 's') {
-    cout << "Invalid choice. Please try again." << endl;
-    cin >> choice;
-  }
-  clearScreen();
-  if (choice == 'm') {
+  auto screen = ScreenInteractive::TerminalOutput();
+
+  // Menu options
+  std::vector<std::string> options = {"Single Player", "Multiplayer"};
+  int selected = 0;
+  auto menu = Menu(&options, &selected);
+
+  // Renderer with a confirmation button
+  auto confirm_button = Button("Confirm", [&] { screen.ExitLoopClosure()(); });
+
+  auto container = Container::Vertical({menu, confirm_button});
+
+  auto renderer = Renderer(container, [&] {
+    return vbox(
+        {text("Do you want to play multiplayer or single player? (m/s)"),
+         menu->Render() | border, confirm_button->Render()});
+  });
+
+  // Main loop
+  screen.Loop(renderer);
+
+  // Process the choice
+  if (selected == 1) {  // Multiplayer
+    clearScreen();
     vector<Human*> players = LoginMultiplayer();
     GameStateMulti gameStateMulti(players[0], players[1]);
     gameLoopMulti(gameStateMulti);
-    return 0;
+  } else {  // Single Player
+    clearScreen();
+    Human* playerCharacter = Login();
+    GameState gameState(playerCharacter);
+    gameLoop(gameState);
   }
-  Human* playerCharacter = Login();
-  GameState gameState(playerCharacter);
-  gameLoop(gameState);
+
   return 0;
 }
