@@ -754,6 +754,18 @@ void combatMulti(Human* player1, Human* player2) {
 
 void explore(GameState& gameState) {
   clearScreen();
+
+  
+   // Load an audio file
+    sf::SoundBuffer ExploreBuffer;
+    if (!ExploreBuffer.loadFromFile("secret-world.wav")) {
+        std::cerr << "Could not load the Explore audio file!" << std::endl;
+    }
+    // Create a sound object and play it
+    sf::Sound ExploreSound;
+    ExploreSound.setBuffer(ExploreBuffer);
+    ExploreSound.play();
+
   srand(time(nullptr));    // Seed for random number generation
   int event = rand() % 4;  // Random event: 0, 1, 2 or 3
 
@@ -904,22 +916,22 @@ void gameLoopMulti(GameStateMulti& gameState) {
 int main() {
   clearScreen();
     cout << Wellcome1 << endl;
-    //       // Load an audio file
-    // sf::SoundBuffer WelcomeBuffer;
-    // if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
-    //     std::cerr << "Could not load the Welcome audio file!" << std::endl;
-    // }
+          // Load an audio file
+    sf::SoundBuffer WelcomeBuffer;
+    if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
+        std::cerr << "Could not load the Welcome audio file!" << std::endl;
+    }
 
-    // // Create a sound object and play it
-    // sf::Sound WelcomeSound;
-    // WelcomeSound.setBuffer(WelcomeBuffer);
-    // WelcomeSound.play();
-    // cout  << Wellcome1 << endl;
-    // // Wait until the sound is finished
-    // while (WelcomeSound.getStatus() == sf::Sound::Playing) {
-    //     // Keep the program running until the sound has finished playing
-    //     sf::sleep(sf::milliseconds(100));
-    // }
+    // Create a sound object and play it
+    sf::Sound WelcomeSound;
+    WelcomeSound.setBuffer(WelcomeBuffer);
+    WelcomeSound.play();
+    cout  << Wellcome1 << endl;
+    // Wait until the sound is finished
+    while (WelcomeSound.getStatus() == sf::Sound::Playing) {
+        // Keep the program running until the sound has finished playing
+        sf::sleep(sf::milliseconds(100));
+    }
 
     clearScreen();
   cout << "Do you want to play multiplayer or single player? (m/s)" << endl;
