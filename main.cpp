@@ -1,3 +1,4 @@
+#include <SFML/Audio.hpp>
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
@@ -5,7 +6,6 @@
 #include <iostream>
 #include <limits>
 #include <vector>
-#include <SFML/Audio.hpp>
 #include "Character.h"
 #include "CharacterType.h"
 #include "Enemy.h"
@@ -495,7 +495,9 @@ void combat(Human* player, Enemy* enemy) {
     }
     if (player->getCurrentHP() <= 0) {
       defeatedByZombie(player);
-      cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
+      cout << endl
+           << "\033[38;5;52m" << You_Died << "\033[38;5;232m"
+           << "\033[0m";
       waitForEnter();
       clearScreen();
       playerDied(player);
@@ -539,25 +541,26 @@ void combatMulti(Human* player1, Human* player2) {
         break;
       case 1: {
         clearScreen();
-        if(choice2 == 2){
+        if (choice2 == 2) {
           synergy1 = player1->chooseAtkItem();
           player1->setAttack(player1->getAttack() + (int)synergy1);
           player2->performDefense(*player1);
           player1->setAttack(player1->getAttack() - (int)synergy1);
 
-        }else{
-        synergy1 = player1->chooseAtkItem();
-        player1->setAttack(player1->getAttack() + (int)synergy1);
-        player1->performAttack(*player2);
-        // player2->takeDamage(player1->getAttack() + (int)synergy1);
-        player1->setAttack(player1->getAttack() - (int)synergy1);}
+        } else {
+          synergy1 = player1->chooseAtkItem();
+          player1->setAttack(player1->getAttack() + (int)synergy1);
+          player1->performAttack(*player2);
+          // player2->takeDamage(player1->getAttack() + (int)synergy1);
+          player1->setAttack(player1->getAttack() - (int)synergy1);
+        }
         break;
       }
       case 2: {
         clearScreen();
         defsynergy1 = player1->chooseDefItems();
         player1->setDefense(player1->getDefense() + defsynergy1);
-        //player1->performDefense(*player2);
+        // player1->performDefense(*player2);
         break;
       }
       case 3: {
@@ -650,23 +653,24 @@ void combatMulti(Human* player1, Human* player2) {
         break;
       case 1: {
         clearScreen();
-        if(choice1 == 2){
-             synergy2 = player2->chooseAtkItem();
-             player2->setAttack(player2->getAttack() + (int)synergy2);
-             player1->performDefense(*player2);
-             player2->setAttack(player2->getAttack() - (int)synergy2);
-        }else{
-        synergy2 = player2->chooseAtkItem();
-        player2->setAttack(player2->getAttack() + (int)synergy2);
-        player2->performAttack(*player1);
-        player2->setAttack(player2->getAttack() - (int)synergy2);}
+        if (choice1 == 2) {
+          synergy2 = player2->chooseAtkItem();
+          player2->setAttack(player2->getAttack() + (int)synergy2);
+          player1->performDefense(*player2);
+          player2->setAttack(player2->getAttack() - (int)synergy2);
+        } else {
+          synergy2 = player2->chooseAtkItem();
+          player2->setAttack(player2->getAttack() + (int)synergy2);
+          player2->performAttack(*player1);
+          player2->setAttack(player2->getAttack() - (int)synergy2);
+        }
         break;
       }
       case 2: {
         clearScreen();
         defsynergy2 = player2->chooseDefItems();
         player2->setDefense(player2->getDefense() + defsynergy2);
-       // player2->performDefense(*player2);
+        // player2->performDefense(*player2);
         break;
       }
       case 3: {
@@ -745,8 +749,8 @@ void combatMulti(Human* player1, Human* player2) {
                      player2->getMaxHP());
   }
   if (choice1 == 2) {
-      player1->setDefense(player1->getDefense() - defsynergy1);
-    }
+    player1->setDefense(player1->getDefense() - defsynergy1);
+  }
 
   cout << "\n*** Combat Ends ***\n" << endl;
   waitForEnter();
@@ -755,25 +759,25 @@ void combatMulti(Human* player1, Human* player2) {
 void explore(GameState& gameState) {
   clearScreen();
 
-  
-   // Load an audio file
-    sf::SoundBuffer ExploreBuffer;
-    if (!ExploreBuffer.loadFromFile("secret-world.wav")) {
-        std::cerr << "Could not load the Explore audio file!" << std::endl;
-    }
-    // Create a sound object and play it
-    sf::Sound ExploreSound;
-    ExploreSound.setBuffer(ExploreBuffer);
-    ExploreSound.play();
+  // Load an audio file
+  sf::SoundBuffer ExploreBuffer;
+  if (!ExploreBuffer.loadFromFile("secret-world.wav")) {
+    std::cerr << "Could not load the Explore audio file!" << std::endl;
+  }
+  // Create a sound object and play it
+  sf::Sound ExploreSound;
+  ExploreSound.setBuffer(ExploreBuffer);
+  ExploreSound.play();
 
   srand(time(nullptr));    // Seed for random number generation
   int event = rand() % 4;  // Random event: 0, 1, 2 or 3
 
   Human* player = gameState.getPlayerCharacter();
-  characterType types[3] = {characterType::WEAKZOMBIE,
-                            characterType::STRONGZOMBIE,
-                            characterType::HUMANENEMY};
-  characterType type = types[rand() % 3];
+  // characterType types[3] = {characterType::WEAKZOMBIE,
+  //                           characterType::STRONGZOMBIE,
+  //                           characterType::HUMANENEMY};
+  // characterType type = types[rand() % 3];
+  characterType type = characterType::HUMANENEMY;
   Enemy* enemy = EnemyFactory::createEnemy(type, player->getLevel(), player);
   Item* potion = new HealingPotion("Elixir of Healing", 50.0, false, 50.0, 1);
   switch (event) {
@@ -794,7 +798,7 @@ void explore(GameState& gameState) {
                        player->getMaxHP());
       cout << endl;
       if (player->getCurrentHP() <= 0) {
-        cout << endl << "\033[38;5;52m" << You_Died << "\033[38;5;232m";
+        cout << endl << "\033[38;5;52m" << You_Died << "\033[48;5;0m";
         waitForEnter();
         clearScreen();
         playerDied(player);
@@ -915,23 +919,24 @@ void gameLoopMulti(GameStateMulti& gameState) {
 
 int main() {
   clearScreen();
-    sf::SoundBuffer WelcomeBuffer;
-    if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
-        std::cerr << "Could not load the Welcome audio file!" << std::endl;
-    }
+  // Load an audio file
+  sf::SoundBuffer WelcomeBuffer;
+  if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
+    std::cerr << "Could not load the Welcome audio file!" << std::endl;
+  }
 
-    // Create a sound object and play it
-    sf::Sound WelcomeSound;
-    WelcomeSound.setBuffer(WelcomeBuffer);
-    WelcomeSound.play();
-    cout  << Wellcome1 << endl;
-    // Wait until the sound is finished
-    while (WelcomeSound.getStatus() == sf::Sound::Playing) {
-        // Keep the program running until the sound has finished playing
-        sf::sleep(sf::milliseconds(100));
-    }
+  // Create a sound object and play it
+  sf::Sound WelcomeSound;
+  WelcomeSound.setBuffer(WelcomeBuffer);
+  WelcomeSound.play();
+  cout << Wellcome1 << endl;
+  // Wait until the sound is finished
+  while (WelcomeSound.getStatus() == sf::Sound::Playing) {
+    // Keep the program running until the sound has finished playing
+    sf::sleep(sf::milliseconds(100));
+  }
 
-    clearScreen();
+  clearScreen();
   cout << "Do you want to play multiplayer or single player? (m/s)" << endl;
   char choice;
   cin >> choice;
