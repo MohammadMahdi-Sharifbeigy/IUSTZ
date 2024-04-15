@@ -141,6 +141,112 @@ make
 ```
 You have successfully installed and run the project! 
 
+## Running the Game with Docker
+
+**Prerequisites**
+
+Make sure you have Docker installed on your system before proceeding with the steps below.
+
+To install Docker on your system, follow the steps below:
+
+### For Linux (Ubuntu/Debian):
+
+🔘 Step 1 : Update your existing list of packages:
+
+```bash
+sudo apt update
+```
+
+🔘 Step 2 : Install the necessary packages to allow apt to use a repository over HTTPS
+
+```bash
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+```
+🔘 Step 3 : Add Docker’s official GPG key
+
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg sudo apt-key add -
+```
+
+🔘 Step 4 : Set up the Docker repository
+
+```bash
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+```
+
+🔘 Step 5 : Update the package database with Docker packages from the newly added repository
+
+```bash
+sudo apt update
+```
+
+🔘 Step 6 : Make sure you are installing from the Docker repo instead of the default Ubuntu repo
+
+```bash
+apt-cache policy docker-ce
+```
+
+🔘 Step 7 : **Install Docker**
+
+```bash
+sudo apt install docker-ce
+```
+
+🔘 Step 8 : Verify Docker installation by checking the version
+
+```bash
+sudo docker --version
+```
+
+🔘 Step 9 : Start the Docker service and enable it to start on boot
+
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+### For Windows and macOS:
+
+🔘 Step 1 : Download and install Docker Desktop from the official Docker website: Docker Desktop
+
+🔘 Step 2 : Follow the installation instructions provided by the Docker Desktop installer.
+
+🔘 Step 3 : Once installed, start Docker Desktop from your applications.
+
+🔘 Step 4 : Docker should now be running on your system.
+
+### Building and Running the Game with Docker
+
+🔘 Step 1 : Clone the Repository
+
+```bash
+git clone https://github.com/MohammadMahdi-Sharifbeigy/IUSTZ.git
+cd IUSTZ/
+```
+
+🔘 Step 2 : Build the Docker Image
+
+```bash
+docker build -t text-based-rpg .
+```
+
+🔘 Step 3 : Run the Docker Container:
+
+```bash
+docker run -it text-based-rpg
+```
+
+This will start the game within the Docker container, allowing you to interact with the text-based RPG game environment.
+
+### Docker Compose
+Alternatively, you can use Docker Compose for easier management of the container. Here’s how you can use the provided **compose-dev.yaml** file:
+
+```bash
+docker-compose -f compose-dev.yaml up
+```
+
+This will start the container with the necessary dependencies and configurations for running the game.
+
 ### Additional Notes:
 
 - If you encounter any issues during the installation process, refer to the documentation of SFML and ncurses for troubleshooting.
