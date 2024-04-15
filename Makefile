@@ -4,14 +4,18 @@ UNAME_S := $(shell uname -s)
 # Define the compiler
 CXX = g++
 
-# Define compile-time flags
-CXXFLAGS = -std=c++17 -Wall
+# Define base compile-time flags
+CXXFLAGS := -std=c++17 -Wall $(shell pkg-config --cflags sfml-all)
+DEBUGFLAGS = -g -O0 -DDEBUG
 
-# Include directories for SFML
-SFML_INCLUDE = -I/usr/local/include
+# Library flags and libraries
+LDFLAGS := $(shell pkg-config --libs sfml-all)
 
-# SFML libraries
-SFML_LIBS = -lsfml-audio -lsfml-system
+# Define the path to the source files and include the root directory
+# Automatically find all cpp files in the project
+SOURCES := $(shell find . -name '*.cpp')
+OBJECTS := $(SOURCES:.cpp=.o)
+DEBUGOBJECTS := $(SOURCES:.cpp=_debug.o)
 
 # Define the name of the executable
 ifeq ($(UNAME_S),Windows_NT)
@@ -22,34 +26,27 @@ else
     DEBUGTARGET = game_debug
 endif
 
-# Automatically find all cpp files in the current directory
-SOURCES = $(wildcard *.cpp)
-
-# Define object files
-OBJECTS = $(SOURCES:.cpp=.o)
-DEBUGOBJECTS = $(SOURCES:.cpp=.debug.o)
-
 # Default target
 all: $(TARGET)
 
 # Debug target
 debug: $(DEBUGTARGET)
 
-# Link the target with all objects and SFML libraries
+# Link the target with all objects
 $(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(SFML_LIBS)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
-# Link the debug target with all debug objects and SFML libraries
+# Link the debug target with all debug objects
 $(DEBUGTARGET): $(DEBUGOBJECTS)
-	$(CXX) $(DEBUGFLAGS) -o $@ $^ $(SFML_LIBS)
+	$(CXX) $(DEBUGFLAGS) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
 # Compile each cpp file to an object file
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(SFML_INCLUDE) -c $<
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Compile each cpp file to a debug object file
-%.debug.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(SFML_INCLUDE) -c $< -o $@
+# Compile debug objects
+%_debug.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $@
 
 # Clean up the build
 clean:
