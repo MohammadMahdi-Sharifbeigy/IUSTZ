@@ -915,8 +915,6 @@ void gameLoopMulti(GameStateMulti& gameState) {
 
 int main() {
   clearScreen();
-    cout << Wellcome1 << endl;
-          // Load an audio file
     sf::SoundBuffer WelcomeBuffer;
     if (!WelcomeBuffer.loadFromFile("Welcome.wav")) {
         std::cerr << "Could not load the Welcome audio file!" << std::endl;
